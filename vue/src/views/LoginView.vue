@@ -21,13 +21,17 @@
       <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
     </form>
   </div>
+  
 </template>
 
 <script>
 import authService from "../services/AuthService";
+import Header from '../components/Header.vue';
 
 export default {
-  components: {},
+  components: {
+    
+  },
   data() {
     return {
       user: {
