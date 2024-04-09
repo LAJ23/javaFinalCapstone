@@ -1,23 +1,54 @@
 <template>
-  <Header/>
+  <Header />
   <div class="home">
-    <h1>Welcome, {{user}}</h1>
+    <h1>Welcome, {{ user }}</h1>
     <h2>What is your goal today?</h2>
     <nav>
-      <router-link class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
+      <router-link
+        class="btn"
+        :to="{ name: 'study' }"
+        style="
+          display: inline-flex;
+          text-decoration: none;
+          align-items: center;
+          justify-content: center;
+          height: 3vw;
+          padding-top: 1vw;
+        "
+      >
         Study
       </router-link>
-      <router-link v-on:click="createDeck" class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
+      <router-link
+        class="btn"
+        :to="{ name: 'create' }"
+        style="
+          display: inline-flex;
+          text-decoration: none;
+          align-items: center;
+          justify-content: center;
+          height: 3vw;
+          padding-top: 1vw;
+        "
+      >
         Create Deck
       </router-link>
-      <router-link class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
+      <router-link
+        class="btn"
+        :to="{ name: 'study' }"
+        style="
+          display: inline-flex;
+          text-decoration: none;
+          align-items: center;
+          justify-content: center;
+          height: 3vw;
+          padding-top: 1vw;
+        "
+      >
         Edit Deck
       </router-link>
-     
-      
     </nav>
     <h2>Recent Decks</h2>
-<UserDecks />
+    <UserDecks />
   </div>
 </template>
 
@@ -59,19 +90,17 @@ export default {
           return this.nextDeckId++;
        },
        createDeck(){
-          this.newDeck.id = 
+          this.newDeck.id =
 
        }
-    
+
   },
 }
 </script>
 
 <style scoped>
 * {
-  font-family: 'Writing';
-
-
+  font-family: "Writing";
 }
 
 .home {
@@ -104,7 +133,7 @@ nav {
   padding-bottom: 1vw;
   color: white;
   background-color: rgb(58, 58, 255);
-  border-radius: .8vw;
+  border-radius: 0.8vw;
   border: none;
   text-decoration: none; /* Remove underline from links */
   cursor: pointer; /* Ensure it looks clickable */
@@ -120,6 +149,4 @@ nav {
 .deckIcon {
   width: 20vw;
 }
-
-
 </style>
