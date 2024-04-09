@@ -1,4 +1,5 @@
 <template>
+  <Header/>
   <div id="login">
     <form v-on:submit.prevent="login">
       <h1 >Please Sign In</h1>
@@ -20,6 +21,7 @@
       <p>
       <router-link v-bind:to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
     </form>
+    
   </div>
   
 </template>
@@ -30,7 +32,7 @@ import Header from '../components/Header.vue';
 
 export default {
   components: {
-    
+    Header
   },
   data() {
     return {

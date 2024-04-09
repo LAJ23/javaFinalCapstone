@@ -1,6 +1,6 @@
 <template>
-    <div id="logo">
-        <img src="C:\Users\Student\workspace\final-capstone\java-finalcapstone-team0\vue\images\Flashr-Logo.png"/>
+    <div id="logo" v-on:click.prevent="goHome">
+        <img src="src\assets\Flashr-Logo.png"/>
     </div>
     <label>Search</label>
     <input id="header-search-bar" type="text">
@@ -8,7 +8,11 @@
   
   <script>
   export default {
-    
+    methods: {
+        goHome(){
+            this.$router.push("/");
+        }
+    }
   };
   </script>
   

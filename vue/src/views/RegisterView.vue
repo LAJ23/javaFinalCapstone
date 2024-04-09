@@ -1,4 +1,5 @@
 <template>
+  <Header/>
   <div id="register" class="text-center">
     <form v-on:submit.prevent="register">
       <h1>Create Account</h1>
@@ -25,6 +26,7 @@
 
 <script>
 import authService from '../services/AuthService';
+import Header from '../components/Header.vue';
 
 export default {
   data() {
@@ -38,6 +40,9 @@ export default {
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
     };
+  },
+  components: {
+    Header
   },
   methods: {
     register() {
