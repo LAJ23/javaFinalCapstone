@@ -4,8 +4,7 @@ import axios from "axios";
 export function createStore(currentToken, currentUser) {
   let store = _createStore({
     state: {
-
-      token: currentToken || '',
+      token: currentToken || "",
       user: currentUser || {},
 
       nextDeckId: 2,
@@ -21,11 +20,11 @@ export function createStore(currentToken, currentUser) {
       decks: [
         {
           id: 1,
-          name: 'Java',
+          name: "Java",
           high_score: 0,
           color: 1,
-          creator_id: 2
-        }
+          creator_id: 2,
+        },
       ],
 
       token: currentToken || "",
@@ -62,7 +61,11 @@ export function createStore(currentToken, currentUser) {
         deck.id = state.nextDeckId++;
         state.decks(deck);
 <<<<<<< HEAD
+<<<<<<< HEAD
       }
+=======
+      },
+>>>>>>> main
 =======
       },
 >>>>>>> main

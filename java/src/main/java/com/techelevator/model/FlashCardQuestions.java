@@ -1,25 +1,28 @@
 package com.techelevator.model;
 
 public class FlashCardQuestions {
-  private int id;
+  private int card_id;
+
+  private int deck_id;
     private String question;
     private String answer;
 
 
     public FlashCardQuestions(){};
 
-    public FlashCardQuestions(int id, String question, String answer){
-     this.id = id;
+    public FlashCardQuestions(int card_id, int deck_id, String question, String answer){
+     this.card_id = card_id;
+     this.deck_id = deck_id;
      this.question = question;
      this.answer = answer;
     }
 
-    public int getId() {
-      return id;
+    public int getCardId() {
+      return card_id;
     }
 
-    public void setId(int id) {
-      this.id = id;
+    public void setCardId(int id) {
+      this.card_id = card_id;
     }
 
     public String getQuestion() {
@@ -38,4 +41,11 @@ public class FlashCardQuestions {
       this.answer = answer;
     }
 
+    public int getDeck_id() {
+    return deck_id;
+    }
+
+    public void setDeck_id(int deck_id) {
+    this.deck_id = deck_id;
+    }
 }
