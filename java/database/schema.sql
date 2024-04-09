@@ -22,7 +22,7 @@ CREATE TABLE flaschard (
 CREATE TABLE deck (
 	deck_id SERIAL,
  	name varchar(50) NOT NULL,
-	high_score numeric(100) NOT NULL DEFAULT '0',
+	high_score numeric(100) DEFAULT '0',
 	color numeric(10) NOT NULL,
 	creator_id numeric(50) NOT NULL,
  	CONSTRAINT PK_deck PRIMARY KEY (deck_id),

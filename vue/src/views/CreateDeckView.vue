@@ -1,7 +1,7 @@
 <template>
     <Header/>
     <div id="createCont">
-      <form action="">
+      <form v-on:click="createDeck" action="">
     <h3>What would you like to Name your deck?</h3>
     <input type="text" placeholder="Name">
 
@@ -25,8 +25,23 @@
 
   export default {
     components: {
-      Header,
+      Header
       
+    },
+    data() {
+      return {
+        newDeck: {},
+      }
+    },
+    methods: {
+      getNextDeckId(){
+          return this.nextDeckId++;
+       },
+      createDeck(){
+          this.$store.commit('ADD_DECK', this.newDeck);
+          this.$router.push('/edit');
+
+       }
     }
   };
   </script>
