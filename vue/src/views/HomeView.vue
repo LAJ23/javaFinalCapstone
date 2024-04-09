@@ -49,7 +49,11 @@
       </router-link>
     </nav>
     <h2>Recent Decks</h2>
+    <<<<<<< HEAD
     <UserDecks />
+    =======
+    <UserDecks />
+    >>>>>>> main
   </div>
 </template>
 
@@ -88,6 +92,7 @@ export default {
         });
        },
 <<<<<<< HEAD
+<<<<<<< HEAD
        getNextDeckId(){
           return this.nextDeckId++;
        },
@@ -100,6 +105,12 @@ export default {
 >>>>>>> 38288b2 (create deck method)
        }
 
+=======
+       goToCreate(){
+        this.$router.push("/create");
+       }
+
+>>>>>>> main
   },
 }
 </script>
