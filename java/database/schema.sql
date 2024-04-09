@@ -10,6 +10,7 @@ CREATE TABLE users (
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
 
+
 CREATE TABLE flaschard (
 	card_id SERIAL,
 	deck_id numeric,
