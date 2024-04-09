@@ -6,18 +6,18 @@ const http = axios.create({
 
 export default {
     user() {
-        return http.get('/user');
+        return http.get('/users');
     },
     getUser(id) {
-        return http.get(`/user/${id}`)
+        return http.get(`/users/${id}`)
     },
-    addUser(user) {
-        return http.past('/user', user)
+    addUser(username, password) {
+        return http.past('/users', username, password)
     },
     updateUser(user) {
-        return http.put(`user/${user.id}`)
+        return http.put(`users/${user.id}`)
     },
     deleteUser(id) {
-        return http.delete(`/user/${id}`)
+        return http.delete(`/users/${id}`)
     }
 }
