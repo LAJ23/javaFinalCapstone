@@ -97,6 +97,14 @@
     width: 100%;
     
   }
+
+  h2 {
+    margin-top: 2vw;
+  }
+  h3 {
+    margin-top: 1vw;
+    margin-bottom: 2vw;
+  }
   
   .card {
     
