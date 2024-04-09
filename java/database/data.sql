@@ -28,3 +28,5 @@ INSERT INTO flashcard (deck_id, question, answer)
 VALUES ('1','What is an Interface, and why would you use one?','An Interface defines a contract for classes. It outlines specific methods or properties a class must implement. You use interfaces to enforce certain behaviors across different classes. This enables loose coupling, making your code more modular, adaptable, and testable.');
 
 COMMIT TRANSACTION;
+
+

@@ -1,23 +1,59 @@
 <template>
-  <Header/>
+  <Header />
   <div class="home">
-    <h1>Welcome, {{ username }}</h1>
+    <h1>Welcome, {{ user }}</h1>
     <h2>What is your goal today?</h2>
     <nav>
-      <router-link class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
+      <router-link
+        class="btn"
+        :to="{ name: 'study' }"
+        style="
+          display: inline-flex;
+          text-decoration: none;
+          align-items: center;
+          justify-content: center;
+          height: 3vw;
+          padding-top: 1vw;
+        "
+      >
         Study
       </router-link>
-      <router-link v-on:click="goToCreate" class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
+      <router-link
+        v-on:click="goToCreate"
+        class="btn"
+        :to="{ name: 'study' }"
+        style="
+          display: inline-flex;
+          text-decoration: none;
+          align-items: center;
+          justify-content: center;
+          height: 3vw;
+          padding-top: 1vw;
+        "
+      >
         Create Deck
       </router-link>
-      <router-link class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
+      <router-link
+        class="btn"
+        :to="{ name: 'study' }"
+        style="
+          display: inline-flex;
+          text-decoration: none;
+          align-items: center;
+          justify-content: center;
+          height: 3vw;
+          padding-top: 1vw;
+        "
+      >
         Edit Deck
       </router-link>
-     
-      
     </nav>
     <h2>Recent Decks</h2>
-<UserDecks />
+    <<<<<<< HEAD
+    <UserDecks />
+    =======
+    <UserDecks />
+    >>>>>>> main
   </div>
 </template>
 
@@ -55,20 +91,43 @@ export default {
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
+<<<<<<< HEAD
     }
   },     
   goToCreate(){
         this.$router.push("/create");
        }
+=======
+       },
+<<<<<<< HEAD
+<<<<<<< HEAD
+       getNextDeckId(){
+          return this.nextDeckId++;
+       },
+       createDeck(){
+          this.newDeck.id =
+
+=======
+       goToCreate(){
+        this.$router.push("/create");
+>>>>>>> 38288b2 (create deck method)
+       }
+
+=======
+       goToCreate(){
+        this.$router.push("/create");
+       }
+
+>>>>>>> main
+  },
+>>>>>>> 5da02e2862af47ded3a4890f4fa2c18d8df97aac
 }
 
 </script>
 
 <style scoped>
 * {
-  font-family: 'Writing';
-
-
+  font-family: "Writing";
 }
 
 .home {
@@ -101,7 +160,7 @@ nav {
   padding-bottom: 1vw;
   color: white;
   background-color: rgb(58, 58, 255);
-  border-radius: .8vw;
+  border-radius: 0.8vw;
   border: none;
   text-decoration: none; /* Remove underline from links */
   cursor: pointer; /* Ensure it looks clickable */
@@ -117,6 +176,4 @@ nav {
 .deckIcon {
   width: 20vw;
 }
-
-
 </style>
