@@ -1,7 +1,8 @@
 <template>
   <Header/>
   <div class="home">
-    <h1>Welcome, {{user}}</h1>
+    <h1>Welcome, {{user.username}}</h1>
+    <pre>{{ userJson }}</pre> <!-- Add this line for debugging -->
     <h2>What is your goal today?</h2>
     <nav>
       <router-link class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
@@ -10,7 +11,7 @@
       <router-link v-on:click="goToCreate" class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
         Create Deck
       </router-link>
-      <router-link class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
+      <router-link class="btn" :to="{ name: 'edit' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
         Edit Deck
       </router-link>
      
@@ -39,6 +40,15 @@ export default {
         nextDeckId: 2
       };
     },
+    computed: {
+    userName() {
+      // Assuming the user object ha.s a name property. Adjust according to your user object structure.
+      return this.$store.state.user.username; // or any other property you want to display
+    },
+    userJson() {
+      return JSON.stringify(this.$store.state.user, null, 2); // For debugging
+    }
+  },
     mounted() {
       this.fetchData();
     },
@@ -60,6 +70,7 @@ export default {
        }
     
   },
+  
 }
 </script>
 

@@ -27,6 +27,7 @@
     justify-content: center;
     width: 80%;
     height: 10vw;
+    
 
     background-color: blueviolet;
   }
