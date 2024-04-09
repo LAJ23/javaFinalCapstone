@@ -1,7 +1,7 @@
 <template>
   <Header/>
   <div class="home">
-    <h1>Welcome, {{user}}</h1>
+    <h1>Welcome, {{ username }}</h1>
     <h2>What is your goal today?</h2>
     <nav>
       <router-link class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
@@ -24,7 +24,7 @@
 <script>
 import Header from '../components/Header.vue';
 import UserDecks from '../components/UserDecks.vue';
-import UserService from '../services/UserService'
+import UserService from '../services/UserService';
 
 
 export default {
@@ -34,8 +34,9 @@ export default {
   },
     data() {
       return {
+        username: '',
         newDeck: {},
-        newCard: {}
+        newCard: {},
       };
     },
     mounted() {
@@ -54,7 +55,7 @@ export default {
           console.error('Error fetching data:', error);
         });
     }
-  },
+  }
 }
 </script>
 

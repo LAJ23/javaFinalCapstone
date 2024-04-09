@@ -11,6 +11,9 @@ export default {
     getUser(id) {
         return http.get(`/users/${id}`)
     },
+    getUsername(id) {
+        return http.get(`/users/${id}`)
+    },
     addUser(username, password) {
         return http.past('/users', username, password)
     },
