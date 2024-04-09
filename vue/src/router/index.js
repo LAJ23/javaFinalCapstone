@@ -9,6 +9,7 @@ import RegisterView from '../views/RegisterView.vue';
 import StudySessionView from '../views/StudySessionView.vue'
 import StudyView from '../views/StudyView.vue';
 import CreateDeckView from '../views/CreateDeckView.vue'
+import EditDeckView from '../views/EditDeckView.vue'
 
 /**
  * The Vue Router is used to "direct" the browser to render a specific view component
@@ -28,6 +29,15 @@ const routes = [
     }
   },
   {
+    path: '/edit',
+    name: 'edit',
+    component: EditDeckView,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    
     path: '/create',
     name: 'create',
     component: CreateDeckView,
