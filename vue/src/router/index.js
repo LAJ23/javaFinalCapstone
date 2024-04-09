@@ -28,7 +28,7 @@ const routes = [
     }
   },
   {
-    path: '/',
+    path: '/create',
     name: 'create',
     component: CreateDeckView,
     meta: {
@@ -36,7 +36,7 @@ const routes = [
     }
   },
   {
-  path: '/',
+  path: '/study',
   name: 'study',
   component: StudyView,
   meta: {
@@ -44,7 +44,7 @@ const routes = [
   }
 },
 {
-  path: '/',
+  path: '/study-session',
   name: 'session',
   component: StudySessionView,
   meta: {

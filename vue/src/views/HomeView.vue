@@ -19,8 +19,9 @@
         Study
       </router-link>
       <router-link
+        v-on:click="goToCreate"
         class="btn"
-        :to="{ name: 'create' }"
+        :to="{ name: 'study' }"
         style="
           display: inline-flex;
           text-decoration: none;
@@ -86,12 +87,17 @@ export default {
           console.error('Error fetching data:', error);
         });
        },
+<<<<<<< HEAD
        getNextDeckId(){
           return this.nextDeckId++;
        },
        createDeck(){
           this.newDeck.id =
 
+=======
+       goToCreate(){
+        this.$router.push("/create");
+>>>>>>> 38288b2 (create deck method)
        }
 
   },
