@@ -38,7 +38,7 @@
           return this.nextDeckId++;
        },
       createDeck(){
-          this.$store.commit('ADD_DECK', this.newDeck);
+          // this.$store.commit('ADD_DECK', this.newDeck);
           this.$router.push('/edit');
 
        }
