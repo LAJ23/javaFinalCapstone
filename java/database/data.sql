@@ -3,8 +3,8 @@ BEGIN TRANSACTION;
 INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_USER');
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
-INSERT INTO deck (name, high_score, color, creator_id)
-VALUES ('Java', '0', '1', user_id FROM users where username = 'admin');
+INSERT INTO deck (name, color, creator_id)
+VALUES ('Java', '1', user_id FROM users where username = 'admin');
 
 INSERT INTO flashcard (deck_id, question, answer)
 VALUES ('1','What is a variable? Give an example', 'Variables are containers for storing data values. An example is a boolean variable named isAwake, whose value can be either true or false');
