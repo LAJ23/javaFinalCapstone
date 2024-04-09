@@ -1,7 +1,7 @@
 <template>
     <Header/>
     <div id="createCont">
-      <form v-on:click="createDeck" action="">
+      <form  action="">
     <h3>What would you like to Name your deck?</h3>
     <input type="text" placeholder="Name">
 
@@ -13,7 +13,7 @@
   <option id="yellow" value="yellow">Yellow</option>
   <option id="green" value="green">Green</option>
 </select>
-<button class="btn" type="submit"> Create</button>
+<button v-on:click="createDeck" class="btn" type="submit"> Create</button>
 </form>
 </div>
     
