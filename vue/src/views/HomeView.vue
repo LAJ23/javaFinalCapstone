@@ -33,7 +33,18 @@
       >
         Create Deck
       </router-link>
-      <router-link class="btn" :to="{ name: 'edit' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
+      <router-link
+        class="btn"
+        :to="{ name: 'edit' }"
+        style="
+          display: inline-flex;
+          text-decoration: none;
+          align-items: center;
+          justify-content: center;
+          height: 3vw;
+          padding-top: 1vw;
+        "
+      >
         Edit Deck
       </router-link>
     </nav>
