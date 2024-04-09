@@ -6,15 +6,15 @@ export function createStore(currentToken, currentUser) {
     state: {
       token: currentToken || '',
       user: currentUser || {},
-      nextDeckId: 2,
       decks: [
-        {id: 1,
+        {
+          id: 1,
           name: 'Java',
-          highScore: 0,
+          high_score: 0,
           color: 1,
-          creator_id: 
+          creator_id: 2
         }
-      ]
+      ],
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -32,6 +32,10 @@ export function createStore(currentToken, currentUser) {
         state.token = '';
         state.user = {};
         axios.defaults.headers.common = {};
+      },
+      ADD_DECK(state, deck) {
+        deck.id = state.nextDeckId++;
+        state.decks(deck);
       }
     },
   });
