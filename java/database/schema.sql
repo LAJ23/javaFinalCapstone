@@ -11,7 +11,7 @@ CREATE TABLE users (
 );
 
 
-CREATE TABLE flaschard (
+CREATE TABLE flashcard (
 	card_id SERIAL,
 	deck_id numeric,
 	question varchar(500) NOT NULL,
