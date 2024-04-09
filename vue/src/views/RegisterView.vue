@@ -31,6 +31,7 @@
 
 <script>
 import authService from '../services/AuthService';
+import Header from '../components/Header.vue';
 
 export default {
   data() {
@@ -44,6 +45,9 @@ export default {
       registrationErrors: false,
       registrationErrorMsg: 'There were problems registering this user.',
     };
+  },
+  components: {
+    Header
   },
   methods: {
     register() {

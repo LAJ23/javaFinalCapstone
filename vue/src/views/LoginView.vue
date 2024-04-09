@@ -23,6 +23,7 @@
       <button class="btn" type="submit" >
       <router-link style="text-decoration: none; color: inherit;" v-bind:to="{ name: 'register' }">Register</router-link></button>
     </form>
+    
   </div>
     <img src="../assets/imgs/sign-in-logo.png" alt="Study Clip Art" id="signInLogo">
 
@@ -37,7 +38,7 @@ import Header from '../components/Header.vue';
 
 export default {
   components: {
-    
+    Header
   },
   data() {
     return {

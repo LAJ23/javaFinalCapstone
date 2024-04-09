@@ -2,7 +2,7 @@
                 <router-link  style="text-decoration: none;  ;padding: 0;" :to="{ name: 'session' }"> 
             <div class="deckIconCont">
                 <div class="iconText greenBK">
-                    <h3>Html Tags</h3>
+                    <h3>{{ name }}</h3>
                     <p>High Score: 69%</p>
                 </div>
                 <img :src="deckImage" alt="" class="deck-image">

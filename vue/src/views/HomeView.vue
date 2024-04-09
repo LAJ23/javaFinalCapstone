@@ -1,13 +1,13 @@
 <template>
   <Header/>
   <div class="home">
-    <h1>Welcome Frank,</h1>
+    <h1>Welcome, {{user}}</h1>
     <h2>What is your goal today?</h2>
     <nav>
       <router-link class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
         Study
       </router-link>
-      <router-link class="btn" :to="{ name: 'create' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
+      <router-link v-on:click="goToCreate" class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
         Create Deck
       </router-link>
       <router-link class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
@@ -18,24 +18,49 @@
     </nav>
     <h2>Recent Decks</h2>
 <UserDecks />
-
-
-        
- 
   </div>
 </template>
 
 <script>
 import Header from '../components/Header.vue';
 import UserDecks from '../components/UserDecks.vue';
+import UserService from '../services/UserService'
 
 
 export default {
   components: {
     Header,
     UserDecks,
-  }
-};
+  },
+    data() {
+      return {
+        newDeck: {},
+        newCard: {},
+        nextDeckId: 2
+      };
+    },
+    mounted() {
+      this.fetchData();
+    },
+    methods: {
+      fetchData() {
+      fetch('/api/data').then(response => {
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.json();
+        }).then(data => {
+          this.data = data;
+        }).catch(error => {
+          console.error('Error fetching data:', error);
+        });
+       },
+       goToCreate(){
+        this.$router.push("/create");
+       }
+    
+  },
+}
 </script>
 
 <style scoped>
