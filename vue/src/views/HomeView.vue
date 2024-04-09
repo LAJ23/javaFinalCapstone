@@ -7,7 +7,7 @@
       <router-link class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
         Study
       </router-link>
-      <router-link v-on:click="createDeck" class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
+      <router-link v-on:click="goToCreate" class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
         Create Deck
       </router-link>
       <router-link class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
@@ -55,12 +55,8 @@ export default {
           console.error('Error fetching data:', error);
         });
        },
-       getNextDeckId(){
-          return this.nextDeckId++;
-       },
-       createDeck(){
-          this.newDeck.id = 
-
+       goToCreate(){
+        this.$router.push("/create");
        }
     
   },
