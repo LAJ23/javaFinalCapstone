@@ -6,18 +6,7 @@ export function createStore(currentToken, currentUser) {
     state: {
       token: currentToken || "",
       user: currentUser || {},
-
       nextDeckId: 2,
-      decks: [
-        {id: 1,
-          name: 'Java',
-          highScore: 0,
-          color: 1,
-          creator_id: 
-        }
-      ],
-      token: currentToken || "",
-      user: currentUser || {},
       decks: [
         {
           id: 1,
@@ -27,6 +16,7 @@ export function createStore(currentToken, currentUser) {
           creator_id: 2,
         },
       ],
+
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {

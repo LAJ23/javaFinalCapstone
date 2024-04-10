@@ -86,7 +86,13 @@ export default {
        getNextDeckId(){
           return this.nextDeckId++;
        },
-     
+       createDeck(){
+          this.newDeck.id = this.getNextDeckId; },
+
+       goToCreate(){
+        this.$router.push("/create");
+       }
+
   },
   
 }
