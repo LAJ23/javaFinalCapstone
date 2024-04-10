@@ -1,6 +1,7 @@
 package com.techelevator.model;
 
-public class Flashcards {
+public class Flashcard {
+
   private int card_id;
 
   private int deck_id;
@@ -8,9 +9,10 @@ public class Flashcards {
     private String answer;
 
 
-    public Flashcards(){};
 
-    public Flashcards(int card_id, int deck_id, String question, String answer){
+    public Flashcard(){};
+
+    public Flashcard(int card_id, int deck_id, String question, String answer){
      this.card_id = card_id;
      this.deck_id = deck_id;
      this.question = question;
