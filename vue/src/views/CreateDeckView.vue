@@ -22,6 +22,7 @@
   
   <script>
   import Header from '../components/Header.vue';
+  import FlashcardService  from '../services/FlashcardService';
 
   export default {
     components: {
@@ -30,18 +31,31 @@
     },
     data() {
       return {
-        newDeck: {},
+        newDeck: {
+      name: '',
+      highscore: 0, 
+      color: '', 
+      creator_id: null, 
+    }
       }
     },
     methods: {
       getNextDeckId(){
           return this.nextDeckId++;
        },
-      createDeck(){
-          // this.$store.commit('ADD_DECK', this.newDeck);
-          this.$router.push('/edit');
-
-       }
+       createDeck() {
+    // Assuming authService is a service that communicates with your backend
+    FlashcardService.addDeck(this.newDeck)
+      .then(response => {
+        // On successful creation, navigate to the edit page
+        // You might want to pass the newly created deck ID to the edit route if needed
+        this.$router.push({ name: 'edit', query: { deckId: response.data.deck_id } });
+      })
+      .catch(error => {
+        console.error("Failed to create deck:", error);
+        // Handle error (e.g., show an error message to the user)
+      });
+  }
     }
   };
   </script>
