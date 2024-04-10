@@ -1,8 +1,7 @@
 <template>
   <Header/>
   <div class="home">
-    <h1>Welcome, {{user.username}}</h1>
-    <pre>{{ userJson }}</pre> <!-- Add this line for debugging -->
+    <h1>Welcome {{userName}},</h1>
     <h2>What is your goal today?</h2>
     <nav>
       <router-link class="btn" :to="{ name: 'study' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
@@ -42,12 +41,9 @@ export default {
     },
     computed: {
     userName() {
-      // Assuming the user object ha.s a name property. Adjust according to your user object structure.
-      return this.$store.state.user.username; // or any other property you want to display
+      return this.$store.state.user.username; 
     },
-    userJson() {
-      return JSON.stringify(this.$store.state.user, null, 2); // For debugging
-    }
+ 
   },
     mounted() {
       this.fetchData();
