@@ -13,29 +13,29 @@ export function createStore(currentToken, currentUser) {
           name: "Java",
           high_score: 0,
           color: 1,
-          creator_id: 2
+          creator_id: 2,
         },
         {
           id: 2,
-          name: 'elementary',
+          name: "elementary",
           high_score: 0,
           color: 2,
-          creator_id: 2
+          creator_id: 2,
         },
         {
           id: 3,
-          name: 'highschool',
+          name: "highschool",
           high_score: 0,
           color: 3,
-          creator_id: 2
+          creator_id: 2,
         },
         {
           id: 4,
-          name: 'authors',
+          name: "authors",
           high_score: 0,
           color: 4,
-          creator_id: 2
-        }
+          creator_id: 2,
+        },
       ],
       flashcards: [
         // {
@@ -44,9 +44,7 @@ export function createStore(currentToken, currentUser) {
         //   question:
         //   answer:
         // }
-
-
-      ]
+      ],
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -67,8 +65,9 @@ export function createStore(currentToken, currentUser) {
       },
       ADD_DECK(state, deck) {
         deck.id = state.nextDeckId++;
-        state.decks(deck);},
+        state.decks(deck);
+      },
     },
-  })
+  });
   return store;
 }

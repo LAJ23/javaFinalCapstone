@@ -1,7 +1,7 @@
 <template>
   <Header />
   <div class="home">
-    <h1>Welcome {{userName}},</h1>
+    <h1>Welcome {{ userName }},</h1>
     <h2>What is your goal today?</h2>
     <nav>
       <router-link
@@ -33,7 +33,18 @@
       >
         Create Deck
       </router-link>
-      <router-link class="btn" :to="{ name: 'edit' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
+      <router-link
+        class="btn"
+        :to="{ name: 'edit' }"
+        style="
+          display: inline-flex;
+          text-decoration: none;
+          align-items: center;
+          justify-content: center;
+          height: 3vw;
+          padding-top: 1vw;
+        "
+      >
         Edit Deck
       </router-link>
     </nav>
@@ -43,60 +54,59 @@
 </template>
 
 <script>
-import Header from '../components/Header.vue';
-import UserDecks from '../components/UserDecks.vue';
-import UserService from '../services/UserService'
-
+import Header from "../components/Header.vue";
+import UserDecks from "../components/UserDecks.vue";
+import UserService from "../services/UserService";
 
 export default {
   components: {
     Header,
     UserDecks,
   },
-    data() {
-      return {
-        newDeck: {},
-        newCard: {},
-        nextDeckId: 2
-      };
-    },
-    computed: {
-    userName() {
-      return this.$store.state.user.username; 
-    },
- 
+  data() {
+    return {
+      newDeck: {},
+      newCard: {},
+      nextDeckId: 2,
+    };
   },
-    mounted() {
-      this.fetchData();
+  computed: {
+    userName() {
+      return this.$store.state.user.username;
     },
-    methods: {
-      fetchData() {
-      fetch('/api/data').then(response => {
+  },
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      fetch("/api/data")
+        .then((response) => {
           if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error("Network response was not ok");
           }
           return response.json();
-        }).then(data => {
+        })
+        .then((data) => {
           this.data = data;
-        }).catch(error => {
-          console.error('Error fetching data:', error);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
         });
-       },
+    },
 
-       getNextDeckId(){
-          return this.nextDeckId++;
-       },
-       createDeck(){
-          this.newDeck.id = this.getNextDeckId; },
+    getNextDeckId() {
+      return this.nextDeckId++;
+    },
+    createDeck() {
+      this.newDeck.id = this.getNextDeckId;
+    },
 
-       goToCreate(){
-        this.$router.push("/create");
-       }
-
+    goToCreate() {
+      this.$router.push("/create");
+    },
   },
-  
-}
-
+};
 </script>
 
 <style scoped>
