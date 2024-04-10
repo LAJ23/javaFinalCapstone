@@ -6,7 +6,7 @@ export function createStore(currentToken, currentUser) {
     state: {
       token: currentToken || "",
       user: currentUser || {},
-      nextDeckId: 2,
+      nextDeckId: 5,
       decks: [
         {
           id: 1,
@@ -15,8 +15,36 @@ export function createStore(currentToken, currentUser) {
           color: 1,
           creator_id: 2,
         },
+        {
+          id: 2,
+          name: "elementary",
+          high_score: 0,
+          color: 2,
+          creator_id: 2,
+        },
+        {
+          id: 3,
+          name: "highschool",
+          high_score: 0,
+          color: 3,
+          creator_id: 2,
+        },
+        {
+          id: 4,
+          name: "authors",
+          high_score: 0,
+          color: 4,
+          creator_id: 2,
+        },
       ],
-
+      flashcards: [
+        // {
+        //   card_id:
+        //   deck_id: 1,
+        //   question:
+        //   answer:
+        // }
+      ],
     },
     mutations: {
       SET_AUTH_TOKEN(state, token) {
@@ -38,9 +66,8 @@ export function createStore(currentToken, currentUser) {
       ADD_DECK(state, deck) {
         deck.id = state.nextDeckId++;
         state.decks(deck);
-
-      }
       },
+    },
   });
   return store;
 }
