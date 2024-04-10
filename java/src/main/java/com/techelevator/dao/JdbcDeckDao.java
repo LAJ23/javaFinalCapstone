@@ -61,7 +61,7 @@ public class JdbcDeckDao implements DeckDao {
         flashCard.setAnswer(rowset.getString("answer"));
         flashCard.setCardId(rowset.getInt("card_id"));
         flashCard.setQuestion(rowset.getString("question"));
-        flashCard.setDeck_id(rowset.getInt("deck_id"));
+        flashCard.setDeckId(rowset.getInt("deck_id"));
 
         return flashCard;
     }
