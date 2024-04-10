@@ -1,98 +1,131 @@
 <template>
   <div id="loginViewCont">
-  <div id="login">
-    <div id="formCont">
-    <img src="../assets/imgs/Flashr-Logo.png" alt="" id="appLogo">
-    <form v-on:submit.prevent="login">
-      <h1 >Login</h1>
-      <div role="alert" v-if="invalidCredentials">
-        Invalid username and password!
+    
+    <div id="login">
+      <div id="formCont">
+        <img src="../assets/imgs/Flashr-Logo.png" alt="" id="appLogo" />
+        <form v-on:submit.prevent="login">
+          <h1>Login</h1>
+          <div role="alert" v-if="invalidCredentials">
+            Invalid username and password!
+          </div>
+          <div role="alert" v-if="this.$route.query.registration">
+            Thank you for registering, please sign in.
+          </div>
+          <div class="form-input-group">
+            <!-- <label for="username">Username</label> -->
+            <input
+              type="text"
+              id="username"
+              v-model="user.username"
+              required
+              autofocus
+              placeholder="Username"
+            />
+          </div>
+          <div class="form-input-group">
+            <!-- <label for="password">Password</label> -->
+            <input
+              type="password"
+              id="password"
+              v-model="user.password"
+              required
+              placeholder="Password"
+            />
+          </div>
+          <button class="btn" type="submit">Sign in</button>
+          <button class="btn" type="submit">
+            <router-link
+              style="text-decoration: none; color: inherit"
+              v-bind:to="{ name: 'register' }"
+              >Register</router-link
+            >
+          </button>
+        </form>
       </div>
+      <img
+        src="../assets/imgs/sign-in-logo.png"
+        alt="Study Clip Art"
+        id="signInLogo"
+      />
+    </div>
       <div role="alert" v-if="this.$route.query.registration">
         Thank you for registering, please sign in.
       </div>
-      <div class="form-input-group">
-        <!-- <label for="username">Username</label> -->
+      <!-- <div class="form-input-group">
+        
         <input type="text" id="username" v-model="user.username" required autofocus placeholder="Username"/>
       </div>
       <div class="form-input-group">
-        <!-- <label for="password">Password</label> -->
+        
         <input type="password" id="password" v-model="user.password" required placeholder="Password"/>
       </div>
       <button class="btn" type="submit">Sign in</button>
       <button class="btn" type="submit" >
       <router-link style="text-decoration: none; color: inherit;" v-bind:to="{ name: 'register' }">Register</router-link></button>
-    </form>
+    </form> -->
     
   </div>
-    <img src="../assets/imgs/sign-in-logo.png" alt="Study Clip Art" id="signInLogo">
-
-</div>
-</div>
-  
 </template>
 
 <script>
 import authService from "../services/AuthService";
-import Header from '../components/Header.vue';
+import Header from "../components/Header.vue";
 
 export default {
   components: {
-    Header
+    Header,
   },
   data() {
     return {
       user: {
         username: "",
-        password: ""
+        password: "",
       },
-      invalidCredentials: false
+      invalidCredentials: false,
     };
   },
   methods: {
     login() {
       authService
         .login(this.user)
-        .then(response => {
+        .then((response) => {
           if (response.status == 200) {
             this.$store.commit("SET_AUTH_TOKEN", response.data.token);
             this.$store.commit("SET_USER", response.data.user);
             this.$router.push("/");
           }
         })
-        .catch(error => {
+        .catch((error) => {
           const response = error.response;
 
           if (response.status === 401) {
             this.invalidCredentials = true;
           }
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 @font-face {
-  font-family: 'Writing';
+  font-family: "Writing";
   src: url(../assets/Fonts/LovelexieHandwritten.ttf);
 }
 h1 {
-  font-family: 'Writing';
+  font-family: "Writing";
   font-size: 2vw;
   margin: 1vw;
   padding: 0;
 }
 
 form {
-  
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-items: center;
-  
-  
 }
 label {
   margin-right: 0.5rem;
@@ -110,7 +143,7 @@ label {
   background-color: rgb(107, 91, 250);
   border-radius: 2vw;
   box-shadow: rgb(114, 114, 114) 0px 0px 5px 2px inset;
-  margin: .2vw;
+  margin: 0.2vw;
 }
 
 #appLogo {
@@ -129,24 +162,24 @@ label {
   display: block;
   width: 80%;
   height: 2.5vw;
-  margin-top: .6vw;
+  margin-top: 0.6vw;
   border: none;
   background-color: rgb(65, 65, 253);
-  border-radius: .3vw;
+  border-radius: 0.3vw;
   color: white;
   font-size: 1.5vw;
   text-decoration: none;
-  font-family: 'Writing';
+  font-family: "Writing";
 }
 input {
   font-size: 1.5vw;
-  padding: .5vw;
-  border-radius: .3vw;
+  padding: 0.5vw;
+  border-radius: 0.3vw;
   border: none;
   height: auto;
   width: 18vw;
-  font-family: 'Writing';
-  margin-bottom: .5vw;
+  font-family: "Writing";
+  margin-bottom: 0.5vw;
 }
 
 #loginViewCont {
@@ -156,5 +189,4 @@ input {
   justify-content: center;
   background-image: url(src/assets/imgs/Sign-in-background.png);
 }
-
 </style>
