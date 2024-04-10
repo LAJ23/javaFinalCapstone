@@ -73,11 +73,7 @@ export default {
     };
   },
   components: {
-<<<<<<< HEAD
-    Header,
-=======
     Header
->>>>>>> main
   },
   methods: {
     register() {
