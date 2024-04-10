@@ -18,10 +18,11 @@ export default {
         return http.get(`/card/${id}`)
     },
     addDeck(deck) {
-        return http.past('/deck', deck)
+        return http.post('/deck', deck)
     },
+  
     addCard(card) {
-        return http.get('/card', card)
+        return http.post('/card', card)
     },
     updateDeck(deck) {
         return http.put(`deck/${deck.id}`)

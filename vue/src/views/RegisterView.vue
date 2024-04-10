@@ -1,6 +1,6 @@
 <template>
   <div id="registerViewCont">
-    <Header />
+    
     <div id="register" class="text-center">
       <div id="formCont">
         <img src="../assets/imgs/Flashr-Logo.png" alt="" id="appLogo" />

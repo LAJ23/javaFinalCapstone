@@ -1,6 +1,15 @@
 package com.techelevator.dao;
-import java.util.List;
+
 import com.techelevator.model.Deck;
+import com.techelevator.model.FlashCard;
+
+import java.util.List;
+
+public interface DeckDao {
+    public List<Deck> getAllDecks(int id);
+
+    public List<FlashCard> getAllFlashcards(int id);
+
 
 public interface DeckDao {
     List<Deck> listDecks();
