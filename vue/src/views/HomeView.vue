@@ -1,7 +1,7 @@
 <template>
   <Header />
   <div class="home">
-    <h1>Welcome, {{user}}</h1>
+    <h1>Welcome {{userName}},</h1>
     <h2>What is your goal today?</h2>
     <nav>
       <router-link
@@ -33,34 +33,20 @@
       >
         Create Deck
       </router-link>
-      <router-link
-        class="btn"
-        :to="{ name: 'study' }"
-        style="
-          display: inline-flex;
-          text-decoration: none;
-          align-items: center;
-          justify-content: center;
-          height: 3vw;
-          padding-top: 1vw;
-        "
-      >
+      <router-link class="btn" :to="{ name: 'edit' }" style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;">
         Edit Deck
       </router-link>
     </nav>
     <h2>Recent Decks</h2>
-    <<<<<<< HEAD
     <UserDecks />
-    =======
-    <UserDecks />
-    >>>>>>> main
+
   </div>
 </template>
 
 <script>
 import Header from '../components/Header.vue';
 import UserDecks from '../components/UserDecks.vue';
-import UserService from '../services/UserService'
+import UserService from '../services/UserService';
 
 
 export default {
@@ -70,11 +56,18 @@ export default {
   },
     data() {
       return {
+        username: '',
         newDeck: {},
         newCard: {},
         nextDeckId: 2
       };
     },
+    computed: {
+    userName() {
+      return this.$store.state.user.username; 
+    },
+ 
+  },
     mounted() {
       this.fetchData();
     },
@@ -90,29 +83,21 @@ export default {
         }).catch(error => {
           console.error('Error fetching data:', error);
         });
+
+    }
+  },     
+  goToCreate(){
+        this.$router.push("/create");
        },
-<<<<<<< HEAD
-<<<<<<< HEAD
+
        getNextDeckId(){
           return this.nextDeckId++;
        },
        createDeck(){
-          this.newDeck.id =
+          this.newDeck.id = this.getNextDeckId; },
 
-=======
-       goToCreate(){
-        this.$router.push("/create");
->>>>>>> 38288b2 (create deck method)
-       }
+  }
 
-=======
-       goToCreate(){
-        this.$router.push("/create");
-       }
-
->>>>>>> main
-  },
-}
 </script>
 
 <style scoped>
