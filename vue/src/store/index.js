@@ -6,6 +6,7 @@ export function createStore(currentToken, currentUser) {
     state: {
       token: currentToken || "",
       user: currentUser || {},
+      nextDeckId: 2,
       decks: [
         {
           id: 1,

@@ -1,7 +1,7 @@
 <template>
   <Header />
   <div class="home">
-    <h1>Welcome, {{ user }}</h1>
+    <h1>Welcome {{ userName }},</h1>
     <h2>What is your goal today?</h2>
     <nav>
       <router-link
@@ -49,7 +49,6 @@
       </router-link>
     </nav>
     <h2>Recent Decks</h2>
-
     <UserDecks />
   </div>
 </template>
@@ -72,6 +71,12 @@ export default {
         nextDeckId: 2
       };
     },
+    computed: {
+    userName() {
+      return this.$store.state.user.username;
+    },
+
+  },
     mounted() {
       this.fetchData();
     },
@@ -93,6 +98,7 @@ export default {
           return this.nextDeckId++;
        },
        createDeck(){
+<<<<<<< HEAD
           this.newDeck.id =
        },
 
@@ -102,12 +108,17 @@ export default {
        },
 
 
+=======
+          this.newDeck.id = this.getNextDeckId; },
+
+>>>>>>> main
        goToCreate(){
         this.$router.push("/create");
        },
 
 
   },
+
 }
 </script>
 
