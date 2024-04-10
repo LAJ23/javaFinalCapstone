@@ -1,6 +1,6 @@
 <template>
   <div id="loginViewCont">
-    <Header />
+    
     <div id="login">
       <div id="formCont">
         <img src="../assets/imgs/Flashr-Logo.png" alt="" id="appLogo" />
@@ -52,18 +52,18 @@
       <div role="alert" v-if="this.$route.query.registration">
         Thank you for registering, please sign in.
       </div>
-      <div class="form-input-group">
-        <!-- <label for="username">Username</label> -->
+      <!-- <div class="form-input-group">
+        
         <input type="text" id="username" v-model="user.username" required autofocus placeholder="Username"/>
       </div>
       <div class="form-input-group">
-        <!-- <label for="password">Password</label> -->
+        
         <input type="password" id="password" v-model="user.password" required placeholder="Password"/>
       </div>
       <button class="btn" type="submit">Sign in</button>
       <button class="btn" type="submit" >
       <router-link style="text-decoration: none; color: inherit;" v-bind:to="{ name: 'register' }">Register</router-link></button>
-    </form>
+    </form> -->
     
   </div>
 </template>
