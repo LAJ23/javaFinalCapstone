@@ -39,7 +39,6 @@
     </nav>
     <h2>Recent Decks</h2>
     <UserDecks />
-
   </div>
 </template>
 
@@ -97,6 +96,7 @@ export default {
           this.newDeck.id = this.getNextDeckId; },
 
   }
+
 
 </script>
 
