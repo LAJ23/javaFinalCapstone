@@ -54,73 +54,59 @@
 </template>
 
 <script>
-import Header from '../components/Header.vue';
-import UserDecks from '../components/UserDecks.vue';
-import UserService from '../services/UserService'
-
+import Header from "../components/Header.vue";
+import UserDecks from "../components/UserDecks.vue";
+import UserService from "../services/UserService";
 
 export default {
   components: {
     Header,
     UserDecks,
   },
-    data() {
-      return {
-        newDeck: {},
-        newCard: {},
-        nextDeckId: 2
-      };
-    },
-    computed: {
+  data() {
+    return {
+      newDeck: {},
+      newCard: {},
+      nextDeckId: 2,
+    };
+  },
+  computed: {
     userName() {
       return this.$store.state.user.username;
     },
-
   },
-    mounted() {
-      this.fetchData();
-    },
-    methods: {
-      fetchData() {
-      fetch('/api/data').then(response => {
+  mounted() {
+    this.fetchData();
+  },
+  methods: {
+    fetchData() {
+      fetch("/api/data")
+        .then((response) => {
           if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error("Network response was not ok");
           }
           return response.json();
-        }).then(data => {
+        })
+        .then((data) => {
           this.data = data;
-        }).catch(error => {
-          console.error('Error fetching data:', error);
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
         });
-       },
+    },
 
-       getNextDeckId(){
-          return this.nextDeckId++;
-       },
-       createDeck(){
-<<<<<<< HEAD
-          this.newDeck.id =
-       },
+    getNextDeckId() {
+      return this.nextDeckId++;
+    },
+    createDeck() {
+      this.newDeck.id = this.getNextDeckId;
+    },
 
-       goToCreate(){
-        this.$router.push("/create");
-
-       },
-
-
-=======
-          this.newDeck.id = this.getNextDeckId; },
-
->>>>>>> main
-       goToCreate(){
-        this.$router.push("/create");
-       },
-
-
+    goToCreate() {
+      this.$router.push("/create");
+    },
   },
-
-}
-
+};
 </script>
 
 <style scoped>
