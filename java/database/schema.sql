@@ -9,7 +9,6 @@ CREATE TABLE users (
 	role varchar(50) NOT NULL,
 	CONSTRAINT PK_user PRIMARY KEY (user_id)
 );
-
 CREATE TABLE deck (
 	deck_id SERIAL,
  	name varchar(50) NOT NULL,

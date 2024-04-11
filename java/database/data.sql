@@ -65,7 +65,7 @@ VALUES ('3', 'When was the USA founded?', 'July 4, 1776');
 
 
 INSERT INTO deck (name, color, creator_id)
-VALUES ('authors', '4', 2);
+VALUES ('authors', '4', 2); 
 
 INSERT INTO flashcard (deck_id, question, answer)
 VALUES ('4', 'Who wrote the book title "1984"?', 'George Orwell');

@@ -49,7 +49,6 @@ public class FlashCardController  {
             return ResponseEntity.badRequest().body("Failed to update flashcard.");
         }
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteFlashcard(@PathVariable("id") int id) {
         boolean isDeleted = deckDao.deleteFlashcard(id);
