@@ -43,7 +43,6 @@
       getNextDeckId(){
           return this.nextDeckId++;
        },
-<<<<<<< HEAD
        createDeck() {
     // Assuming authService is a service that communicates with your backend
     FlashcardService.addDeck(this.newDeck)
@@ -57,12 +56,6 @@
         // Handle error (e.g., show an error message to the user)
       });
   }
-=======
-      createDeck(){
-          this.$store.commit('ADD_DECK', this.newDeck);
-          this.$router.push('/edit');
-       }
->>>>>>> main
     }
   };
   </script>
