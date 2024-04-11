@@ -5,18 +5,15 @@ const http = axios.create({
 });
 
 export default {
-    getDeck(id) {
-        return http.get(`/decks/${id}`); 
-      },
-
-
-
     deck() {
         return http.get('/deck');
     },
     card() {
         return http.get('/card')
     },
+    getDecks(id) {
+        return http.get(`/decks/${id}`); 
+      },
     getCard(id) {
         return http.get(`/card/${id}`)
     },
