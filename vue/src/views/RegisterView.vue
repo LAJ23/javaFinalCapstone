@@ -57,7 +57,7 @@
 
 <script>
 import authService from "../services/AuthService";
-import Header from "../components/Header.vue";
+
 
 export default {
   data() {
@@ -73,7 +73,7 @@ export default {
     };
   },
   components: {
-    Header,
+   
   },
   methods: {
     register() {
