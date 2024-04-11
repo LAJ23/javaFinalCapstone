@@ -43,11 +43,11 @@ public class FlashCard {
       this.answer = answer;
     }
 
-    public int getDeck_id() {
+    public int getDeckId() {
     return deck_id;
     }
 
-    public void setDeck_id(int deck_id) {
+    public void setDeckId(int deckId) {
     this.deck_id = deck_id;
     }
 }

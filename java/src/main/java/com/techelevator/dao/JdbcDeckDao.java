@@ -5,6 +5,10 @@ import com.techelevator.model.FlashCard;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -47,6 +51,58 @@ public class JdbcDeckDao implements DeckDao {
         return flashCards;
     }
 
+    @Override
+    public boolean updateFlashcard(int cardId, String question, String answer) {
+        String sql = "UPDATE flashcard SET question = ?, answer = ? WHERE card_id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, question, answer, cardId);
+        return rowsAffected > 0;
+    }
+
+    @Override
+    public boolean deleteFlashcard(int Id) {
+        String sql = "DELETE FROM flashcard WHERE card_id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, Id);
+        return rowsAffected > 0;
+    }
+
+    @Override
+    public void addFlashcard(int deckId, String question, String answer) {
+        String sql = "INSERT INTO flashcard (deck_id, question, answer) VALUES (?, ?, ?)";
+            jdbcTemplate.update(sql, deckId, question, answer);
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteDeck(int deckId) {
+        String sql = "DELETE FROM flashcard WHERE deck_id = ?";
+        jdbcTemplate.update(sql, deckId);
+        String deleteDeckSql = "DELETE FROM deck WHERE deck_id = ?";
+        int rowsAffected = jdbcTemplate.update(deleteDeckSql, deckId);
+
+        return rowsAffected > 0;
+    }
+
+    public boolean updateDeck(int deckId, int color, String name) {
+        String sql = "UPDATE deck SET color = ?, name = ? WHERE deck_id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, color, name, deckId);
+        return rowsAffected > 0;
+    }
+
+    @Override
+    public void addDeck(String name, int color) {
+        String sql = "INSERT INTO deck (name, color) VALUES (?, ?)";
+            jdbcTemplate.update(sql, name, color);
+    }
+
+
+
+
+
+
+
+
+
+
     private Deck mapRowToDeck(SqlRowSet rowset) {
         Deck deck = new Deck();
         deck.setColor(rowset.getInt("color"));
@@ -62,7 +118,7 @@ public class JdbcDeckDao implements DeckDao {
         flashCard.setAnswer(rowset.getString("answer"));
         flashCard.setCardId(rowset.getInt("card_id"));
         flashCard.setQuestion(rowset.getString("question"));
-        flashCard.setDeckId(rowset.getInt("deck_id"));
+        flashCard.setDeck_id(rowset.getInt("deck_id"));
 
         return flashCard;
     }
