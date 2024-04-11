@@ -12,8 +12,8 @@ export default {
         return http.get('/card')
     },
     getDecks(id) {
-        return http.get(`/decks/${id}`); 
-      },
+        return http.get(`/decks/${id}`)
+    },
     getCard(id) {
         return http.get(`/card/${id}`)
     },
