@@ -47,7 +47,6 @@ public class FlashCardController  {
             return ResponseEntity.badRequest().body("Failed to update flashcard.");
         }
     }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteFlashcard(@PathVariable("id") int id) {
         boolean isDeleted = deckDao.deleteFlashcard(id);
@@ -88,7 +87,7 @@ public class FlashCardController  {
 
     @PostMapping
     public ResponseEntity<Void> addFlashcard(@RequestBody FlashCard flashCard) {
-        deckDao.addFlashcard(flashCard.getDeck_id(), flashCard.getQuestion(), flashCard.getAnswer());
+        deckDao.addFlashcard(flashCard.getDeckId(), flashCard.getQuestion(), flashCard.getAnswer());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     }
