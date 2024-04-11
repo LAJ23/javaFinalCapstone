@@ -2,34 +2,38 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Deck;
 import com.techelevator.model.FlashCard;
+
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcDeckDao implements DeckDao {
-    private static JdbcTemplate jdbcTemplate;
+    private  JdbcTemplate jdbcTemplate;
 
-    public void DeckDao(DataSource dataSource) {
+    public JdbcDeckDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    public void DeckDao() {
+    // public void DeckDao() {
 
-    }
+    // } // I dont believe this is needed, so I commented it out for now. 
 
     @Override
     public List<Deck> getAllDecks(int id) {
-        List<Deck> Decks = new ArrayList<>();
-        String sql = "SELECT * FROM deck WHERE user id = ? || user id = 2";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        List<Deck> decks = new ArrayList<>();
+        String sql = "SELECT * FROM deck WHERE user_id = ? OR user_id = 2";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
         while (results.next()) {
             Deck deck = mapRowToDeck(results);
-            Decks.add(deck);
+            decks.add(deck);
         }
-        return Decks;
+        return decks;
 
     }
 
@@ -37,7 +41,7 @@ public class JdbcDeckDao implements DeckDao {
     public List<FlashCard> getAllFlashcards(int id) {
         List<FlashCard> flashCards = new ArrayList<>();
         String sql = "SELECT * FROM flashcard WHERE deck_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
         while (results.next()) {
             FlashCard flashCard = mapRowToFlash(results);
             flashCards.add(flashCard);
@@ -45,7 +49,57 @@ public class JdbcDeckDao implements DeckDao {
         }
         return flashCards;
     }
+    @Override
+    public boolean updateFlashcard(int cardId, String question, String answer) {
+        String sql = "UPDATE flashcard SET question = ?, answer = ? WHERE card_id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, question, answer, cardId);
+        return rowsAffected > 0;
+    }
 
+
+    @Override
+    public boolean deleteFlashcard(int Id) {
+        String sql = "DELETE FROM flashcard WHERE card_id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, Id);
+        return rowsAffected > 0;
+    }
+
+
+    @Override
+    public void addFlashcard(int deckId, String question, String answer) {
+    String sql = "INSERT INTO flashcard (deck_id, question, answer) VALUES (?, ?, ?)";
+    try {
+        jdbcTemplate.update(sql, deckId, question, answer);
+    } catch (DataAccessException e) {
+        throw new EmptyResultDataAccessException("Failed to insert flashcard into the database.", 1);
+    }
+}
+     @Override
+    @Transactional
+public boolean deleteDeck(int deckId) {
+    String sql = "DELETE FROM flashcard WHERE deck_id = ?";
+    jdbcTemplate.update(sql, deckId);
+    String deleteDeckSql = "DELETE FROM deck WHERE deck_id = ?";
+    int rowsAffected = jdbcTemplate.update(deleteDeckSql, deckId);
+
+    return rowsAffected > 0;
+}
+
+public boolean updateDeck(int deckId, int color, String name) {
+    String sql = "UPDATE deck SET color = ?, name = ? WHERE deck_id = ?";
+    int rowsAffected = jdbcTemplate.update(sql, color, name, deckId);
+    return rowsAffected > 0;
+}
+@Override
+public void addDeck(String name, int color) {
+    String sql = "INSERT INTO deck (name, color) VALUES (?, ?)";
+
+    try {
+        jdbcTemplate.update(sql, name, color);
+    } catch (DataAccessException e) {
+        throw new EmptyResultDataAccessException("Failed to insert deck into the database.", 1);
+    }
+}
     private Deck mapRowToDeck(SqlRowSet rowset) {
         Deck deck = new Deck();
         deck.setColor(rowset.getInt("color"));
