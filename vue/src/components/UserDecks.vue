@@ -1,27 +1,43 @@
 <template>
-    <div class="deck-icon">
-           <DeckIcon />
-           <DeckIcon />
-           <DeckIcon />
-      
-    </div>
+  <div id="iconCont">
+    <DeckIcon
+      v-for="deck in decks"
+      :key="deck.deckId"
+      :name="deck.deckName"
+      :highScore="deck.highScore"
+      :color="deck.color"
+    />
+  </div>
+</template>
 
-  </template>
-  
-  <script>
-  
-  import DeckIcon from './DeckIcon.vue';
-  
-  export default {
-    data() {
-      return {
-      };
+<script>
+import DeckIcon from './DeckIcon.vue'; // Adjust the path as necessary
+import FlashcardService from '../services/FlashcardService';
+
+export default {
+  data() {
+    return {
+      decks: [],
+    };
+  },
+  created() {
+    this.fetchDecks();
+  },
+  methods: {
+    async fetchDecks() {
+      try {
+        const response = await FlashcardService.getDeck(this.$store.state.user.id);
+        this.decks = response.data; // Adjust according to how your data is returned
+      } catch (error) {
+        console.error('Error fetching decks:', error);
+      }
     },
-    components:{
-        DeckIcon,
-    }
-  };
-  </script>
+  },
+  components: {
+    DeckIcon,
+  },
+};
+</script>
   
   <style scoped>
   @font-face {

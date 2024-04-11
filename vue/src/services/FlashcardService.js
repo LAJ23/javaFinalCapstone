@@ -1,18 +1,21 @@
 import axios from 'axios';
 
 const http = axios.create({
-  baseURL: "http://localhost:3000"
+  baseURL: "http://localhost:9000"
 });
 
 export default {
+    getDeck(id) {
+        return http.get(`/decks/${id}`); 
+      },
+
+
+
     deck() {
         return http.get('/deck');
     },
     card() {
         return http.get('/card')
-    },
-    getDeck(id) {
-        return http.get(`/deck/${id}`)
     },
     getCard(id) {
         return http.get(`/card/${id}`)
