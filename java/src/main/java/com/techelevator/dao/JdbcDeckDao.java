@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,10 +28,11 @@ public class JdbcDeckDao implements DeckDao {
     }
 
     @Override
+    @CrossOrigin
     public List<Deck> getAllDecks(int id) {
         List<Deck> decks = new ArrayList<>();
-        String sql = "SELECT * FROM deck WHERE creator_id = ? OR creator_id = 2";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id); // Pass the id as parameter
+        String sql = "SELECT * FROM deck WHERE creator_id = 2";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql); // Pass the id as parameter
         while (results.next()) {
             Deck deck = mapRowToDeck(results);
             decks.add(deck);

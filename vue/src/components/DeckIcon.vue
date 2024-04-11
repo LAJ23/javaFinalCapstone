@@ -1,31 +1,43 @@
-<template>      <div id="iconCont">
-                <router-link  style="text-decoration: none;  ;padding: 0;" :to="{ name: 'session' }"> 
-            <div class="deckIconCont">
-                <div class="iconText greenBK">
-                    <h3>{{name}}</h3>
-                    <p>High Score: 69%</p>
-                </div>
-                <img :src="deckImage" alt="" class="deck-image">
-            </div>
-   </router-link>
-  </div> 
+<template>
+  <div id="iconCont">
+    <router-link style="text-decoration: none; padding: 0;" :to="{ name: 'session' }">
+      <div class="deckIconCont">
+        <div :class="['iconText', colorClass]">
+          <h3>{{ name }}</h3>
+          <p>{{ highScore }}</p>
+        </div>
+        <img :src="deckImage" alt="" class="deck-image">
+      </div>
+    </router-link>
+  </div>
+</template>
 
+<script>
+import deckImage from '../assets/imgs/deck-image.png';
 
-  </template>
-  
-  <script>
-  import deckImage from '../assets/imgs/deck-image.png';
-  import FlashcardService from '../services/FlashcardService';
-  
-  export default {
-    data() {
-      return {
-        deckImage,
-        FlashcardService,
-      };
+export default {
+  props: ['name', 'highScore', 'color'],
+  data() {
+    return {
+      deckImage,
+    };
+  },
+  computed: {
+    colorClass() {
+      // Example of dynamic class based on color prop
+      switch (this.color) {
+        case 1: return 'rednBK';
+        case 2: return 'orangeBK'; 
+        case 3: return 'yellowBK'; 
+        case 4: return 'greenBK'; 
+        case 5: return 'whiteBK';   
+        
+        default: return '';
+      }
     },
-  };
-  </script>
+  },
+};
+</script>
   
   <style scoped>
   @font-face {
@@ -37,6 +49,22 @@
   }
 #iconCont {
   width: 20vw;
+}
+
+.whiteBK {
+  background-color: rgb(255, 255, 255);
+}
+.greenBK {
+  background-color: rgb(99, 255, 99);
+}
+.redBK {
+  background-color: rgb(255, 99, 99);
+}
+.orangeBK {
+  background-color: rgb(255, 200, 99);
+}
+.yellowBK {
+  background-color: rgb(245, 255, 99);
 }
 
 .deck-image {
@@ -61,7 +89,7 @@
     border-radius: .5vw;
     bottom: 1.3vw;
     right: 1vw;
-    background-color: blue;
+   
     color: black;   
 }
 
