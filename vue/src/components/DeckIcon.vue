@@ -1,40 +1,42 @@
-<template>      <div id="iconCont">
-                <router-link  style="text-decoration: none;  ;padding: 0;" :to="{ name: 'session' }"> 
-            <div class="deckIconCont">
-                <div class="iconText greenBK">
-                    <h3>{{name}}</h3>
-                    <p>High Score: 69%</p>
-                </div>
-                <img :src="deckImage" alt="" class="deck-image">
-            </div>
-   </router-link>
-  </div> 
+<template>
+  <div id="iconCont">
+    <router-link
+      style="text-decoration: none; padding: 0"
+      :to="{ name: 'session' }"
+    >
+      <div class="deckIconCont">
+        <div class="iconText greenBK">
+          <h3>{{ name }}</h3>
+          <p>High Score: 69%</p>
+        </div>
+        <img :src="deckImage" alt="" class="deck-image" />
+      </div>
+    </router-link>
+  </div>
+</template>
 
+<script>
+import deckImage from "../assets/imgs/deck-image.png";
+import FlashcardService from "../services/FlashcardService";
 
-  </template>
-  
-  <script>
-  import deckImage from '../assets/imgs/deck-image.png';
-  import FlashcardService from '../services/FlashcardService';
-  
-  export default {
-    data() {
-      return {
-        deckImage,
-        FlashcardService,
-      };
-    },
-  };
-  </script>
-  
-  <style scoped>
-  @font-face {
-    font-family: 'Writing';
-    src: url(../assets/Fonts/LovelexieHandwritten.ttf);
-  }
-  * {
-    width: 100%;
-  }
+export default {
+  data() {
+    return {
+      deckImage,
+      FlashcardService,
+    };
+  },
+};
+</script>
+
+<style scoped>
+@font-face {
+  font-family: "Writing";
+  src: url(../assets/Fonts/LovelexieHandwritten.ttf);
+}
+* {
+  width: 100%;
+}
 #iconCont {
   width: 20vw;
 }
@@ -43,35 +45,30 @@
   width: 20vw;
 }
 .deckIconCont {
-    position: relative;
-    
-    
+  position: relative;
 }
 
-
-
 .iconText {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    justify-content: center;
-    height: 12vw;
-    width: 16.5vw;
-    border-radius: .5vw;
-    bottom: 1.3vw;
-    right: 1vw;
-    background-color: blue;
-    color: black;   
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  height: 12vw;
+  width: 16.5vw;
+  border-radius: 0.5vw;
+  bottom: 1.3vw;
+  right: 1vw;
+  background-color: blue;
+  color: black;
 }
 
 h3 {
-    font-size: 3vw;
-    margin-bottom: 2vw;
+  font-size: 3vw;
+  margin-bottom: 2vw;
 }
 
 p {
-    font-size: 1.8vw;
+  font-size: 1.8vw;
 }
 </style>
-  
