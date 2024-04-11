@@ -21,7 +21,7 @@ public class FlashCardController  {
         this.deckDao = deckDao;
     }
 
-    @RequestMapping(path = "Decks/{id}", method = RequestMethod.GET)
+    @RequestMapping(path = "/decks/{id}", method = RequestMethod.GET)
     public List<Deck> getAllDecks(@PathVariable int id) {
         List<Deck> decks = deckDao.getAllDecks(id);
         return decks;
@@ -47,6 +47,7 @@ public class FlashCardController  {
             return ResponseEntity.badRequest().body("Failed to update flashcard.");
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteFlashcard(@PathVariable("id") int id) {
         boolean isDeleted = deckDao.deleteFlashcard(id);
@@ -59,9 +60,38 @@ public class FlashCardController  {
 
     @RequestMapping(path = "/adddeck", method = RequestMethod.POST)
     public String addDeck(@RequestBody Deck deck) {
-        String results = deckDao.addDeck(deck.getDeckName(), deck.getColor());
-        return results;
+       deckDao.addDeck(deck.getDeckName(), deck.getColor());
+        return "Deck Added";
     }
-}
+
+        @PutMapping("/{deckId}")
+        public ResponseEntity<?> updateDeck(@PathVariable("deckId") int deckId,
+                                            @RequestParam("color") int color,
+                                            @RequestParam("name") String name) {
+            boolean isUpdated = deckDao.updateDeck(deckId, color, name);
+            if (isUpdated) {
+                return new ResponseEntity<>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+
+    @DeleteMapping("/{deckId}")
+    public ResponseEntity<?> deleteDeck(@PathVariable("deckId") int deckId) {
+        boolean isDeleted = deckDao.deleteDeck(deckId);
+        if (isDeleted) {
+            return ResponseEntity.ok().build(); // Successfully deleted
+        } else {
+            return ResponseEntity.notFound().build(); // Deck not found
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Void> addFlashcard(@RequestBody FlashCard flashCard) {
+        deckDao.addFlashcard(flashCard.getDeck_id(), flashCard.getQuestion(), flashCard.getAnswer());
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    }
+
 
 

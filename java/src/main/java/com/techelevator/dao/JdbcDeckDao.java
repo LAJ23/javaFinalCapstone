@@ -2,8 +2,6 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Deck;
 import com.techelevator.model.FlashCard;
-import org.springframework.dao.DataAccessException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -70,11 +68,7 @@ public class JdbcDeckDao implements DeckDao {
     @Override
     public void addFlashcard(int deckId, String question, String answer) {
         String sql = "INSERT INTO flashcard (deck_id, question, answer) VALUES (?, ?, ?)";
-        try {
             jdbcTemplate.update(sql, deckId, question, answer);
-        } catch (DataAccessException e) {
-            throw new EmptyResultDataAccessException("Failed to insert flashcard into the database.", 1);
-        }
     }
 
     @Override
@@ -97,8 +91,10 @@ public class JdbcDeckDao implements DeckDao {
     @Override
     public void addDeck(String name, int color) {
         String sql = "INSERT INTO deck (name, color) VALUES (?, ?)";
-        jdbcTemplate.update(sql, name, color);
+            jdbcTemplate.update(sql, name, color);
     }
+
+
 
 
 
@@ -122,7 +118,7 @@ public class JdbcDeckDao implements DeckDao {
         flashCard.setAnswer(rowset.getString("answer"));
         flashCard.setCardId(rowset.getInt("card_id"));
         flashCard.setQuestion(rowset.getString("question"));
-        flashCard.setDeckId(rowset.getInt("deck_id"));
+        flashCard.setDeck_id(rowset.getInt("deck_id"));
 
         return flashCard;
     }
