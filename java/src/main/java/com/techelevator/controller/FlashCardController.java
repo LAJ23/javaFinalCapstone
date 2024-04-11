@@ -4,6 +4,7 @@ import com.techelevator.dao.JdbcDeckDao;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
         import com.techelevator.model.*;
 
 import java.util.List;
+//@PreAuthorize("isAuthenticated()")
 
 @RestController
 @CrossOrigin
@@ -88,7 +90,7 @@ public class FlashCardController  {
 
     @PostMapping
     public ResponseEntity<Void> addFlashcard(@RequestBody FlashCard flashCard) {
-        deckDao.addFlashcard(flashCard.getDeck_id(), flashCard.getQuestion(), flashCard.getAnswer());
+        deckDao.addFlashcard(flashCard.getDeckId(), flashCard.getQuestion(), flashCard.getAnswer());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     }

@@ -4,7 +4,7 @@ INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULi
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
 INSERT INTO deck (name, color, creator_id)
-VALUES ('java', '1', user_id FROM users where username = 'admin');
+VALUES ('java', '1', 2);
 
 INSERT INTO flashcard (deck_id, question, answer)
 VALUES ('1','What is a variable? Give an example', 'Variables are containers for storing data values. An example is a boolean variable named isAwake, whose value can be either true or false');
@@ -28,7 +28,7 @@ INSERT INTO flashcard (deck_id, question, answer)
 VALUES ('1','What is an Interface, and why would you use one?','An Interface defines a contract for classes. It outlines specific methods or properties a class must implement. You use interfaces to enforce certain behaviors across different classes. This enables loose coupling, making your code more modular, adaptable, and testable.');
 
 INSERT INTO deck (name, color, creator_id)
-VALUES ('elementary', '2', user_id FROM users where username = 'admin');
+VALUES ('elementary', '2', 2);
 
 INSERT INTO flashcard (deck_id, question, answer)
 VALUES ('2', 'How many States are in the United States?', '50');
@@ -46,7 +46,7 @@ INSERT INTO flashcard (deck_id, question, answer)
 VALUES ('2', 'How many permanently inhabited territories (not states) are part of the United States?', '5');
 
 INSERT INTO deck (name, color, creator_id)
-VALUES ('highschool', '3', user_id FROM users where username = 'admin');
+VALUES ('highschool', '3', 2);
 
 INSERT INTO flashcard (deck_id, question, answer)
 VALUES ('3', 'How do we refer to the first ten amendments of the constitution?', 'The Bill of Rights');
@@ -65,7 +65,7 @@ VALUES ('3', 'When was the USA founded?', 'July 4, 1776');
 
 
 INSERT INTO deck (name, color, creator_id)
-VALUES ('authors', '4', user_id FROM users where username = 'admin'); 
+VALUES ('authors', '4', 2);
 
 INSERT INTO flashcard (deck_id, question, answer)
 VALUES ('4', 'Who wrote the book title "1984"?', 'George Orwell');
