@@ -1,6 +1,6 @@
 package com.techelevator.Service;
 
-import com.techelevator.model.Flashcard;
+import com.techelevator.model.FlashCard;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -22,11 +22,11 @@ public class FlashcardService {
     /**
      *Gets a list of all the flash cards
      */
-    public Flashcard[] listFlashcards() {
-        Flashcard[] getFlashd = null;
+    public FlashCard[] listFlashcards() {
+        FlashCard[] getFlashd = null;
         try {
-            ResponseEntity<Flashcard[]> response = restTemplate.exchange(API_BASE_URL + "", HttpMethod.GET,
-                    makeAuthEntity(), Flashcard[].class);
+            ResponseEntity<FlashCard[]> response = restTemplate.exchange(API_BASE_URL + "", HttpMethod.GET,
+                    makeAuthEntity(), FlashCard[].class);
             getFlashd = response.getBody();
         } catch (RestClientResponseException | ResourceAccessException e) {
             System.out.println("Can't find Flashcards");
@@ -36,11 +36,11 @@ public class FlashcardService {
     /**
      *Gets a singular card from its ID
      */
-    public Flashcard getCard(int cardId) {
-        Flashcard card = null;
+    public FlashCard getCard(int cardId) {
+        FlashCard card = null;
         try {
-            ResponseEntity<Flashcard> response =
-                    restTemplate.exchange(API_BASE_URL + "" + cardId, HttpMethod.GET, makeAuthEntity(), Flashcard.class);
+            ResponseEntity<FlashCard> response =
+                    restTemplate.exchange(API_BASE_URL + "" + cardId, HttpMethod.GET, makeAuthEntity(), FlashCard.class);
             card = response.getBody();
         } catch (RestClientResponseException | ResourceAccessException e) {
             System.out.println("Can't find that specific card");
@@ -52,11 +52,11 @@ public class FlashcardService {
     /**
      *Gets a list of all the decks
      */
-    public Flashcard[] listDecks() {
-        Flashcard[] getDeckd = null;
+    public FlashCard[] listDecks() {
+        FlashCard[] getDeckd = null;
         try {
-            ResponseEntity<Flashcard[]> response = restTemplate.exchange(API_BASE_URL + "", HttpMethod.GET,
-                    makeAuthEntity(), Flashcard[].class);
+            ResponseEntity<FlashCard[]> response = restTemplate.exchange(API_BASE_URL + "", HttpMethod.GET,
+                    makeAuthEntity(), FlashCard[].class);
             getDeckd = response.getBody();
         } catch (RestClientResponseException | ResourceAccessException e) {
             System.out.println("Can't find Decks");
@@ -66,11 +66,11 @@ public class FlashcardService {
     /**
      *Gets a singular deck from its ID
      */
-    public Flashcard getDeck(int deckId) {
-        Flashcard deck = null;
+    public FlashCard getDeck(int deckId) {
+        FlashCard deck = null;
         try {
-            ResponseEntity<Flashcard> response =
-                    restTemplate.exchange(API_BASE_URL + "" + deckId, HttpMethod.GET, makeAuthEntity(), Flashcard.class);
+            ResponseEntity<FlashCard> response =
+                    restTemplate.exchange(API_BASE_URL + "" + deckId, HttpMethod.GET, makeAuthEntity(), FlashCard.class);
             deck = response.getBody();
         } catch (RestClientResponseException | ResourceAccessException e) {
             System.out.println("Can't find that deck");
