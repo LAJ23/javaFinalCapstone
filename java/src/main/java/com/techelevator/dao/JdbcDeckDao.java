@@ -4,15 +4,17 @@ import com.techelevator.model.Deck;
 import com.techelevator.model.FlashCard;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class JdbcDeckDao implements DeckDao {
-    private static JdbcTemplate jdbcTemplate;
+    private JdbcTemplate jdbcTemplate;
 
-    public void DeckDao(DataSource dataSource) {
+    public JdbcDeckDao(DataSource dataSource) {
         this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
@@ -22,22 +24,21 @@ public class JdbcDeckDao implements DeckDao {
 
     @Override
     public List<Deck> getAllDecks(int id) {
-        List<Deck> Decks = new ArrayList<>();
-        String sql = "SELECT * FROM deck WHERE user id = ? || user id = 2";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        List<Deck> decks = new ArrayList<>();
+        String sql = "SELECT * FROM deck WHERE creator_id = ? OR creator_id = 2";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id); // Pass the id as parameter
         while (results.next()) {
             Deck deck = mapRowToDeck(results);
-            Decks.add(deck);
+            decks.add(deck);
         }
-        return Decks;
-
+        return decks;
     }
 
     @Override
     public List<FlashCard> getAllFlashcards(int id) {
         List<FlashCard> flashCards = new ArrayList<>();
         String sql = "SELECT * FROM flashcard WHERE deck_id = ?";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
         while (results.next()) {
             FlashCard flashCard = mapRowToFlash(results);
             flashCards.add(flashCard);
