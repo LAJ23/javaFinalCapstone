@@ -26,7 +26,7 @@ export default {
   methods: {
     async fetchDecks() {
       try {
-        const response = await FlashcardService.getDeck(this.$store.state.user.id);
+        const response = await FlashcardService.getDecks(this.$store.state.user.id);
         this.decks = response.data; // Adjust according to how your data is returned
       } catch (error) {
         console.error('Error fetching decks:', error);
