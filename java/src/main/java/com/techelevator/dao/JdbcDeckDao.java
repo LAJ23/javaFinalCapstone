@@ -2,6 +2,8 @@ package com.techelevator.dao;
 
 import com.techelevator.model.Deck;
 import com.techelevator.model.FlashCard;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -93,16 +95,9 @@ public class JdbcDeckDao implements DeckDao {
     }
 
     @Override
-    public String addDeck(String name, int color) {
+    public void addDeck(String name, int color) {
         String sql = "INSERT INTO deck (name, color) VALUES (?, ?)";
-        String result = "Deck Added";
-
-        try {
-            jdbcTemplate.update(sql, name, color);
-        } catch (DataAccessException e) {
-            throw new EmptyResultDataAccessException("Failed to insert deck into the database.", 1);
-        }
-        return result;
+        jdbcTemplate.update(sql, name, color);
     }
 
 
