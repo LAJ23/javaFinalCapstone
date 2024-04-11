@@ -68,11 +68,7 @@ public class JdbcDeckDao implements DeckDao {
     @Override
     public void addFlashcard(int deckId, String question, String answer) {
         String sql = "INSERT INTO flashcard (deck_id, question, answer) VALUES (?, ?, ?)";
-        try {
             jdbcTemplate.update(sql, deckId, question, answer);
-        } catch (DataAccessException e) {
-            throw new EmptyResultDataAccessException("Failed to insert flashcard into the database.", 1);
-        }
     }
 
     @Override
@@ -93,17 +89,12 @@ public class JdbcDeckDao implements DeckDao {
     }
 
     @Override
-    public String addDeck(String name, int color) {
+    public void addDeck(String name, int color) {
         String sql = "INSERT INTO deck (name, color) VALUES (?, ?)";
-        String result = "Deck Added";
-
-        try {
             jdbcTemplate.update(sql, name, color);
-        } catch (DataAccessException e) {
-            throw new EmptyResultDataAccessException("Failed to insert deck into the database.", 1);
-        }
-        return result;
     }
+
+
 
 
 
@@ -127,7 +118,7 @@ public class JdbcDeckDao implements DeckDao {
         flashCard.setAnswer(rowset.getString("answer"));
         flashCard.setCardId(rowset.getInt("card_id"));
         flashCard.setQuestion(rowset.getString("question"));
-        flashCard.setDeckId(rowset.getInt("deck_id"));
+        flashCard.setDeck_id(rowset.getInt("deck_id"));
 
         return flashCard;
     }
