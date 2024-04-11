@@ -1,15 +1,27 @@
 package com.techelevator.dao;
-import java.util.List;
+
 import com.techelevator.model.Deck;
+import com.techelevator.model.FlashCard;
+
+import java.util.List;
 
 public interface DeckDao {
-    List<Deck> listDecks();
+    public List<Deck> getAllDecks(int id);
 
-    Deck getDeckById(int deck_id);
+    public List<FlashCard> getAllFlashcards(int id);
 
-    Deck createDeck(Deck deck);
-    Deck updateDeck(int deck_id);
-    Deck deleteDeck(int deck_id);
+    public boolean deleteFlashcard(int id);
 
+    public boolean updateFlashcard(int cardId, String question, String answer);
 
+    public void addFlashcard(int deckId, String question, String answer);
+
+    public boolean deleteDeck(int deckId);
+
+    public void addDeck(String name, int color);
+
+    public boolean updateDeck(int deckId, int color, String name);
 }
+
+
+

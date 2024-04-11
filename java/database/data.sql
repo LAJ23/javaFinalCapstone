@@ -4,7 +4,7 @@ INSERT INTO users (username,password_hash,role) VALUES ('user','$2a$08$UkVvwpULi
 INSERT INTO users (username,password_hash,role) VALUES ('admin','$2a$08$UkVvwpULis18S19S5pZFn.YHPZt3oaqHZnDwqbCW9pft6uFtkXKDC','ROLE_ADMIN');
 
 INSERT INTO deck (name, color, creator_id)
-VALUES ('Java', '1', user_id FROM users where username = 'admin');
+VALUES ('java', '1', user_id FROM users where username = 'admin');
 
 INSERT INTO flashcard (deck_id, question, answer)
 VALUES ('1','What is a variable? Give an example', 'Variables are containers for storing data values. An example is a boolean variable named isAwake, whose value can be either true or false');
@@ -27,6 +27,62 @@ VALUES ('1','What is Polymorphism?','Polymorphism, a concept in object-oriented 
 INSERT INTO flashcard (deck_id, question, answer)
 VALUES ('1','What is an Interface, and why would you use one?','An Interface defines a contract for classes. It outlines specific methods or properties a class must implement. You use interfaces to enforce certain behaviors across different classes. This enables loose coupling, making your code more modular, adaptable, and testable.');
 
-COMMIT TRANSACTION;
+INSERT INTO deck (name, color, creator_id)
+VALUES ('elementary', '2', user_id FROM users where username = 'admin');
 
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('2', 'How many States are in the United States?', '50');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('2', 'What is the biggest State in the United States?', 'ALASKA');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('2', 'What is the smallest State in the United States?', 'Rhode Island');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('2', 'What is the Capital of the United States?', 'Washington D.C.');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('2', 'How many permanently inhabited territories (not states) are part of the United States?', '5');
+
+INSERT INTO deck (name, color, creator_id)
+VALUES ('highschool', '3', user_id FROM users where username = 'admin');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('3', 'How do we refer to the first ten amendments of the constitution?', 'The Bill of Rights');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('3', 'What are the three branches of Government?', 'Executive, Legislative, Judicial');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('3', 'What is the smallest State in the United States?', 'Rhode Island');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('3', 'Who was the second President of the United States?', 'John Adams');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('3', 'When was the USA founded?', 'July 4, 1776');
+
+
+INSERT INTO deck (name, color, creator_id)
+VALUES ('authors', '4', user_id FROM users where username = 'admin'); 
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('4', 'Who wrote the book title "1984"?', 'George Orwell');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('4', 'What book opens with the line "It was the best of times, it was the worst of times, it was the age of wisdom, it was the age of foolishness..."', 'A Tale of Two Cities');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('4', 'How many novels has author Stephen King published?', '65 Novels');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('4', 'Who is the main character in The Odyssey?', 'Odysseus');
+
+INSERT INTO flashcard (deck_id, question, answer)
+VALUES ('4', 'Who wrote the Odyssey?', 'Homer');
+
+
+
+COMMIT TRANSACTION;
 
