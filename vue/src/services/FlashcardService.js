@@ -9,8 +9,6 @@ export default {
         return http.get(`/decks/${id}`); 
       },
 
-
-
     deck() {
         return http.get('/deck');
     },
@@ -23,12 +21,12 @@ export default {
     getCard(id) {
         return http.get(`/card/${id}`)
     },
-    addDeck(name, color, creator_id) {
-        console.log(name, color, creator_id);
+    addDeck(name, color) {
+        let currentUser = JSON.parse(localStorage.getItem('user'))
         return http.post('/adddeck', {
-            name: name, 
+            deckName: name, 
             color: color, 
-            creator_id: creator_id});
+            userID: currentUser.id});
     },
   
     addCard(card) {
