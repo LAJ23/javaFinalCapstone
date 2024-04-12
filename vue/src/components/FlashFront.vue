@@ -1,54 +1,24 @@
 <template>
-    <Header/>
-    <h2>Name of Deck</h2>
-    <div id="sessionCont">
-    <div id="topBar">
-    <button class="btn">End Session</button>
-    <button class="btn">Skip</button>
-    <p>Time 00:00</p>
-    <p>Score 2/10</p>
-    <div class="btn btn2"><font-awesome-icon :icon="['fas', 'pencil']" /> </div>
     
-</div>
-<!--     
-    <FlashFront /> -->
-    <FlashBack />
-    
-    <div id="bottom">
-      <div id="tags">
-          <h4>Tags</h4>
-          <ul>
-          <li class="">Javascript</li>
-          <li>Loops</li>
-      </ul>
-      </div>
-      
-</div>
+    <div class="card">
+      <p>Is water wet?</p>
+        <button id="flip">Flip!</button>
     </div>
 
- 
-   
-
-  
-          
-   
   </template>
   
   <script>
   import Header from '../components/Header.vue';
-  import FlashFront from '../components/FlashFront.vue';
-  import FlashBack from '../components/FlashBack.vue';
-
   
 
   
   
   export default {
     components: {
-    Header,
-    FlashFront,
-    FlashBack,
-}
+     
+      
+      
+    }
   };
   </script>
   
@@ -127,13 +97,7 @@ button {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 5vw;
   }
-  #topBar {
-    display: flex;
-    margin-bottom: .5vw;
-    width: 60%;
-    align-items: center;
-    justify-content: space-between;
-  }
+
   
   #flip {
     position: absolute;
@@ -146,45 +110,4 @@ button {
     left: 37%;
     background-color: orange;
   }
-  #sessionCont {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-  }
-
-  #tags {
-    align-self: self-start;
-    
-    margin-top: 2vw;
-  }
-
-  li {
-    background-color: blue;
-    margin-top: 1vw;
-    color: white;
-    width: 12vw;
-    border-radius: 2vw;
-    text-align: center;
-    padding-top: .5vw;
-    padding-bottom: .5vw;
-    font-size: 1.5vw;
-  }
-  .btn {
-    background-color: blue;
-    
-    color: white;
-    width: 12vw;
-    border-radius: 1vw;
-    border: none;
-    text-align: center;
-    padding-top: .5vw;
-    padding-bottom: .5vw;
-    font-size: 1.5vw;
-  }
-  .btn2 {
- width: 3vw;
- 
-  }
   </style>
-  

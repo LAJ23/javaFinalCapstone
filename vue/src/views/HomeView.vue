@@ -7,49 +7,30 @@
       <router-link
         class="btn"
         :to="{ name: 'study' }"
-        style="
-          display: inline-flex;
-          text-decoration: none;
-          align-items: center;
-          justify-content: center;
-          height: 3vw;
-          padding-top: 1vw;
-        "
+        style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;"
       >
         Study
       </router-link>
       <router-link
         v-on:click="goToCreate"
         class="btn"
-        :to="{ name: 'study' }"
-        style="
-          display: inline-flex;
-          text-decoration: none;
-          align-items: center;
-          justify-content: center;
-          height: 3vw;
-          padding-top: 1vw;
-        "
+        :to="{ name: 'create' }" 
+        style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;"
       >
         Create Deck
       </router-link>
       <router-link
         class="btn"
         :to="{ name: 'edit' }"
-        style="
-          display: inline-flex;
-          text-decoration: none;
-          align-items: center;
-          justify-content: center;
-          height: 3vw;
-          padding-top: 1vw;
-        "
+        style="display: inline-flex; text-decoration: none; align-items: center; justify-content: center; height: 3vw; padding-top: 1vw;"
       >
         Edit Deck
       </router-link>
     </nav>
     <h2>Recent Decks</h2>
-    <UserDecks />
+    <div id="UserDeckCont" >
+    <UserDecks :limit="3" />
+  </div>
   </div>
 </template>
 
@@ -115,19 +96,26 @@ export default {
 }
 
 .home {
-  margin: 7vw;
+  
   display: flex;
   flex-direction: column;
 }
 
+#UserDeckCont {
+  margin-left: -14vw;
+}
+
 h1 {
+  margin-top: 5vw;
+  margin-left: 6vw;
   font-size: 5vw;
-  margin: 0;
+  
   font-weight: 500;
 }
 h2 {
   font-size: 2.5vw;
-  margin-top: 2vw;
+  margin-top: 3vw;
+  margin-bottom: 2vw;
   align-self: center;
 }
 
@@ -146,18 +134,8 @@ nav {
   background-color: rgb(58, 58, 255);
   border-radius: 0.8vw;
   border: none;
-  text-decoration: none; /* Remove underline from links */
-  cursor: pointer; /* Ensure it looks clickable */
+  text-decoration: none;
+  cursor: pointer;
 }
 
-.recentDecks {
-  display: flex;
-  flex-direction: row; /* or column */
-  justify-content: space-between; /* Alignment along the main axis */
-  align-items: center; /* Alignment along the cross axis */
-}
-
-.deckIcon {
-  width: 20vw;
-}
 </style>
