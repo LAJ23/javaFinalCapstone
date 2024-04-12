@@ -18,7 +18,7 @@ public interface DeckDao {
 
     public boolean deleteDeck(int deckId);
 
-    public void addDeck(String name, int color);
+    public void addDeck(String name, int color, int creator_id);
 
     public boolean updateDeck(int deckId, int color, String name);
 }

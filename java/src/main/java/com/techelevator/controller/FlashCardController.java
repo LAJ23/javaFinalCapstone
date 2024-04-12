@@ -60,8 +60,8 @@ public class FlashCardController  {
     }
 
     @RequestMapping(path = "/adddeck", method = RequestMethod.POST)
-    public String addDeck(@RequestBody Deck deck) {
-       deckDao.addDeck(deck.getDeckName(), deck.getColor());
+    public String addDeck(@RequestBody String name, int color, int creator_id) {
+       deckDao.addDeck(name, color, creator_id);
         return "Deck Added";
     }
 

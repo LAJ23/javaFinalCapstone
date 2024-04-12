@@ -5,6 +5,12 @@ const http = axios.create({
 });
 
 export default {
+    getDeck(id) {
+        return http.get(`/decks/${id}`); 
+      },
+
+
+
     deck() {
         return http.get('/deck');
     },
@@ -17,8 +23,12 @@ export default {
     getCard(id) {
         return http.get(`/card/${id}`)
     },
-    addDeck(deck) {
-        return http.post('/deck', deck)
+    addDeck(name, color, creator_id) {
+        console.log(name, color, creator_id);
+        return http.post('/adddeck', {
+            name: name, 
+            color: color, 
+            creator_id: creator_id});
     },
   
     addCard(card) {

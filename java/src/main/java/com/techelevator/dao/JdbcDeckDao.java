@@ -1,7 +1,11 @@
 package com.techelevator.dao;
 
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.Deck;
 import com.techelevator.model.FlashCard;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
@@ -91,11 +95,22 @@ public class JdbcDeckDao implements DeckDao {
     }
 
     @Override
-    public void addDeck(String name, int color) {
-        String sql = "INSERT INTO deck (name, color) VALUES (?, ?)";
-            jdbcTemplate.update(sql, name, color);
-    }
+    public void addDeck(String name, int color, int creator_id) {
+        String sql = "INSERT INTO deck (name, color, creator_id) SELECT ?, ?, user_id FROM users WHERE u.user_id = ?";
+        try {
+            jdbcTemplate.update(sql, name, color, creator_id);
 
+        }
+        catch(CannotGetJdbcConnectionException ex){
+            throw new DaoException("Cannot connect to the database", ex);
+        }
+        catch(DataIntegrityViolationException ex) {
+            throw new DaoException("Data integrity violation", ex);
+        }
+        catch(BadSqlGrammarException ex) {
+            throw new DaoException("Bad SQL Grammar", ex);
+        }
+    }
 
 
 
