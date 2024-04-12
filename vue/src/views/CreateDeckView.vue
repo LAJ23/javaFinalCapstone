@@ -44,7 +44,6 @@
           return this.nextDeckId++;
        },
        createDeck() {
-    // Assuming authService is a service that communicates with your backend
     FlashcardService.addDeck(this.newDeck)
       .then(response => {
         // On successful creation, navigate to the edit page
