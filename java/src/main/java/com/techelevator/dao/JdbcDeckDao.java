@@ -31,8 +31,8 @@ public class JdbcDeckDao implements DeckDao {
     @CrossOrigin
     public List<Deck> getAllDecks(int id) {
         List<Deck> decks = new ArrayList<>();
-        String sql = "SELECT * FROM deck WHERE creator_id = 2";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql); // Pass the id as parameter
+        String sql = "SELECT * FROM deck WHERE creator_id = ? OR creator_id = 2";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id); // Pass the id as parameter
         while (results.next()) {
             Deck deck = mapRowToDeck(results);
             decks.add(deck);
