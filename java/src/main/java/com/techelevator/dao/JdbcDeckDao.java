@@ -11,6 +11,9 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -104,23 +107,21 @@ public class JdbcDeckDao implements DeckDao {
     }
 
     @Override
-    public Deck addDeck(String name, int color, int creator_id) {
-        Deck newDeck = null;
-        String sql = "INSERT INTO deck (name, color, creator_id) VALUES (?, ?, ?) RETURNING deck_id";
+    public void addDeck(String name, int color, int creator_id) {
+        String sql = "INSERT INTO deck (name, color, creator_id) SELECT ?, ?, user_id FROM users WHERE u.user_id = ?";
         try {
-           int newDeckId = jdbcTemplate.update(sql, int.class, name, color, creator_id);
-           newDeck = getDeckById(newDeckId);
+            jdbcTemplate.update(sql, name, color, creator_id);
+
         }
-        catch(CannotGetJdbcConnectionException ex) {
-            throw new DaoException("Can't connect to the DB.", ex);
+        catch(CannotGetJdbcConnectionException ex){
+            throw new DaoException("Cannot connect to the database", ex);
         }
         catch(DataIntegrityViolationException ex) {
-            throw new DaoException("Data integrity violation, oops.", ex);
+            throw new DaoException("Data integrity violation", ex);
         }
         catch(BadSqlGrammarException ex) {
-            throw new DaoException("Bad SQL Grammar, fix it and try again.", ex);
+            throw new DaoException("Bad SQL Grammar", ex);
         }
-        return newDeck;
     }
 
 
