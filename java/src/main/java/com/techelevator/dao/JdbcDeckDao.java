@@ -107,10 +107,14 @@ public class JdbcDeckDao implements DeckDao {
     }
 
     @Override
-    public void addDeck(String name, int color, int creator_id) {
-        String sql = "INSERT INTO deck (name, color, creator_id) SELECT ?, ?, user_id FROM users WHERE u.user_id = ?";
+    public Deck addDeck(Deck deck) {
+        Deck newDeck = null;
+        String sql = "INSERT INTO deck (name, color, creator_id)" +
+                "VALUES (?,?, (SELECT user_id FROM users WHERE user_id = ?)) RETURNING deck_id";
         try {
-            jdbcTemplate.update(sql, name, color, creator_id);
+            int newDeckId = jdbcTemplate.queryForObject(sql, int.class, deck.getDeckName(),  deck.getColor(), deck.getUserID());
+            newDeck = getDeckById(newDeckId);
+            return newDeck;
 
         }
         catch(CannotGetJdbcConnectionException ex){
