@@ -1,15 +1,16 @@
 package com.techelevator.dao;
 
+import com.techelevator.exception.DaoException;
 import com.techelevator.model.Deck;
 import com.techelevator.model.FlashCard;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -38,6 +39,18 @@ public class JdbcDeckDao implements DeckDao {
             decks.add(deck);
         }
         return decks;
+    }
+    @Override
+    public Deck getDeckById(int deckId) {
+        Deck deck = null;
+        String sql = "SELECT * " +
+                "FROM deck " +
+                "WHERE deck_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, deckId);
+        if (results.next()) {
+            deck = mapRowToDeck(results);
+        }
+        return deck;
     }
 
     @Override
@@ -91,9 +104,23 @@ public class JdbcDeckDao implements DeckDao {
     }
 
     @Override
-    public void addDeck(String name, int color) {
-        String sql = "INSERT INTO deck (name, color) VALUES (?, ?)";
-            jdbcTemplate.update(sql, name, color);
+    public Deck addDeck(String name, int color, int creator_id) {
+        Deck newDeck = null;
+        String sql = "INSERT INTO deck (name, color, creator_id) VALUES (?, ?, ?) RETURNING deck_id";
+        try {
+           int newDeckId = jdbcTemplate.update(sql, int.class, name, color, creator_id);
+           newDeck = getDeckById(newDeckId);
+        }
+        catch(CannotGetJdbcConnectionException ex) {
+            throw new DaoException("Can't connect to the DB.", ex);
+        }
+        catch(DataIntegrityViolationException ex) {
+            throw new DaoException("Data integrity violation, oops.", ex);
+        }
+        catch(BadSqlGrammarException ex) {
+            throw new DaoException("Bad SQL Grammar, fix it and try again.", ex);
+        }
+        return newDeck;
     }
 
 
