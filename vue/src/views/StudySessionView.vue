@@ -10,10 +10,10 @@
     <div class="btn btn2"><font-awesome-icon :icon="['fas', 'pencil']" /> </div>
     
 </div>
-    <div class="card">
-      <p>Is water wet?</p>
-        <button id="flip">Flip!</button>
-    </div>
+<!--     
+    <FlashFront /> -->
+    <FlashBack />
+    
     <div id="bottom">
       <div id="tags">
           <h4>Tags</h4>
@@ -22,15 +22,7 @@
           <li>Loops</li>
       </ul>
       </div>
-      <div id="answer">
-        <div class="answerbtn">
-        <font-awesome-icon class="thumbs-up-icon" :icon="['fasr', 'thumbs-up']" />
-      </div>
-      <div class="answerbtn red">
-        <font-awesome-icon class="thumbs-down-icon" :icon="['fasr', 'thumbs-down']" />
-      </div>
-
-      </div>
+      
 </div>
     </div>
 
@@ -44,16 +36,19 @@
   
   <script>
   import Header from '../components/Header.vue';
+  import FlashFront from '../components/FlashFront.vue';
+  import FlashBack from '../components/FlashBack.vue';
+
   
 
   
   
   export default {
     components: {
-      Header,
-      
-      
-    }
+    Header,
+    FlashFront,
+    FlashBack,
+}
   };
   </script>
   
