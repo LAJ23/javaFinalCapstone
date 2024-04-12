@@ -4,10 +4,13 @@
       <DeckIcon
         v-for="deck in limitedDecks"
         :key="deck.deckId"
+        :deckId="deck.deckId"
         :name="deck.deckName"
         :highScore="deck.highScore"
         :color="deck.color"
+        :linkTarget="{ name: 'session', params: { deckId: deck.deckId } }"
       />
+
     </div>
   </div>
 </template>
@@ -18,7 +21,8 @@ import FlashcardService from '../services/FlashcardService';
 
 export default {
   props: {
-    limit: Number // Optional prop to limit the number of decks displayed
+    limit: Number, // Optional prop to limit the number of decks displayed
+    linkTarget: Object
   },
   components: {
     DeckIcon,
