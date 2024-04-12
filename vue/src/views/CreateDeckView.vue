@@ -9,10 +9,10 @@
     <select id="colors" name="colors" v-model="newDeck.color">
       <option disabled value="">Please select one</option>
   <option  value="5">White</option>
-  <option id="red" value="red">Red</option>
-  <option id="orange" value="orange"><span>Orange</span></option>
-  <option id="yellow" value="yellow">Yellow</option>
-  <option id="green" value="green">Green</option>
+  <option id="red" value="1">Red</option>
+  <option id="orange" value="2"><span>Orange</span></option>
+  <option id="yellow" value="3">Yellow</option>
+  <option id="green" value="4">Green</option>
 </select>
 <button v-on:click.prevent="createDeck" class="btn" type="submit"> Create</button>
 </form>
