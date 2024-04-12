@@ -29,7 +29,8 @@
     </nav>
     <h2>Recent Decks</h2>
     <div id="UserDeckCont" >
-    <UserDecks :limit="3" />
+      <UserDecks :limit="3" :linkTarget="{ name: 'session' }" />
+
   </div>
   </div>
 </template>

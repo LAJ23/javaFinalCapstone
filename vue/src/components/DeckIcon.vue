@@ -1,6 +1,9 @@
 <template>
   <div id="iconCont">
-    <router-link style="text-decoration: none; padding: 0;" :to="{ name: 'session' }">
+
+      <router-link :to="linkTarget" style="text-decoration: none; padding: 0;">
+
+
       <div class="deckIconCont">
         <div :class="['iconText', colorClass]">
           <h3>{{ name }}</h3>
@@ -16,11 +19,14 @@
 import deckImage from '../assets/imgs/deck-image.png';
 
 export default {
-  props: ['name', 'highScore', 'color'],
+  props: ['name', 'highScore', 'color', 'linkTarget'],
   data() {
     return {
       deckImage,
     };
+  },
+  mounted() {
+    console.log(this.linkTarget);  // Check what linkTarget is actually receiving
   },
   computed: {
     colorClass() {

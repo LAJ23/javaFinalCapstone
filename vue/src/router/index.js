@@ -30,6 +30,19 @@ const routes = [
       requiresAuth: true
     }
   },
+
+    {
+        path: '/session/:deckId',
+        name: 'session',
+        component: () => import('@/views/StudySessionView.vue'),
+        props: true
+    },
+    {
+        path: '/edit-deck/:deckId',
+        name: 'editDeck',
+        component: () => import('@/views/EditDeckView.vue'),
+        props: true
+    },
   {
     path: '/edit',
     name: 'edit',
