@@ -8,6 +8,8 @@ import java.util.List;
 public interface DeckDao {
     public List<Deck> getAllDecks(int id);
 
+    public Deck getDeckById(int deckId);
+
     public List<FlashCard> getAllFlashcards(int id);
 
     public boolean deleteFlashcard(int id);

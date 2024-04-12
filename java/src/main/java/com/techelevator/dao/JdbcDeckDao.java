@@ -43,6 +43,18 @@ public class JdbcDeckDao implements DeckDao {
         }
         return decks;
     }
+    @Override
+    public Deck getDeckById(int deckId) {
+        Deck deck = null;
+        String sql = "SELECT * " +
+                "FROM deck " +
+                "WHERE deck_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, deckId);
+        if (results.next()) {
+            deck = mapRowToDeck(results);
+        }
+        return deck;
+    }
 
     @Override
     public List<FlashCard> getAllFlashcards(int id) {
@@ -111,6 +123,7 @@ public class JdbcDeckDao implements DeckDao {
             throw new DaoException("Bad SQL Grammar", ex);
         }
     }
+
 
 
 
