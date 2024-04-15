@@ -180,8 +180,8 @@
     }
   },
   saveOrUpdateCard(card){
-    for(let i = 0; i < cards.length; i++){
-      if (card_id === null){
+    for(let i = 0; i < this.cards.length; i++){
+      if (this.cardId === null){
         FlashcardService.saveCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
         .then(response => {
 
