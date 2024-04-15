@@ -29,11 +29,61 @@ public class FlashCardController  {
         return decks;
     }
 
-    @RequestMapping(path = "cards/{id}", method = RequestMethod.GET)
-    public List<FlashCard> getAllCards(@PathVariable int deckID) {
-        List<FlashCard> cards = deckDao.getAllFlashcards(deckID);
+    @RequestMapping(path = "/cards/{id}", method = RequestMethod.GET)
+    public List<FlashCard> getAllCards(@PathVariable int id) {
+        List<FlashCard> cards = deckDao.getAllFlashcards(id);
         return cards;
     }
+    @RequestMapping(path = "/deckName/{id}", method = RequestMethod.GET)
+    public String getDeckName(@PathVariable int id) {
+        String name = deckDao.getDeckName(id);
+        return name;
+    }
+    @RequestMapping(path = "deck/{deckId}", method = RequestMethod.GET)
+    public Deck getDeck(@PathVariable int deckId) {
+        Deck deck = deckDao.getDeck(deckId);
+        return deck;
+    }
+
+    @RequestMapping(path = "/updateDeck", method = RequestMethod.POST)
+    public ResponseEntity<?> updateDeck(@RequestBody Deck deck) {
+        System.out.println("Received update request for deck with ID: " + deck.getDeckId());
+        System.out.println("Name: " + deck.getDeckName());
+        System.out.println("HighScore: " + deck.getHighScore());
+        System.out.println("Color: " + deck.getColor());
+        System.out.println("Creator ID: " + deck.getUserID());
+
+        try {
+            boolean updateSuccessful = deckDao.updateDeck(deck);
+            if (updateSuccessful) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.badRequest().body("Update failed");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating deck: " + e.getMessage());
+        }
+    }
+
+    @RequestMapping(path = "/adddeck", method = RequestMethod.POST)
+    public Deck addDeck(@RequestBody Deck deck) {
+
+        Deck newDeck = null;
+        newDeck = deckDao.addDeck(deck);
+        return newDeck;
+    }
+
+
+
+
+    @RequestMapping(path = "/score/{id}", method = RequestMethod.GET)
+    public String getHighScore(@PathVariable int id) {
+        String score = deckDao.getDeckHighScore(id);
+        return score;
+    }
+//--------------------------------------------------------------------------------------------------------
+
 
     @PutMapping("/{cardId}")
     public ResponseEntity<String> updateFlashcard(
@@ -59,11 +109,7 @@ public class FlashCardController  {
         }
     }
 
-    @RequestMapping(path = "/adddeck", method = RequestMethod.POST)
-    public String addDeck(@RequestBody Deck deck) {
-       deckDao.addDeck(deck.getDeckName(), deck.getColor());
-        return "Deck Added";
-    }
+
 
         @PutMapping("/{deckId}")
         public ResponseEntity<?> updateDeck(@PathVariable("deckId") int deckId,

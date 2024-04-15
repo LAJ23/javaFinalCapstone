@@ -1,7 +1,11 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Deck {
     private int deckId;
+
+
     private String deckName;
     private int highScore;
     private int color;

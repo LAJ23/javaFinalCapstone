@@ -1,5 +1,5 @@
 <template>
-    <Header/>
+  
     <div id="editView">
         <div id="editCont">
           <div id="top">
@@ -15,15 +15,18 @@
         </div>
       </template>
     </h2>
-    <h3>color theme:
+    <h3>Color theme:
   <template v-if="isSelectingColor">
     <select id="colors" name="colors" @change="setColor">
-      <option value="white">White</option>
-      <option value="red">Red</option>
-      <option value="orange">Orange</option>
-      <option value="yellow">Yellow</option>
-      <option value="green">Green</option>
+      
+<option  value="5">White</option>
+<option class="redBK" value="1">Red</option>
+<option class="orangeBK" value="2"><span>Orange</span></option>
+<option class="yellowBK" value="3">Yellow</option>
+<option class="greenBK" value="4">Green</option>
+
     </select>
+    
   </template>
   <template v-else>
     <span id="color">{{ selectedColor }}</span>
@@ -92,7 +95,7 @@
     };
   },
   components: {
-    Header,
+   
     Preview,
   },
   // Methods to toggle edit state and update text
@@ -133,6 +136,10 @@
   * {
     font-family: 'Writing';
    
+  }
+
+  select {
+    font-size: 2vw;
   }
 
   

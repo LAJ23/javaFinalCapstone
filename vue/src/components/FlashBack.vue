@@ -1,35 +1,39 @@
 <template>
-    
-    <div class="card">
-      <p>Is water wet?</p>
-      <div id="answer">
-        <div class="answerbtn">
-        <font-awesome-icon class="thumbs-up-icon" :icon="['fasr', 'thumbs-up']" />
+  <div :class="['card', colorClass]">
+    <p>{{ card.answer }}</p>
+    <div id="answer">
+      <div class="answerbtn" @click="selectAnswer(true)">
+        <font-awesome-icon class="thumbs-up-icon" :icon="['fas', 'thumbs-up']" />
       </div>
-      <div class="answerbtn red">
-        <font-awesome-icon class="thumbs-down-icon" :icon="['fasr', 'thumbs-down']" />
+      <div class="answerbtn red" @click="selectAnswer(false)">
+        <font-awesome-icon class="thumbs-down-icon" :icon="['fas', 'thumbs-down']" />
       </div>
-
-      </div>
-       
     </div>
+  </div>
+</template>
 
-  </template>
-  
-  <script>
-  import Header from '../components/Header.vue';
-  
-
-  
-  
-  export default {
-    components: {
-     
-      
-      
+<script>
+export default {
+  props: ['card', 'color'],
+  computed: {
+    colorClass() {
+      switch (this.color) {
+        case 1: return 'redBK';
+        case 2: return 'orangeBK';
+        case 3: return 'yellowBK';
+        case 4: return 'greenBK';
+        case 5: return 'whiteBK';
+        default: return '';  // Default case if color is not set
+      }
+    },
+  },
+  methods: {
+    selectAnswer(correct) {
+      this.$emit('answerSelected', correct);
     }
-  };
-  </script>
+  }
+};
+</script>
   
   <style scoped>
   * {
@@ -97,20 +101,21 @@ p {
 button {
     margin: none;
 }
-  .card {
+.card {
     width: 60%;
+    padding: 2vw;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    background-color: rgb(94, 202, 67);
-    height: 30vw;
     
+    height: 30vw;
+    border-radius: 2vw;
   }
 
   .card p {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 5vw;
+    font-size: 2vw;
   }
 
   
