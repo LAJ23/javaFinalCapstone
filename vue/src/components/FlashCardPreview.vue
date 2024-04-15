@@ -26,10 +26,10 @@ export default {
   <style scoped>
   * {
     font-family: 'helvetica';
- 
+
   }
   #Flashhighlight {
-   background-color: red; 
+   background-color: red;
    border-radius: .5vw;
    display: flex;
    justify-content: center;
@@ -45,8 +45,9 @@ export default {
     width: 89%;
     border-radius: .5vw;
     height: 10vw;
-    
-
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle;
     background-color: blueviolet;
   }
 

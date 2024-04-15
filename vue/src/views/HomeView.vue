@@ -71,6 +71,9 @@ export default {
         .then((data) => {
           this.data = data;
         })
+          .then((data) => {
+            this.decks = data.slice(0, 3); // Keep only the first 3 decks
+          })
         .catch((error) => {
           console.error("Error fetching data:", error);
         });
