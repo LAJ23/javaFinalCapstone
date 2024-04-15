@@ -1,42 +1,49 @@
 <template>
-    <div id="FlashCardCont" >
-    
-        
-      <p>{{ question }}</p>
-      <div class="deleteCont">
+  <div id="Flashhighlight">
+  <div id="FlashCardCont">
+    <p>{{ question }}</p>
+    <div class="deleteCont">
       <button><font-awesome-icon class="delete" :icon="['fas', 'x']" v-on:click="deleteCard"/></button>
-      </div>
-      <p id="num"><span>69</span></p>
     </div>
-    
- 
-  </template>
-  
-  <script>
-  import FlashcardService from '../services/FlashcardService';
+    <p id="num"><span>{{ index + 1 }}</span></p> <!-- Use index here -->
+  </div>
+</div>
+</template>
 
+<script>
+import FlashcardService from '../services/FlashcardService';
 
-  export default {
-    props: ['deckId', 'question', 'color', 'answer', 'cardId'],
-   methods: {
+export default {
+  props: ['deckId', 'question', 'color', 'answer', 'cardId', 'index'],  // Include 'index' here
+  methods: {
     deleteCard() {
       confirm('Are you sure you want to delete this card?');
     }
-   },
-  };
-  </script>
+  },
+};
+</script>
   
   <style scoped>
   * {
     font-family: 'helvetica';
-   
+
+  }
+  #Flashhighlight {
+   background-color: red;
+   border-radius: .5vw;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   width: 100%;
+   height: 12vw;
   }
   #FlashCardCont {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 80%;
+    width: 89%;
+    border-radius: .5vw;
     height: 10vw;
     padding: 15px;
     text-align: center;
