@@ -4,7 +4,7 @@
         
       <p>{{ question }}</p>
       <div class="deleteCont">
-      <font-awesome-icon class="delete" :icon="['fas', 'x']" />
+      <button><font-awesome-icon class="delete" :icon="['fas', 'x']" v-on:click="deleteCard"/></button>
     </div>
       <p id="num"><span>3</span></p>
 </div>
@@ -13,11 +13,15 @@
   </template>
   
   <script>
-  
+  import FlashcardService from '../services/FlashcardService';
 
   export default {
     props: ['deckId', 'question', 'color', 'answer', 'cardId'],
-   
+   methods: {
+    deleteCard() {
+      confirm('Are you sure you want to delete this card?');
+    }
+   },
   };
   </script>
   
@@ -63,7 +67,7 @@
 
   }
 
-  .deleteCont {
+  button {
     height: 2vw;
     display: flex;
     justify-content: center;

@@ -128,9 +128,9 @@ public class JdbcDeckDao implements DeckDao {
     }
 
     @Override
-    public boolean deleteFlashcard(int Id) {
+    public boolean deleteFlashcard(int card_id) {
         String sql = "DELETE FROM flashcard WHERE card_id = ?";
-        int rowsAffected = jdbcTemplate.update(sql, Id);
+        int rowsAffected = jdbcTemplate.update(sql, card_id);
         return rowsAffected > 0;
     }
 
