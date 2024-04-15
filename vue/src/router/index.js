@@ -31,15 +31,15 @@ const routes = [
       requiresAuth: true
     }
   },
-  {
-    path: '/',
-    name: 'editor',
-    component: EditDeckView,
-    meta: {
-      showHeader: true,
-      requiresAuth: true
-    }
-  },
+  // {
+  //   path: '/',
+  //   name: 'editor',
+  //   component: EditDeckView,
+  //   meta: {
+  //     showHeader: true,
+  //     requiresAuth: true
+  //   }
+  // },
 
     {
         path: '/session/:deckId',
