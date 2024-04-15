@@ -1,9 +1,6 @@
 <template>
     <Header/>
-    <div id="createCont">
-      <form  action="">
-    <h3>What would you like to Name your deck?</h3>
-    <input type="text" placeholder="Name" v-model="newDeck.name">
+  
 
   <div id="createCont">
     <form  action="">

@@ -8,7 +8,7 @@
         :name="deck.deckName"
         :highScore="deck.highScore"
         :color="deck.color"
-        :deckId="deck.deckId"
+        
         :routeName="routeName"
       />
 

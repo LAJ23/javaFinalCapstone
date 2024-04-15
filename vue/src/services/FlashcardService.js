@@ -31,9 +31,7 @@ export default {
     },
 
 
-    getDeck(id) {
-        return http.get(`/decks/${id}`);
-      },
+  
 
     deck() {
         return http.get('/deck');
