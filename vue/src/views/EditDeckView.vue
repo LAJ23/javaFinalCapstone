@@ -76,13 +76,20 @@
   </template>
   
   <script>
-  import Header from '../components/Header.vue';
   import Preview from '../components/FlashCardPreview.vue';
+  import FlashcardService from '../services/FlashcardService';
 
   export default {
     data() {
     return {
-      // Manage edit states
+      cards: [],
+      deck: {
+        deckName: '',
+        highScore: 0,
+        color: '',
+        creator_id: null,
+        deckId: ''
+      },
       isEditingFront: false,
       isEditingBack: false,
       // Store editable content
@@ -98,10 +105,40 @@
    
     Preview,
   },
-  // Methods to toggle edit state and update text
+  created() {
+  const deckId = this.$route.params.deckId;
+  console.log("Received Deck ID:", deckId);  // Verify the deck ID is received
+  if (deckId) {
+    this.getDeck(deckId);
+    this.fetchCards(deckId);
+  } else {
+    console.error('No deckId provided in the route.');
+    this.$router.push({ name: 'home' });  // Fallback to a safe route if no ID
+  }
+},
   methods: {
+    fetchCards(deckId) {
+  FlashcardService.getCards(deckId).then(response => {
+    this.cards = response.data;
+    console.log('Cards fetched:', response.data);
+  }).catch(error => {
+    console.error('Failed to fetch cards:', error);
+  });
+},
+    getDeck(deckId) {
+  FlashcardService.getDeck(deckId).then(response => {
+    const data = response.data;
+    this.deck.deckName = data.deckName;
+    this.deck.highScore = data.highScore;
+    this.deck.color = data.color;
+    this.deck.creator_id = data.userID;
+    this.deck.deckId = data.deckId;
+    console.log('Deck details fetched:', data);
+  }).catch(error => {
+    console.error('Failed to fetch deck details:', error);
+  });
+},
   toggleEditFront() {
-    // Check if frontText is empty and set a default value
     if (this.frontText.trim() === '') {
       this.frontText = 'Enter your question';
     }
