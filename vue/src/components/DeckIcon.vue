@@ -22,6 +22,9 @@ export default {
       deckImage,
     };
   },
+  created() {
+    console.log(this.deckId)
+  },
   computed: {
     colorClass() {
       switch (this.color) {
