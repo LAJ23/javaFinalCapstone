@@ -2,7 +2,7 @@
     <div id="FlashCardCont" >
     
         
-      <p>this is a test</p>
+      <p>{{ question }}</p>
       <div class="deleteCont">
       <font-awesome-icon class="delete" :icon="['fas', 'x']" />
     </div>
@@ -16,6 +16,7 @@
   
 
   export default {
+    props: ['deckId', 'question', 'color', 'answer', 'cardId'],
    
   };
   </script>

@@ -41,9 +41,16 @@
         <div id="editorCont" >
         <div id="previewList">
           <button v-on:click="createBlankCard"><font-awesome-icon :icon="['fas', 'plus']" />   Add Card</button>
-          <Preview />
-          <Preview />
-          <Preview />
+          <Preview 
+  v-for="card in cards"
+  :key="card.card_id"  
+  :deckId="deck.deckId"  
+  :question="card.question" 
+  :answer="card.answer" 
+  :color="deck.color"  
+/>
+          
+
         
     </div>
     <div id="cardEditor" >
