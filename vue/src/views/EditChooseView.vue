@@ -1,7 +1,7 @@
 <template>
 
     <h2>Choose a deck to Edit:</h2>
-    <UserDecks route-name="editor" />
+    <UserDecks route-name="editDeck" />
 
   
           
