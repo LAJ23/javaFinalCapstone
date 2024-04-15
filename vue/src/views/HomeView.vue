@@ -1,5 +1,5 @@
 <template>
-  <Header />
+
   <div class="home">
     <h1>Welcome {{ userName }},</h1>
     <h2>What is your goal today?</h2>
@@ -29,20 +29,19 @@
     </nav>
     <h2>Recent Decks</h2>
     <div id="UserDeckCont" >
-      <UserDecks :limit="3" :linkTarget="{ name: 'session' }" />
-
+      <UserDecks route-name='session' />
   </div>
   </div>
 </template>
 
 <script>
-import Header from "../components/Header.vue";
+
 import UserDecks from "../components/UserDecks.vue";
 import UserService from "../services/UserService";
 
 export default {
   components: {
-    Header,
+
     UserDecks,
   },
   data() {

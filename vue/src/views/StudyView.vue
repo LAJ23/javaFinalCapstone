@@ -1,7 +1,7 @@
 <template>
-    <Header/>
+    
     <h2>Choose a deck start a session:</h2>
-    <UserDecks />
+    <UserDecks route-name='session' />
    
 
   
@@ -10,14 +10,14 @@
   </template>
   
   <script>
-  import Header from '../components/Header.vue';
+  
   import UserDecks from '../components/UserDecks.vue';
 
   
   
   export default {
     components: {
-      Header,
+      
       UserDecks,
       
     }

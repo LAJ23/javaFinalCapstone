@@ -27,6 +27,16 @@ const routes = [
     name: 'home',
     component: HomeView,
     meta: {
+      showHeader: true,
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/',
+    name: 'editor',
+    component: EditDeckView,
+    meta: {
+      showHeader: true,
       requiresAuth: true
     }
   },
@@ -48,6 +58,7 @@ const routes = [
     name: 'edit',
     component: EditChooseDeck,
     meta: {
+      showHeader: true,
       requiresAuth: true
     }
   },
@@ -56,6 +67,7 @@ const routes = [
     name: 'flashfront',
     component: FlashFront,
     meta: {
+      showHeader: true,
       requiresAuth: true
     }
   },
@@ -65,6 +77,7 @@ const routes = [
     name: 'create',
     component: CreateDeckView,
     meta: {
+      showHeader: true,
       requiresAuth: true
     }
   },
@@ -73,15 +86,17 @@ const routes = [
   name: 'study',
   component: StudyView,
   meta: {
+    showHeader: true,
     requiresAuth: true
   }
 },
 {
-  path: '/study-session',
-  name: 'session',
-  component: StudySessionView,
+  path: '/study-session/:deckId/:name', 
+  name: 'session',                          
+  component: StudySessionView,              
   meta: {
-    requiresAuth: true
+    showHeader: true,                       
+    requiresAuth: true                      
   }
 },
   {
@@ -89,6 +104,7 @@ const routes = [
     name: "login",
     component: LoginView,
     meta: {
+      showHeader: false, 
       requiresAuth: false
     }
   },
@@ -105,7 +121,8 @@ const routes = [
     name: "register",
     component: RegisterView,
     meta: {
-      requiresAuth: false
+      requiresAuth: false,
+        showHeader: false 
     }
   }
 ];

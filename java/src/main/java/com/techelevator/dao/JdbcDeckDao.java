@@ -11,9 +11,6 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
@@ -43,31 +40,85 @@ public class JdbcDeckDao implements DeckDao {
         }
         return decks;
     }
-    @Override
-    public Deck getDeckById(int deckId) {
-        Deck deck = null;
-        String sql = "SELECT * " +
-                "FROM deck " +
-                "WHERE deck_id = ?;";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, deckId);
-        if (results.next()) {
-            deck = mapRowToDeck(results);
-        }
-        return deck;
-    }
 
     @Override
     public List<FlashCard> getAllFlashcards(int id) {
         List<FlashCard> flashCards = new ArrayList<>();
-        String sql = "SELECT * FROM flashcard WHERE deck_id = ?";
+        String sql = "SELECT card_id, deck_id, question, answer FROM flashcard WHERE deck_id = ?";
+        ;
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
         while (results.next()) {
-            FlashCard flashCard = mapRowToFlash(results);
-            flashCards.add(flashCard);
+
+            flashCards.add(mapRowToFlash(results));
 
         }
         return flashCards;
     }
+
+    @Override
+    public String getDeckName(int id) {
+        String sql = "SELECT name FROM deck WHERE deck_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+
+        if (results.next()) {
+            return results.getString("name"); // Extract the name column from the first row of the result set
+        } else {
+            return null; // Return null if no results found (or you could throw an exception or return a default value)
+        }
+    }
+
+    @Override
+    public String getDeckHighScore(int id) {
+        String sql = "SELECT high_score FROM deck WHERE deck_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
+
+        if (results.next()) {
+            return results.getString("high_score"); // Extract the name column from the first row of the result set
+        } else {
+            return null; // Return null if no results found (or you could throw an exception or return a default value)
+        }
+    }
+
+    @Override
+    public Deck getDeck(int deckId) {
+        String sql = "SELECT * FROM deck WHERE deck_id = ?";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, deckId);
+        if (results.next()) {  // Ensure there is at least one row
+            return mapRowToDeck(results);
+        } else {
+            return null;  // Return null or handle it based on your application's requirement
+        }
+    }
+
+    @Override
+    public boolean updateDeck(Deck deck) {
+        String sql = "UPDATE deck SET name = ?, high_score = ?, color = ? WHERE deck_id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, deck.getDeckName(), deck.getHighScore(), deck.getColor(), deck.getDeckId());
+        return rowsAffected > 0;
+    }
+
+    @Override
+    public Deck addDeck(Deck deck) {
+        Deck newDeck = null;
+        String sql = "INSERT INTO deck (name, color, creator_id)" +
+                "VALUES (?,?, (SELECT user_id FROM users WHERE user_id = ?)) RETURNING deck_id";
+        try {
+            int newDeckId = jdbcTemplate.queryForObject(sql, int.class, deck.getDeckName(),  deck.getColor(), deck.getUserID());
+            newDeck = getDeck(newDeckId);
+            return newDeck;
+
+        }
+        catch(CannotGetJdbcConnectionException ex){
+            throw new DaoException("Cannot connect to the database", ex);
+        }
+        catch(DataIntegrityViolationException ex) {
+            throw new DaoException("Data integrity violation", ex);
+        }
+        catch(BadSqlGrammarException ex) {
+            throw new DaoException("Bad SQL Grammar", ex);
+        }
+    }
+
 
     @Override
     public boolean updateFlashcard(int cardId, String question, String answer) {
@@ -106,27 +157,7 @@ public class JdbcDeckDao implements DeckDao {
         return rowsAffected > 0;
     }
 
-    @Override
-    public Deck addDeck(Deck deck) {
-        Deck newDeck = null;
-        String sql = "INSERT INTO deck (name, color, creator_id)" +
-                "VALUES (?,?, (SELECT user_id FROM users WHERE user_id = ?)) RETURNING deck_id";
-        try {
-            int newDeckId = jdbcTemplate.queryForObject(sql, int.class, deck.getDeckName(),  deck.getColor(), deck.getUserID());
-            newDeck = getDeckById(newDeckId);
-            return newDeck;
 
-        }
-        catch(CannotGetJdbcConnectionException ex){
-            throw new DaoException("Cannot connect to the database", ex);
-        }
-        catch(DataIntegrityViolationException ex) {
-            throw new DaoException("Data integrity violation", ex);
-        }
-        catch(BadSqlGrammarException ex) {
-            throw new DaoException("Bad SQL Grammar", ex);
-        }
-    }
 
 
 

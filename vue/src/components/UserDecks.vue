@@ -2,13 +2,14 @@
   <div id="viewCont">
     <div id="iconCont">
       <DeckIcon
-        v-for="deck in limitedDecks"
+        v-for="deck in decks"
         :key="deck.deckId"
         :deckId="deck.deckId"
         :name="deck.deckName"
         :highScore="deck.highScore"
         :color="deck.color"
-        :linkTarget="{ name: 'session', params: { deckId: deck.deckId } }"
+        :deckId="deck.deckId"
+        :routeName="routeName"
       />
 
     </div>
@@ -20,10 +21,7 @@ import DeckIcon from './DeckIcon.vue';
 import FlashcardService from '../services/FlashcardService';
 
 export default {
-  props: {
-    limit: Number, // Optional prop to limit the number of decks displayed
-    linkTarget: Object
-  },
+  props: ['routeName'],  // Receive routeName prop
   components: {
     DeckIcon,
   },
@@ -32,11 +30,6 @@ export default {
       decks: [],
     };
   },
-  computed: {
-    limitedDecks() {
-      return this.limit ? this.decks.slice(0, this.limit) : this.decks;
-    }
-  },
   created() {
     this.fetchDecks();
   },
@@ -44,7 +37,7 @@ export default {
     async fetchDecks() {
       try {
         const response = await FlashcardService.getDecks(this.$store.state.user.id);
-        this.decks = response.data;
+        this.decks = response.data; // Ensure the API response format matches your expectations
       } catch (error) {
         console.error('Error fetching decks:', error);
       }
@@ -58,9 +51,7 @@ export default {
     font-family: 'Writing';
     src: url(../assets/Fonts/LovelexieHandwritten.ttf);
   }
-  * {
-   
-  }
+
   h2 {
     font-size: 3vw;
     font-weight: 200;

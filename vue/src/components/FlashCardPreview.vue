@@ -3,6 +3,9 @@
     
         
       <p>this is a test</p>
+      <div class="deleteCont">
+      <font-awesome-icon class="delete" :icon="['fas', 'x']" />
+    </div>
       <p id="num"><span>3</span></p>
 </div>
     
@@ -50,6 +53,27 @@
 
   span {
     font-size: 1.5vw;
+  }
+  .delete {
+  
+    
+    font-size: 1.5vw;
+    color: black;
+
+  }
+
+  .deleteCont {
+    height: 2vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    width: 2vw;
+    position: absolute;
+    top: 1vw;
+    background-color: rgb(255, 68, 68);
+    border-radius: 50%;
+    right: 1vw;
   }
   
  

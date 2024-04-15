@@ -5,36 +5,56 @@ const http = axios.create({
 });
 
 export default {
+    getDeckName(id) {
+        return http.get(`/deckName/${id}`)
+    },
     getDeck(id) {
-        return http.get(`/decks/${id}`); 
+        return http.get(`/deck/${id}`)
+    },
+
+    addDeck(name, color) {
+        let currentUser = JSON.parse(localStorage.getItem('user'))
+        return http.post('/adddeck', {
+            deckName: name,
+            color: color,
+            userID: currentUser.id});
+    },
+
+    updateDeck(deck) {
+        return http.post('/updateDeck', {
+          deckId: deck.deckId,
+          deckName: deck.deckName,  // Changed from name to deckName
+          highScore: deck.highScore,
+          color: deck.color,
+          user_id: deck.creator_id
+        });
+    },
+
+
+    getDeck(id) {
+        return http.get(`/decks/${id}`);
       },
 
     deck() {
         return http.get('/deck');
     },
+
     card() {
         return http.get('/card')
     },
     getDecks(id) {
         return http.get(`/decks/${id}`)
     },
-    getCard(id) {
-        return http.get(`/card/${id}`)
+
+    getCards(id) {
+        return http.get(`/cards/${id}`)
     },
-    addDeck(name, color) {
-        let currentUser = JSON.parse(localStorage.getItem('user'))
-        return http.post('/adddeck', {
-            deckName: name, 
-            color: color, 
-            userID: currentUser.id});
-    },
+
   
     addCard(card) {
         return http.post('/card', card)
     },
-    updateDeck(deck) {
-        return http.put(`deck/${deck.id}`)
-    },
+
     updateCard(id) {
         return http.get(`/deck/${id}`)
     },
