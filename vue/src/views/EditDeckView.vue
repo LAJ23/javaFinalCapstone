@@ -175,16 +175,19 @@
     return this.nextCardId++;
   },
   createBlankCard(){
-    FlashcardService.addBlankCard() ;{
-      //create card in data()
-    }
-  },
+    let newCard;
+    newCard.card_id = null;
+    newCard.deck_id = null;
+    newCard.question = '';
+    newCard.answer = '';
+    this.cards.push(newCard);
+    },
   saveOrUpdateCard(card){
     for(let i = 0; i < this.cards.length; i++){
       if (this.cardId === null){
         FlashcardService.saveCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
         .then(response => {
-
+        console.log("Card was saved", response);
         })
         .catch(error => {
         console.error("Failed to create card:", error);
@@ -192,7 +195,7 @@
       }else{
         FlashcardService.updateCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
         .then(response => {
-
+          console.log("Card was updated", response);
         })
         .catch(error => {
           console.error("Failed to update card:", error);

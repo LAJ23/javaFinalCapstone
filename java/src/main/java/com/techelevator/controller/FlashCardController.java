@@ -89,18 +89,24 @@ public class FlashCardController {
 //--------------------------------------------------------------------------------------------------------
 
 
-    @PutMapping("/{cardId}")
+    @PutMapping("/deck/{cardId}")
     public ResponseEntity<String> updateFlashcard(
             @PathVariable int cardId,
             @RequestParam String question,
             @RequestParam String answer) {
 
-        boolean updateSuccessful = deckDao.updateFlashcard(cardId, question, answer);
+        try {
+            boolean updateSuccessful = deckDao.updateFlashcard(cardId, question, answer);
 
-        if (updateSuccessful) {
-            return ResponseEntity.ok("Flashcard updated successfully.");
-        } else {
-            return ResponseEntity.badRequest().body("Failed to update flashcard.");
+            if (updateSuccessful) {
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.badRequest().body("Failed to update flashcard.");
+            }
+        }
+        catch (Exception e) {
+        e.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating card: " + e.getMessage());
         }
     }
 
@@ -137,8 +143,8 @@ public class FlashCardController {
         }
     }
 
-    @RequestMapping(path = "/edit-deck/:deckId", method = RequestMethod.POST)
-    public FlashCard addFlashcard(@RequestBody FlashCard card) {
+    @RequestMapping(path = "/savecard", method = RequestMethod.POST)
+    public FlashCard saveFlashcard(@RequestBody FlashCard card) {
         FlashCard newCard = null;
         newCard = deckDao.addFlashcard(card);
         return newCard;
