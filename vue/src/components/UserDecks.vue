@@ -4,12 +4,14 @@
       <DeckIcon
         v-for="deck in decks"
         :key="deck.deckId"
+        :deckId="deck.deckId"
         :name="deck.deckName"
         :highScore="deck.highScore"
         :color="deck.color"
         :deckId="deck.deckId"
-        :routeName="routeName"  
+        :routeName="routeName"
       />
+
     </div>
   </div>
 </template>

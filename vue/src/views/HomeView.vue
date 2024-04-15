@@ -41,7 +41,7 @@ import UserService from "../services/UserService";
 
 export default {
   components: {
-   
+
     UserDecks,
   },
   data() {

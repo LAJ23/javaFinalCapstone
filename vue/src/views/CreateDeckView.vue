@@ -1,23 +1,28 @@
 <template>
- 
+    <Header/>
+    <div id="createCont">
+      <form  action="">
+    <h3>What would you like to Name your deck?</h3>
+    <input type="text" placeholder="Name" v-model="newDeck.name">
+
   <div id="createCont">
     <form  action="">
   <h3>What would you like to Name your deck?</h3>
   <input type="text" placeholder="Name" v-model="newDeck.name">
 
-  <h3>Choose a color theme:</h3>
-  <select id="colors" name="colors" v-model="newDeck.color">
-    <option disabled value="">Please select one</option>
-<option  value="5">White</option>
-<option id="red" value="1">Red</option>
-<option id="orange" value="2"><span>Orange</span></option>
-<option id="yellow" value="3">Yellow</option>
-<option id="green" value="4">Green</option>
+    <h3>Choose a color theme:</h3>
+    <select id="colors" name="colors" v-model="newDeck.color">
+      <option disabled value="">Please select one</option>
+  <option  value="5">White</option>
+  <option id="red" value="1">Red</option>
+  <option id="orange" value="2"><span>Orange</span></option>
+  <option id="yellow" value="3">Yellow</option>
+  <option id="green" value="4">Green</option>
 </select>
 <button v-on:click.prevent="createDeck" class="btn" type="submit"> Create</button>
 </form>
 </div>
-  
+
 
 </template>
 
@@ -27,16 +32,16 @@ import FlashcardService  from '../services/FlashcardService';
 
 export default {
   components: {
- 
-    
+
+
   },
   data() {
     return {
       newDeck: {
     name: '',
-    highscore: 0, 
-    color: '', 
-    creator_id: null, 
+    highscore: 0,
+    color: '',
+    creator_id: null,
   }
     }
   },
@@ -63,7 +68,7 @@ export default {
 <style scoped>
 * {
   font-family: 'Writing';
- 
+
 }
 h3 {
 font-size: 3vw;
@@ -79,7 +84,7 @@ margin-top: 2vw;
 }
 #red{
   background-color: rgb(255, 114, 114);
- 
+
 }
 #orange{
   background-color: rgb(255, 196, 114);
@@ -99,12 +104,12 @@ margin-top: 2vw;
   display: flex;
   flex-direction: column;
   align-items: center;
- 
+
 }
 
 form {
   width: 60%;
- 
+
 }
 
 input {
@@ -127,7 +132,7 @@ select {
   font-size: 2vw;
   margin-bottom: 2vw;
   padding-top: .5vw;
- 
+
 }
 
 

@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 import com.techelevator.dao.DeckDao;
 import com.techelevator.dao.JdbcDeckDao;
+import com.techelevator.dao.UserDao;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
         import com.techelevator.model.*;
 
+import java.security.Principal;
 import java.util.List;
 //@PreAuthorize("isAuthenticated()")
 
@@ -18,9 +20,11 @@ import java.util.List;
 @CrossOrigin
 public class FlashCardController  {
     private DeckDao deckDao;
+    private UserDao userDao;
 
-    public FlashCardController(DeckDao deckDao) {
+    public FlashCardController(DeckDao deckDao, UserDao userDao) {
         this.deckDao = deckDao;
+        this.userDao = userDao;
     }
 
     @RequestMapping(path = "/decks/{id}", method = RequestMethod.GET)

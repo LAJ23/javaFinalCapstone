@@ -1,19 +1,22 @@
 <template>
- 
+
     <h2>Choose a deck to Edit:</h2>
     <UserDecks route-name="editor" />
 
+  
+          
+   
   </template>
   
   <script>
-  
+
   import UserDecks from '../components/UserDecks.vue';
 
   
   
   export default {
     components: {
-    
+
       UserDecks,
       
     }
@@ -35,4 +38,3 @@
   }
  
   </style>
-  

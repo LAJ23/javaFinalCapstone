@@ -49,7 +49,21 @@ export default {
   width: 20vw;
 }
 
-
+.whiteBK {
+  background-color: rgb(255, 255, 255);
+}
+.greenBK {
+  background-color: rgb(99, 255, 99);
+}
+.redBK {
+  background-color: rgb(255, 99, 99);
+}
+.orangeBK {
+  background-color: rgb(255, 200, 99);
+}
+.yellowBK {
+  background-color: rgb(245, 255, 99);
+}
 
 .deck-image {
   width: 20vw;
