@@ -5,15 +5,16 @@
       <p>{{ question }}</p>
       <div class="deleteCont">
       <button><font-awesome-icon class="delete" :icon="['fas', 'x']" v-on:click="deleteCard"/></button>
+      </div>
+      <p id="num"><span>69</span></p>
     </div>
-      <p id="num"><span>3</span></p>
-</div>
     
  
   </template>
   
   <script>
   import FlashcardService from '../services/FlashcardService';
+
 
   export default {
     props: ['deckId', 'question', 'color', 'answer', 'cardId'],
@@ -37,8 +38,9 @@
     justify-content: center;
     width: 80%;
     height: 10vw;
-    
-
+    padding: 15px;
+    text-align: center;
+    vertical-align: middle;
     background-color: blueviolet;
   }
 
