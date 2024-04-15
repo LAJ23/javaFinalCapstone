@@ -54,13 +54,13 @@ export default {
         return http.get(`/cards/${id}`)
     },
 
-  
-    addBlankCard(card) {
-        return http.post('/card', card)
-    },
-
-    updateCard(id) {
-        return http.get(`/deck/${id}`)
+    updateCard(card) {
+        return http.post(`/deck/${card.id}`, {
+            card_id: card.card_id,
+            deck_id: card.deck_id,
+            question: card.question,
+            answer: card.answer
+        });
     },
     deleteDeck(id) {
         return http.delete(`/deck/${id}`)
