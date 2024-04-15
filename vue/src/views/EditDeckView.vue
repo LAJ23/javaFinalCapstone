@@ -36,15 +36,18 @@
       </div>
         <div id="editorCont" >
         <div id="previewList">
-          <button v-on:click="createBlankCard"><font-awesome-icon :icon="['fas', 'plus']" />   Add Card</button>
+          <button class="addbtn" v-on:click="createBlankCard"><font-awesome-icon :icon="['fas', 'plus']" />   Add Card</button>
+          <div class="previewCont">
           <Preview 
-  v-for="card in cards"
-  :key="card.card_id"  
-  :deckId="deck.deckId"  
-  :question="card.question" 
-  :answer="card.answer" 
-  :color="deck.color"  
+  v-for="(card, index) in cards"
+  :key="card.card_id"
+  :deckId="deck.deckId"
+  :question="card.question"
+  :answer="card.answer"
+  :color="deck.color"
+  :index="index" 
 />
+</div>
           
 
         
@@ -216,6 +219,10 @@
    
   }
 
+  .addbtn {
+    margin-bottom: 1vw;
+  }
+
   
 
   #editCont {
@@ -235,11 +242,18 @@
     font-size: 1vw;
     display: inline;
   }
-
+  .previewCont{
+    overflow-y: scroll;
+  }
+  .previewCont::-webkit-scrollbar {
+    display: none; 
+}
   #previewList {
     width: 25% ;
+    
+    height: 57.3vw;
   
-    row-gap: 1.5vw;
+    
     padding-top: 1vw;
     display: flex;
     flex-direction: column;
