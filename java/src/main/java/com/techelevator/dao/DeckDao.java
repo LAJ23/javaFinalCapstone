@@ -22,8 +22,8 @@ public interface DeckDao {
 
     public boolean updateFlashcard(int cardId, String question, String answer);
 
-    public void addFlashcard(int deckId, String question, String answer);
-
+    public FlashCard addFlashcard(FlashCard card);
+    public FlashCard getCardById(int cardId);
     public boolean deleteDeck(int deckId);
 
 

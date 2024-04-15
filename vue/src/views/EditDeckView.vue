@@ -36,11 +36,11 @@
   </template>
 </h3>
       </div>
-        <font-awesome-icon class="savebtn" :icon="['fars', 'floppy-disk']" />
+        <font-awesome-icon v-on:click="saveOrUpdateCard" class="savebtn" :icon="['fars', 'floppy-disk']" />
       </div>
         <div id="editorCont" >
         <div id="previewList">
-          <button><font-awesome-icon :icon="['fas', 'plus']" />   Add Card</button>
+          <button v-on:click="createBlankCard"><font-awesome-icon :icon="['fas', 'plus']" />   Add Card</button>
           <Preview />
           <Preview />
           <Preview />
@@ -99,6 +99,12 @@
     deckName: 'Default Deck Name',
     isSelectingColor: false,
     selectedColor: 'Red', // Default or initial color
+    newCard: {
+      card_id: null,
+      deck_id: null,
+      question: '',
+      answer: ''
+    }
     };
   },
   components: {
@@ -139,6 +145,7 @@
   });
 },
   toggleEditFront() {
+    // Check if frontText is empty and set a default value
     if (this.frontText.trim() === '') {
       this.frontText = 'Enter your question';
     }
@@ -163,8 +170,37 @@
   setColor(event) {
     this.selectedColor = event.target.options[event.target.selectedIndex].text;
     this.isSelectingColor = false; // Optionally close the dropdown after selection
+  },
+  getNextCardId(){
+    return this.nextCardId++;
+  },
+  createBlankCard(){
+    FlashcardService.addBlankCard() ;{
+      //create card in data()
+    }
+  },
+  saveOrUpdateCard(card){
+    for(let i = 0; i < cards.length; i++){
+      if (card_id === null){
+        FlashcardService.saveCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
+        .then(response => {
+
+        })
+        .catch(error => {
+        console.error("Failed to create card:", error);
+        });
+      }else{
+        FlashcardService.updateCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
+        .then(response => {
+
+        })
+        .catch(error => {
+          console.error("Failed to update card:", error);
+        })
+      }
+    }
+
   }
-  
 },
   }
   </script>

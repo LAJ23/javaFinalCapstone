@@ -29,9 +29,15 @@ export default {
           user_id: deck.creator_id
         });
     },
+    saveCard(card){
+        return http.post('/savecard', {
+            card_id: card.card_id,
+            deck_id: card.deck_id,
+            question: card.question,
+            answer: card.answer
+        });
+    },
 
-
-  
 
     deck() {
         return http.get('/deck');
@@ -49,7 +55,7 @@ export default {
     },
 
   
-    addCard(card) {
+    addBlankCard(card) {
         return http.post('/card', card)
     },
 

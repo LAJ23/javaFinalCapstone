@@ -135,9 +135,36 @@ public class JdbcDeckDao implements DeckDao {
     }
 
     @Override
-    public void addFlashcard(int deckId, String question, String answer) {
+    public FlashCard addFlashcard(FlashCard card) {
+        FlashCard newCard = null;
         String sql = "INSERT INTO flashcard (deck_id, question, answer) VALUES (?, ?, ?)";
-            jdbcTemplate.update(sql, deckId, question, answer);
+        try {
+            int newCardId = jdbcTemplate.queryForObject(sql, int.class, card.getDeckId(), card.getQuestion(), card.getAnswer());
+            newCard = getCardById(newCardId);
+            return newCard;
+        }
+        catch(CannotGetJdbcConnectionException ex){
+            throw new DaoException("Cannot connect to the database", ex);
+        }
+        catch(DataIntegrityViolationException ex) {
+            throw new DaoException("Data integrity violation", ex);
+        }
+        catch(BadSqlGrammarException ex) {
+            throw new DaoException("Bad SQL Grammar", ex);
+        }
+    }
+
+    @Override
+    public FlashCard getCardById(int cardId) {
+        FlashCard card = null;
+        String sql = "SELECT * " +
+                "FROM flashcard " +
+                "WHERE card_id = ?;";
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, cardId);
+        if (results.next()) {
+            card = mapRowToFlash(results);
+        }
+        return card;
     }
 
     @Override

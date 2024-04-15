@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin
-public class FlashCardController  {
+public class FlashCardController {
     private DeckDao deckDao;
     private UserDao userDao;
 
@@ -38,11 +38,13 @@ public class FlashCardController  {
         List<FlashCard> cards = deckDao.getAllFlashcards(id);
         return cards;
     }
+
     @RequestMapping(path = "/deckName/{id}", method = RequestMethod.GET)
     public String getDeckName(@PathVariable int id) {
         String name = deckDao.getDeckName(id);
         return name;
     }
+
     @RequestMapping(path = "deck/{deckId}", method = RequestMethod.GET)
     public Deck getDeck(@PathVariable int deckId) {
         Deck deck = deckDao.getDeck(deckId);
@@ -79,8 +81,6 @@ public class FlashCardController  {
     }
 
 
-
-
     @RequestMapping(path = "/score/{id}", method = RequestMethod.GET)
     public String getHighScore(@PathVariable int id) {
         String score = deckDao.getDeckHighScore(id);
@@ -103,6 +103,7 @@ public class FlashCardController  {
             return ResponseEntity.badRequest().body("Failed to update flashcard.");
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteFlashcard(@PathVariable("id") int id) {
         boolean isDeleted = deckDao.deleteFlashcard(id);
@@ -114,18 +115,17 @@ public class FlashCardController  {
     }
 
 
-
-        @PutMapping("/{deckId}")
-        public ResponseEntity<?> updateDeck(@PathVariable("deckId") int deckId,
-                                            @RequestParam("color") int color,
-                                            @RequestParam("name") String name) {
-            boolean isUpdated = deckDao.updateDeck(deckId, color, name);
-            if (isUpdated) {
-                return new ResponseEntity<>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-            }
+    @PutMapping("/{deckId}")
+    public ResponseEntity<?> updateDeck(@PathVariable("deckId") int deckId,
+                                        @RequestParam("color") int color,
+                                        @RequestParam("name") String name) {
+        boolean isUpdated = deckDao.updateDeck(deckId, color, name);
+        if (isUpdated) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
 
     @DeleteMapping("/{deckId}")
     public ResponseEntity<?> deleteDeck(@PathVariable("deckId") int deckId) {
@@ -137,12 +137,19 @@ public class FlashCardController  {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Void> addFlashcard(@RequestBody FlashCard flashCard) {
-        deckDao.addFlashcard(flashCard.getDeckId(), flashCard.getQuestion(), flashCard.getAnswer());
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    @RequestMapping(path = "/edit-deck/:deckId", method = RequestMethod.POST)
+    public FlashCard addFlashcard(@RequestBody FlashCard card) {
+        FlashCard newCard = null;
+        newCard = deckDao.addFlashcard(card);
+        return newCard;
     }
-    }
+}
+//    @PostMapping
+//    public ResponseEntity<Void> addFlashcard(@RequestBody FlashCard flashCard) {
+//        deckDao.addFlashcard(flashCard.getDeckId(), flashCard.getQuestion(), flashCard.getAnswer());
+//        return ResponseEntity.status(HttpStatus.CREATED).build();
+//    }
+//    }
 
 
 
