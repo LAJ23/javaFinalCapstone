@@ -13,6 +13,8 @@
 </template>
 
 <script>
+import FlashcardService from '../services/FlashcardService';
+
 export default {
   props: ['isSelected', 'deckId', 'question', 'answer', 'cardId', 'index', 'color'],
   methods: {
@@ -22,9 +24,8 @@ export default {
     },
     deleteCard() {
       if (confirm('Are you sure you want to delete this card?')) {
-        // Logic to delete the card goes here
-        // You might need to emit another event or call an API
-        this.$emit('deleteCard', this.cardId);
+        console.log(this.cardId, this.index)
+        this.$emit('deleteCard', { cardId: this.cardId, index: this.index });
       }
     }
   },
@@ -57,7 +58,8 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 10vw !important;
+  
+  height: 13vw ;
   
 }
 

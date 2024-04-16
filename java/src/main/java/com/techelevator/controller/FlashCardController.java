@@ -110,7 +110,7 @@ public class FlashCardController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteFlashcard(@PathVariable("id") int card_id) {
         boolean isDeleted = deckDao.deleteFlashcard(card_id);
         if (isDeleted) {

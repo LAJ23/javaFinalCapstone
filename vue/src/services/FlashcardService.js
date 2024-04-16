@@ -66,6 +66,6 @@ export default {
         return http.delete(`/deck/${id}`)
     },
     deleteCard(id) {
-        return http.get(`/card/${id}`)
+        return http.delete(`/delete/${id}`)
     },
 }

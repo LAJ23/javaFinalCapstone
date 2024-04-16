@@ -1,29 +1,32 @@
 <template>
+  
     <div id="editView">
         <div id="editCont">
           <div id="top">
             <div>
               <h2>
       <template v-if="isEditingDeckName">
-        <input class="deckTitle" v-model="title" @blur="toggleEditDeckName" @keyup.enter="toggleEditDeckName" placeholder="Enter Deck Name">
+        <input class="deckTitle" v-model="deckName" @blur="toggleEditDeckName" @keyup.enter="toggleEditDeckName" placeholder="Enter Deck Name">
       </template>
       <template v-else>
-        {{ title }}
+        {{ deckName }}
         <div class="btn btn2" @click="toggleEditDeckName">
           <font-awesome-icon :icon="['fas', 'pencil']" />
         </div>
       </template>
     </h2>
-    <h3>color theme:
+    <h3>Color theme:
   <template v-if="isSelectingColor">
     <select id="colors" name="colors" @change="setColor">
-      <option value="white">White</option>
-      <option value="red">Red</option>
-      <option value="orange">Orange</option>
-      <option value="yellow">Yellow</option>
-      <option value="green">Green</option>
-    </select>
+      
+<option  value="5">White</option>
+<option class="redBK" value="1">Red</option>
+<option class="orangeBK" value="2"><span>Orange</span></option>
+<option class="yellowBK" value="3">Yellow</option>
+<option class="greenBK" value="4">Green</option>
 
+    </select>
+    
   </template>
   <template v-else>
     <span id="color">{{ selectedColor }}</span>
@@ -31,35 +34,30 @@
       <font-awesome-icon :icon="['fas', 'pencil']" />
     </div>
   </template>
-</h3> 
-       </div> 
-             <button class= "savebtn" v-on:click="saveOrUpdateCard" >
-        <font-awesome-icon class="savebtn" :icon="['far', 'floppy-disk']" />
-            </button> 
-       </div>
+</h3>
+      </div>
+        <font-awesome-icon v-on:click="saveOrUpdateCard" class="savebtn" :icon="['fars', 'floppy-disk']" />
+      </div>
         <div id="editorCont" >
-          <div id="previewCont">
         <div id="previewList">
-          <button class="addbtn" v-on:click="createBlankCard">
-            <font-awesome-icon :icon="['fas', 'plus']" /> Add Card
-          </button>
+          <button v-on:click="createBlankCard"><font-awesome-icon :icon="['fas', 'plus']" />   Add Card</button>
           <Preview 
-  v-for="(card, index) in cards"
-  :key="card.card_id"
-  :deckId="deck.deckId"
-  :question="card.question"
-  :answer="card.answer"
-  :color="deck.color"
-  :index="index"
-  :isSelected="index === selectedIndex"
-  @selectCard="handleSelectCard(index, card)"
-/>
-</div>
-</div>
+      v-for="(card, index) in cards"
+      :key="card.card_id"
+      :cardId="card.cardId"
+      :deckId="deck.deckId"
+      :question="card.question"
+      :answer="card.answer"
+      :color="deck.color"
+      :index="index"
+      :isSelected="index === selectedIndex"
+      @selectCard="handleSelectCard(index, card)"
+      @deleteCard="handleDeleteCard"
+    />
           
 
         
-    
+    </div>
     <div id="cardEditor" >
       <div class="card" id="frontCard">
   <template v-if="isEditingFront">
@@ -82,9 +80,9 @@
 </div>
     </div>
 </div>
+      
 </div>
 </div>
-
     
  
   </template>
@@ -95,133 +93,134 @@
 
   export default {
     data() {
-      return {
-        cards: [],
-        deck: {
-          deckName: '',
-          highScore: 0,
-          color: '',
-          creator_id: null,
-          deckId: ''
-        },
-        isEditingFront: false,
-        isEditingBack: false,
-        frontText: 'Is water Wet?',
-        backText: 'No, water is not wet',
-        isEditingDeckName: false,
-        deckName: 'Default Deck Name',
-        isSelectingColor: false,
-        title: '',
-        selectedIndex: 0,
-        selectedColor: 'Red',
-        newCard: {
-          card_id: null,
-          deck_id: null,
-          question:'',
-          answer: ''
-        }
-      };
-    },
-    components: {
-
-      Preview,
-    },
-    created() {
-      const deckId = this.$route.params.deckId;
-      console.log("Received Deck ID:", deckId);
-      if (deckId) {
-        this.getDeck(deckId);
-        this.fetchCards(deckId);
-      } else {
-        console.error('No deckId provided in the route.');
-        this.$router.push({name: 'home'});  // Fallback to a safe route if no ID
-      }
-    },
-    methods: {
-      fetchCards(deckId) {
+    return {
+      cards: [],
+      deck: {
+        deckName: '',
+        highScore: 0,
+        color: '',
+        creator_id: null,
+        deckId: ''
+      },
+      isEditingFront: false,
+      isEditingBack: false,
+      // Store editable content
+      frontText: 'Is water Wet?',
+      backText: 'No, water is not wet',
+      isEditingDeckName: false,
+      selectedIndex: 0,
+      title: '',
+    deckName: 'Default Deck Name',
+    isSelectingColor: false,
+    selectedColor: 'Red', // Default or initial color
+    newCard: {
+      card_id: null,
+      deck_id: null,
+      question: '',
+      answer: ''
+    }
+    };
+  },
+  components: {
+   
+    Preview,
+  },
+  created() {
+  const deckId = this.$route.params.deckId;
+  console.log("Received Deck ID:", deckId);  // Verify the deck ID is received
+  if (deckId) {
+    this.getDeck(deckId);
+    this.fetchCards(deckId);
+  } else {
+    console.error('No deckId provided in the route.');
+    this.$router.push({ name: 'home' });  // Fallback to a safe route if no ID
+  }
+},
+  methods: {
+    fetchCards(deckId) {
   FlashcardService.getCards(deckId).then(response => {
     this.cards = response.data;
     console.log('Cards fetched:', response.data);
-    if (this.cards.length > 0) {
-      this.frontText = this.cards[0].question;  // Set the frontText
-      this.backText = this.cards[0].answer;     // Set the backText
-    }
   }).catch(error => {
     console.error('Failed to fetch cards:', error);
   });
 },
-      getDeck(deckId) {
-        FlashcardService.getDeck(deckId).then(response => {
-          const data = response.data;
-          this.deck.deckName = data.deckName;
-          this.deck.highScore = data.highScore;
-          this.deck.color = data.color;
-          this.deck.creator_id = data.userID;
-          this.deck.deckId = data.deckId;
-          this.title = data.deckName;
-          console.log('Deck details fetched:', data);
-        }).catch(error => {
-          console.error('Failed to fetch deck details:', error);
-        });
-      },
-      handleSelectCard(index, card) {
+    getDeck(deckId) {
+  FlashcardService.getDeck(deckId).then(response => {
+    const data = response.data;
+    this.deck.deckName = data.deckName;
+    this.deck.highScore = data.highScore;
+    this.deck.color = data.color;
+    this.deck.creator_id = data.userID;
+    this.deck.deckId = data.deckId;
+    console.log('Deck details fetched:', data);
+  }).catch(error => {
+    console.error('Failed to fetch deck details:', error);
+  });
+},
+  toggleEditFront() {
+    // Check if frontText is empty and set a default value
+    if (this.frontText.trim() === '') {
+      this.frontText = 'Enter your question';
+    }
+    this.isEditingFront = !this.isEditingFront;
+  },
+  toggleEditBack() {
+    // Check if backText is empty and set a default value
+    if (this.backText.trim() === '') {
+      this.backText = 'Enter your answer';
+    }
+    this.isEditingBack = !this.isEditingBack;
+  },
+  toggleEditDeckName() {
+    if (this.deckName.trim() === '') {
+      this.deckName = 'Unnamed Deck'; // Default deck name if empty
+    }
+    this.isEditingDeckName = !this.isEditingDeckName;
+  },
+  toggleColorSelection() {
+    this.isSelectingColor = !this.isSelectingColor;
+  },
+  setColor(event) {
+    this.selectedColor = event.target.options[event.target.selectedIndex].text;
+    this.isSelectingColor = false; // Optionally close the dropdown after selection
+  },
+  handleSelectCard(index, card) {
     this.selectedIndex = index;
     this.frontText = card.question;
     this.backText = card.answer;
   },
-      toggleEditFront() {
-        // Check if frontText is empty and set a default value
-        if (this.frontText.trim() === '') {
-          this.frontText = 'Enter your question';
-        }
-        this.isEditingFront = !this.isEditingFront;
-      },
-      toggleEditBack() {
-        // Check if backText is empty and set a default value
-        if (this.backText.trim() === '') {
-          this.backText = 'Enter your answer';
-        }
-        this.isEditingBack = !this.isEditingBack;
-      },
-      toggleEditDeckName() {
-        if (this.deckName.trim() === '') {
-          this.deckName = 'Unnamed Deck'; // Default deck name if empty
-        }
-        this.isEditingDeckName = !this.isEditingDeckName;
-      },
-      toggleColorSelection() {
-        this.isSelectingColor = !this.isSelectingColor;
-      },
-      setColor(event) {
-        this.selectedColor = event.target.options[event.target.selectedIndex].text;
-        this.isSelectingColor = false; // Optionally close the dropdown after selection
-      },
-      getNextCardId() {
-        return this.nextCardId++;
-      },
-      createBlankCard() {
-        if (this.frontText.trim() === '' || this.backText.trim() === '') {
-          alert('Please enter both a question and an answer.');
-          return;
-        }
-        let newCard = {
-          card_id: null,
-          deck_id: this.deck.deckId,
-          question: this.frontText,
-          answer: this.backText
-        };
-        this.cards.push(newCard);
-        alert('Card added successfully!');
-        this.frontText = 'QUESTION';
-        this.backText = 'ANSWER';
-      },
-
+  handleDeleteCard({ cardId, index }) {
+    if (cardId) {
+      this.removeCardFromLocal(index);
+      FlashcardService.deleteCard(cardId).then(() => {
+        
+        console.log("Card deleted from server:", cardId);
+      }).catch(error => {
+        console.error("Failed to delete card:", error);
+      });
+    } else {
+      console.log(cardId)
+      this.removeCardFromLocal(index);
+    }
+  },
+  removeCardFromLocal(index) {
+    this.cards.splice(index, 1);
+  },
+  getNextCardId(){
+    return this.nextCardId++;
+  },
+  createBlankCard(){
+    FlashcardService.addBlankCard() ;{
+      //create card in data()
+    }
+  },
   saveOrUpdateCard(card){
     for(let i = 0; i < this.cards.length; i++){
       if (this.cardId === null){
         FlashcardService.saveCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
         .then(response => {
-        console.log("Card was saved", response);
+
         })
         .catch(error => {
         console.error("Failed to create card:", error);
@@ -229,7 +228,7 @@
       }else{
         FlashcardService.updateCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
         .then(response => {
-          console.log("Card was updated", response);
+
         })
         .catch(error => {
           console.error("Failed to update card:", error);
@@ -248,10 +247,11 @@
    
   }
 
-  .addbtn {
-    margin-bottom: 1vw;
+  select {
+    font-size: 2vw;
   }
 
+  
 
   #editCont {
     width: 90%;
@@ -270,28 +270,19 @@
     font-size: 1vw;
     display: inline;
   }
-  #previewCont{
-    overflow-y: scroll;
-    width: 25%;
-    height: 60vw;
+
+  #previewList {
+    width: 25% ;
+  
+    row-gap: 1.5vw;
+    padding-top: 1vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(133, 133, 133);
+    border-radius: 1vw;
+    padding-bottom: 1.5vw;
   }
-  #previewCont::-webkit-scrollbar {
-    display: none;
-}
-#previewList {
-  width: 100%;
-  
-  padding-top: 1vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  
-  background-color: rgb(133, 133, 133);
-  border-radius: 1vw;
-  padding-bottom: 1.5vw;
-  
-}
 
   #editView {
     width: 100%;
@@ -306,16 +297,14 @@
     
     display: flex;
     flex-direction: column;
-    width: 100%;
-    
+    width: 75%;
     background-color: rgb(226, 226, 226);
     align-items: center;
     justify-items: center;
 
   }
   #editorCont {
-    display:flex;
-    flex-direction: row;
+    display: flex;
     width: 100%;
     
   }
