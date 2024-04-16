@@ -29,13 +29,13 @@ export default {
           user_id: deck.creator_id
         });
     },
-    saveCard(card){
+    saveCard(card) {
         return http.post('/savecard', {
-            deck_id: card.deck_id,
-            question: card.question,
-            answer: card.answer
+          deck_id: card.deck_id,
+          question: card.question,
+          answer: card.answer
         });
-    },
+      },
 
 
     deck() {
@@ -55,7 +55,7 @@ export default {
 
     updateCard(card) {
         return http.post(`/deck/${card.cardId}`, {
-            card_id: card.cardId,
+            cardId: card.cardId,
             deck_id: card.deck_id,
             question: card.question,
             answer: card.answer

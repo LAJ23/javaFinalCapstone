@@ -6,10 +6,10 @@
             <div>
               <h2>
       <template v-if="isEditingDeckName">
-        <input class="deckTitle" v-model="title" @blur="toggleEditDeckName" @keyup.enter="toggleEditDeckName" placeholder="Enter Deck Name">
+        <input class="deckTitle" v-model="deck.deckName" @blur="toggleEditDeckName" @keyup.enter="toggleEditDeckName" placeholder="Enter Name">
       </template>
       <template v-else>
-        {{ title }}
+        {{ deck.deckName }}
         <div class="btn btn2" @click="toggleEditDeckName">
           <font-awesome-icon :icon="['fas', 'pencil']" />
         </div>
@@ -18,14 +18,13 @@
     <h3>Color theme:
   <template v-if="isSelectingColor">
     <select id="colors" name="colors" @change="setColor">
-
-<option  value="5">White</option>
-<option class="redBK" value="1">Red</option>
-<option class="orangeBK" value="2"><span>Orange</span></option>
-<option class="yellowBK" value="3">Yellow</option>
-<option class="greenBK" value="4">Green</option>
-
-    </select>
+      <option class="" value="">Select Color</option>
+    <option class="redBK" value="1">Red</option>
+    <option class="orangeBK" value="2">Orange</option>
+    <option class="yellowBK" value="3">Yellow</option>
+    <option class="greenBK" value="4">Green</option>
+    <option class="whiteBK" value="5">White</option>
+</select>
 
   </template>
   <template v-else>
@@ -65,7 +64,7 @@
   </div>
     </div>
     <div id="cardEditor" >
-      <div class="card" id="frontCard">
+      <div class="card" :class="colorClass" id="frontCard">
   <template v-if="isEditingFront">
     <input v-model="newCard.question" @blur="toggleEditFront" @keyup.enter="toggleEditFront" placeholder="Enter your question">
   </template>
@@ -75,7 +74,7 @@
   <p class="side">Front</p>
 </div>
 
-<div class="card" id="backCard">
+<div class="card" :class="colorClass" id="backCard">
   <template v-if="isEditingBack">
     <input v-model="newCard.answer" @blur="toggleEditBack" @keyup.enter="toggleEditBack" placeholder="Enter your answer">
   </template>
@@ -193,8 +192,10 @@
   },
   setColor(event) {
     this.selectedColor = event.target.options[event.target.selectedIndex].text;
-    this.isSelectingColor = false; // Optionally close the dropdown after selection
-  },
+    this.deck.color = event.target.value;
+    console.log("Selected color value:", this.deck.color); // Debugging: Check the actual value being set
+    this.isSelectingColor = false;
+},
   handleSelectCard(index, card) {
     this.selectedIndex = index;
     this.newCard = card;  // Pointing newCard to the selected card
@@ -233,18 +234,19 @@
 },
 saveOrUpdateDeck() {
   this.cards.forEach(card => {
-    console.log(card);  // Ensure cardId is correctly logged
-    if (card.card_id === undefined) {  // Check if the card ID is undefined
+     
+    if (card.cardId === undefined) {  
+      card.deck_id = this.deck.deckId; 
       FlashcardService.saveCard(card)
       .then(response => {
         console.log("Card was saved", response.data);
-        card.card_id = response.data.card_id;  // Update the local card's ID with the ID returned from the server
+        card.cardId = response.data.card_id;  
       })
       .catch(error => {
         console.error("Failed to create card:", error);
       });
     } else {
-      // Assuming `updateCard` updates an existing card
+      console.log(card) 
       FlashcardService.updateCard(card)
       .then(response => {
         console.log("Card was updated", response);
@@ -255,32 +257,19 @@ saveOrUpdateDeck() {
     }
   });
 },
-      
 
-      // saveOrUpdateDeck(card) {
-      //   for (let i = 0; i < this.cards.length; i++) {
-      //     let card = this.cards[i];
-      //     console.log(card);
-      //     if (card.cardId === undefined) {
-      //       FlashcardService.saveCard(card.deck_id, card.question, card.answer)
-      //           .then(response => {
-      //             console.log("Card was saved", response);
-      //             card.cardId = response.data.cardId;  // Assuming the response contains the new ID
-      //           })
-      //           .catch(error => {
-      //             console.error("Failed to create card:", error);
-      //           });
-      //     } else {
-      //       FlashcardService.updateCard(card.deck_id, card.question, card.answer)
-      //           .then(response => {
-      //             console.log("Card was updated", response);
-      //           })
-      //           .catch(error => {
-      //             console.error("Failed to update card:", error);
-      //           });
-      //     }
-      //   }
-      // }
+},computed: {
+  colorClass() {
+    console.log("Current color code:", this.deck.color); // Debugging line to check what value is being used
+    switch (this.deck.color) {
+      case '1': return 'redBK';
+      case '2': return 'orangeBK';
+      case '3': return 'yellowBK';
+      case '4': return 'greenBK';
+      case '5': return 'whiteBK';
+      default: return 'whiteBK';
+    }
+  },
 },
   }
   </script>
@@ -386,7 +375,7 @@ saveOrUpdateDeck() {
     margin: 2vw;
     height: 25vw;
     
-    background-color: rgb(255, 88, 88);;
+   
   }
   input {
     width: 90%;
@@ -436,4 +425,22 @@ saveOrUpdateDeck() {
   .deckTitle {
     font-family:  'Writing';
   }
+  .redBK {
+    background-color: rgb(255, 101, 101);
+}
+.orangeBK {
+    background-color: rgb(255, 200, 99);
+}
+.yellowBK {
+    background-color: rgb(255, 255, 97);
+}
+
+.greenBK {
+    background-color: rgb(101, 255, 101);
+}
+
+.whiteBK {
+    background-color: white;
+    border: 1px solid black;
+}
   </style>

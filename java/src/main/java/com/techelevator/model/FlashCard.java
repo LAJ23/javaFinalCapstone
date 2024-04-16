@@ -3,6 +3,7 @@ package com.techelevator.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FlashCard {
+  @JsonProperty("card_id")
 
   private int cardId;
 @JsonProperty("deck_id")
