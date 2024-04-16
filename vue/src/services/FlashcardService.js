@@ -31,7 +31,6 @@ export default {
     },
     saveCard(card){
         return http.post('/savecard', {
-            card_id: card.card_id,
             deck_id: card.deck_id,
             question: card.question,
             answer: card.answer

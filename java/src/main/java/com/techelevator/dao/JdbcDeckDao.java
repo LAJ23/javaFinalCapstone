@@ -137,7 +137,7 @@ public class JdbcDeckDao implements DeckDao {
     @Override
     public FlashCard addFlashcard(FlashCard card) {
         FlashCard newCard = null;
-        String sql = "INSERT INTO flashcard (deck_id, question, answer) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO flashcard (deck_id, question, answer) VALUES (?, ?, ?) RETURNING card_id";
         try {
             int newCardId = jdbcTemplate.queryForObject(sql, int.class, card.getDeckId(), card.getQuestion(), card.getAnswer());
             newCard = getCardById(newCardId);
