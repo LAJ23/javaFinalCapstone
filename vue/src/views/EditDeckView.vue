@@ -5,10 +5,10 @@
             <div>
               <h2>
       <template v-if="isEditingDeckName">
-        <input class="deckTitle" v-model="deckName" @blur="toggleEditDeckName" @keyup.enter="toggleEditDeckName" placeholder="Enter Deck Name">
+        <input class="deckTitle" v-model="title" @blur="toggleEditDeckName" @keyup.enter="toggleEditDeckName" placeholder="Enter Deck Name">
       </template>
       <template v-else>
-        {{ deckName }}
+        {{ title }}
         <div class="btn btn2" @click="toggleEditDeckName">
           <font-awesome-icon :icon="['fas', 'pencil']" />
         </div>
@@ -31,15 +31,16 @@
       <font-awesome-icon :icon="['fas', 'pencil']" />
     </div>
   </template>
-</h3>
-      </div>
-            <button class= "savebtn" v-on:click="saveOrUpdateCard" >
+</h3> 
+       </div> 
+             <button class= "savebtn" v-on:click="saveOrUpdateCard" >
         <font-awesome-icon class="savebtn" :icon="['far', 'floppy-disk']" />
-            </button>
-      </div>
+            </button> 
+       </div>
         <div id="editorCont" >
+          <div id="previewCont">
         <div id="previewList">
-          <button v-on:click="createBlankCard">
+          <button class="addbtn" v-on:click="createBlankCard">
             <font-awesome-icon :icon="['fas', 'plus']" /> Add Card
           </button>
           <Preview 
@@ -50,12 +51,15 @@
   :answer="card.answer"
   :color="deck.color"
   :index="index"
+  :isSelected="index === selectedIndex"
+  @selectCard="handleSelectCard(index, card)"
 />
+</div>
 </div>
           
 
         
-    </div>
+    
     <div id="cardEditor" >
       <div class="card" id="frontCard">
   <template v-if="isEditingFront">
@@ -78,9 +82,9 @@
 </div>
     </div>
 </div>
-      
 </div>
 </div>
+
     
  
   </template>
@@ -102,19 +106,19 @@
         },
         isEditingFront: false,
         isEditingBack: false,
-        // Store editable content
         frontText: 'Is water Wet?',
         backText: 'No, water is not wet',
         isEditingDeckName: false,
         deckName: 'Default Deck Name',
         isSelectingColor: false,
-        selectedColor: 'Red', // Default or initial color
+        title: '',
+        selectedIndex: 0,
+        selectedColor: 'Red',
         newCard: {
           card_id: null,
           deck_id: null,
           question:'',
           answer: ''
-
         }
       };
     },
@@ -124,7 +128,7 @@
     },
     created() {
       const deckId = this.$route.params.deckId;
-      console.log("Received Deck ID:", deckId);  // Verify the deck ID is received
+      console.log("Received Deck ID:", deckId);
       if (deckId) {
         this.getDeck(deckId);
         this.fetchCards(deckId);
@@ -135,13 +139,17 @@
     },
     methods: {
       fetchCards(deckId) {
-        FlashcardService.getCards(deckId).then(response => {
-          this.cards = response.data;
-          console.log('Cards fetched:', response.data);
-        }).catch(error => {
-          console.error('Failed to fetch cards:', error);
-        });
-      },
+  FlashcardService.getCards(deckId).then(response => {
+    this.cards = response.data;
+    console.log('Cards fetched:', response.data);
+    if (this.cards.length > 0) {
+      this.frontText = this.cards[0].question;  // Set the frontText
+      this.backText = this.cards[0].answer;     // Set the backText
+    }
+  }).catch(error => {
+    console.error('Failed to fetch cards:', error);
+  });
+},
       getDeck(deckId) {
         FlashcardService.getDeck(deckId).then(response => {
           const data = response.data;
@@ -150,11 +158,17 @@
           this.deck.color = data.color;
           this.deck.creator_id = data.userID;
           this.deck.deckId = data.deckId;
+          this.title = data.deckName;
           console.log('Deck details fetched:', data);
         }).catch(error => {
           console.error('Failed to fetch deck details:', error);
         });
       },
+      handleSelectCard(index, card) {
+    this.selectedIndex = index;
+    this.frontText = card.question;
+    this.backText = card.answer;
+  },
       toggleEditFront() {
         // Check if frontText is empty and set a default value
         if (this.frontText.trim() === '') {
@@ -239,7 +253,6 @@
   }
 
 
-
   #editCont {
     width: 90%;
 
@@ -257,26 +270,28 @@
     font-size: 1vw;
     display: inline;
   }
-  .previewCont{
+  #previewCont{
     overflow-y: scroll;
+    width: 25%;
+    height: 60vw;
   }
-  .previewCont::-webkit-scrollbar {
+  #previewCont::-webkit-scrollbar {
     display: none;
 }
-  #previewList {
-    width: 25% ;
-
-    height: 57.3vw;
-
-
-    padding-top: 1vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: rgb(133, 133, 133);
-    border-radius: 1vw;
-    padding-bottom: 1.5vw;
-  }
+#previewList {
+  width: 100%;
+  
+  padding-top: 1vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  
+  background-color: rgb(133, 133, 133);
+  border-radius: 1vw;
+  padding-bottom: 1.5vw;
+  
+}
 
   #editView {
     width: 100%;
@@ -291,14 +306,16 @@
     
     display: flex;
     flex-direction: column;
-    width: 75%;
+    width: 100%;
+    
     background-color: rgb(226, 226, 226);
     align-items: center;
     justify-items: center;
 
   }
   #editorCont {
-    display: flex;
+    display:flex;
+    flex-direction: row;
     width: 100%;
     
   }

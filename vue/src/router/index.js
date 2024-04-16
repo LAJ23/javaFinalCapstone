@@ -31,15 +31,7 @@ const routes = [
       requiresAuth: true
     }
   },
-  // {
-  //   path: '/',
-  //   name: 'editor',
-  //   component: EditDeckView,
-  //   meta: {
-  //     showHeader: true,
-  //     requiresAuth: true
-  //   }
-  // },
+  
 
     {
         path: '/session/:deckId',
@@ -48,11 +40,15 @@ const routes = [
         props: true
     },
     {
-        path: '/edit-deck/:deckId',
-        name: 'editDeck',
-        component: () => import('@/views/EditDeckView.vue'),
-        props: true
-    },
+      path: '/edit-deck/:deckId',
+      name: 'editDeck',
+      component: () => import('@/views/EditDeckView.vue'),
+      props: true,
+      meta: {  // Ensure 'meta' is used here
+        showHeader: true,
+        requiresAuth: true
+      }
+  },
   {
     path: '/edit',
     name: 'edit',
@@ -62,6 +58,7 @@ const routes = [
       requiresAuth: true
     }
   },
+  
   {
     path: '/flashfront',
     name: 'flashfront',
