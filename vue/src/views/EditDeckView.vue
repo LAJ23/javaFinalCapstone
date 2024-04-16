@@ -1,4 +1,5 @@
 <template>
+
     <div id="editView">
         <div id="editCont">
           <div id="top">
@@ -14,14 +15,16 @@
         </div>
       </template>
     </h2>
-    <h3>color theme:
+    <h3>Color theme:
   <template v-if="isSelectingColor">
     <select id="colors" name="colors" @change="setColor">
-      <option value="white">White</option>
-      <option value="red">Red</option>
-      <option value="orange">Orange</option>
-      <option value="yellow">Yellow</option>
-      <option value="green">Green</option>
+
+<option  value="5">White</option>
+<option class="redBK" value="1">Red</option>
+<option class="orangeBK" value="2"><span>Orange</span></option>
+<option class="yellowBK" value="3">Yellow</option>
+<option class="greenBK" value="4">Green</option>
+
     </select>
 
   </template>
@@ -36,7 +39,7 @@
           <span class="savebtn" @click="saveOrUpdateDeck">
             Save This Deck
             <font-awesome-icon icon="far, fa-floppy-disk" />
-          </span> 
+          </span>
        </div>
         <div id="editorCont" >
           <div id="previewCont">
@@ -45,22 +48,22 @@
             <font-awesome-icon :icon="['fas', 'plus']" /> Add Card
           </button>
           <Preview 
-  v-for="(card, index) in cards"
-  :key="card.cardId"
-  :deckId="deck.deckId"
-  :question="card.question"
-  :answer="card.answer"
-  :color="deck.color"
-  :index="index"
-  :isSelected="index === selectedIndex"
-  @selectCard="handleSelectCard(index, card)"
-/>
-</div>
-</div>
-          
+      v-for="(card, index) in cards"
+      :key="card.card_id"
+      :cardId="card.cardId"
+      :deckId="deck.deckId"
+      :question="card.question"
+      :answer="card.answer"
+      :color="deck.color"
+      :index="index"
+      :isSelected="index === selectedIndex"
+      @selectCard="handleSelectCard(index, card)"
+      @deleteCard="handleDeleteCard"
+    />
 
-        
-    
+
+
+    </div>
     <div id="cardEditor" >
       <div class="card" id="frontCard">
   <template v-if="isEditingFront">
@@ -151,6 +154,98 @@
     console.error('Failed to fetch cards:', error);
   });
 },
+    getDeck(deckId) {
+  FlashcardService.getDeck(deckId).then(response => {
+    const data = response.data;
+    this.deck.deckName = data.deckName;
+    this.deck.highScore = data.highScore;
+    this.deck.color = data.color;
+    this.deck.creator_id = data.userID;
+    this.deck.deckId = data.deckId;
+    console.log('Deck details fetched:', data);
+  }).catch(error => {
+    console.error('Failed to fetch deck details:', error);
+  });
+},
+  toggleEditFront() {
+    // Check if frontText is empty and set a default value
+    if (this.frontText.trim() === '') {
+      this.frontText = 'Enter your question';
+    }
+    this.isEditingFront = !this.isEditingFront;
+  },
+  toggleEditBack() {
+    // Check if backText is empty and set a default value
+    if (this.backText.trim() === '') {
+      this.backText = 'Enter your answer';
+    }
+    this.isEditingBack = !this.isEditingBack;
+  },
+  toggleEditDeckName() {
+    if (this.deckName.trim() === '') {
+      this.deckName = 'Unnamed Deck'; // Default deck name if empty
+    }
+    this.isEditingDeckName = !this.isEditingDeckName;
+  },
+  toggleColorSelection() {
+    this.isSelectingColor = !this.isSelectingColor;
+  },
+  setColor(event) {
+    this.selectedColor = event.target.options[event.target.selectedIndex].text;
+    this.isSelectingColor = false; // Optionally close the dropdown after selection
+  },
+  handleSelectCard(index, card) {
+    this.selectedIndex = index;
+    this.frontText = card.question;
+    this.backText = card.answer;
+  },
+  handleDeleteCard({ cardId, index }) {
+    if (cardId) {
+      this.removeCardFromLocal(index);
+      FlashcardService.deleteCard(cardId).then(() => {
+
+        console.log("Card deleted from server:", cardId);
+      }).catch(error => {
+        console.error("Failed to delete card:", error);
+      });
+    } else {
+      console.log(cardId)
+      this.removeCardFromLocal(index);
+    }
+  },
+  removeCardFromLocal(index) {
+    this.cards.splice(index, 1);
+  },
+  getNextCardId(){
+    return this.nextCardId++;
+  },
+  createBlankCard(){
+    FlashcardService.addBlankCard() ;{
+      //create card in data()
+    }
+  },
+  saveOrUpdateCard(card){
+    for(let i = 0; i < this.cards.length; i++){
+      if (this.cardId === null){
+        FlashcardService.saveCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
+        .then(response => {
+
+        })
+        .catch(error => {
+        console.error("Failed to create card:", error);
+        });
+      }else{
+        FlashcardService.updateCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
+        .then(response => {
+
+        })
+        .catch(error => {
+          console.error("Failed to update card:", error);
+        })
+      }
+    }
+
+  }
       getDeck(deckId) {
         FlashcardService.getDeck(deckId).then(response => {
           const data = response.data;
@@ -256,8 +351,8 @@
    
   }
 
-  .addbtn {
-    margin-bottom: 1vw;
+  select {
+    font-size: 2vw;
   }
 
 
