@@ -1,23 +1,31 @@
 <template>
-  <div id="Flashhighlight">
-  <div id="FlashCardCont">
-    <p>{{ question }}</p>
-    <div class="deleteCont">
-      <button><font-awesome-icon class="delete" :icon="['fas', 'x']" v-on:click="deleteCard"/></button>
+  <div id='Flashhighlight' :class="isSelected ? 'FlashhighlightSelected' : 'Flashhighlight'" @click="selectCard">
+    <div id="FlashCardCont">
+      <p>{{ question }}</p>
+      <div class="deleteCont">
+        <button @click.stop="deleteCard">
+          <font-awesome-icon class="delete" :icon="['fas', 'x']" />
+        </button>
+      </div>
+      <p id="num"><span>{{ index + 1 }}</span></p>
     </div>
-    <p id="num"><span>{{ index + 1 }}</span></p> <!-- Use index here -->
   </div>
-</div>
 </template>
 
 <script>
-import FlashcardService from '../services/FlashcardService';
-
 export default {
-  props: ['deckId', 'question', 'color', 'answer', 'cardId', 'index'],  // Include 'index' here
+  props: ['isSelected', 'deckId', 'question', 'answer', 'cardId', 'index', 'color'],
   methods: {
+    selectCard() {
+      // Emit an event to inform the parent component that this card was selected
+      this.$emit('selectCard');
+    },
     deleteCard() {
-      confirm('Are you sure you want to delete this card?');
+      if (confirm('Are you sure you want to delete this card?')) {
+        // Logic to delete the card goes here
+        // You might need to emit another event or call an API
+        this.$emit('deleteCard', this.cardId);
+      }
     }
   },
 };
@@ -28,28 +36,30 @@ export default {
     font-family: 'helvetica';
 
   }
-  #Flashhighlight {
-   background-color: red;
-   border-radius: .5vw;
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   width: 100%;
-   height: 12vw;
-  }
-  #FlashCardCont {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 89%;
-    border-radius: .5vw;
-    height: 10vw;
-    padding: 15px;
-    text-align: center;
-    vertical-align: middle;
-    background-color: blueviolet;
-  }
+  p {font-size: .8vw;}
+   #FlashCardCont {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 85%;
+  border-radius: .5vw;
+  height: 75%; 
+  padding: .5vw;
+  text-align: center;
+  vertical-align: middle;
+  background-color: blueviolet;
+} 
+#Flashhighlight {
+  
+  border-radius: .5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 10vw !important;
+  
+}
 
   #num {
     position: absolute;
@@ -89,6 +99,9 @@ export default {
     border-radius: 50%;
     right: 1vw;
   }
+  .FlashhighlightSelected {
+  background-color: green;  /* Ensure this class overrides the default */
+}
   
  
   </style>
