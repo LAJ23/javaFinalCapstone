@@ -33,9 +33,9 @@
   </template>
 </h3> 
        </div> 
-          <span class="savebtn" @click="saveOrUpdateCard">
+          <span class="savebtn" @click="saveOrUpdateDeck">
             Save This Deck
-            <font-awesome-icon @click="saveOrUpdateCard" icon="far, fa-floppy-disk" />
+            <font-awesome-icon icon="far, fa-floppy-disk" />
           </span> 
        </div>
         <div id="editorCont" >
@@ -46,7 +46,7 @@
           </button>
           <Preview 
   v-for="(card, index) in cards"
-  :key="card.card_id"
+  :key="card.cardId"
   :deckId="deck.deckId"
   :question="card.question"
   :answer="card.answer"
@@ -64,20 +64,20 @@
     <div id="cardEditor" >
       <div class="card" id="frontCard">
   <template v-if="isEditingFront">
-    <input v-model="frontText" @blur="toggleEditFront" @keyup.enter="toggleEditFront" placeholder="Enter your question">
+    <input v-model="newCard.question" @blur="toggleEditFront" @keyup.enter="toggleEditFront" placeholder="Enter your question">
   </template>
   <template v-else>
-    <p @click="toggleEditFront">{{ frontText }}</p>
+    <p @click="toggleEditFront">{{ newCard.question }}</p>
   </template>
   <p class="side">Front</p>
 </div>
 
 <div class="card" id="backCard">
   <template v-if="isEditingBack">
-    <input v-model="backText" @blur="toggleEditBack" @keyup.enter="toggleEditBack" placeholder="Enter your answer">
+    <input v-model="newCard.answer" @blur="toggleEditBack" @keyup.enter="toggleEditBack" placeholder="Enter your answer">
   </template>
   <template v-else>
-    <p @click="toggleEditBack">{{ backText }}</p>
+    <p @click="toggleEditBack">{{ newCard.answer }}</p>
   </template>
   <p class="side">Back</p>
 </div>
@@ -116,10 +116,10 @@
         selectedIndex: 0,
         selectedColor: 'Red',
         newCard: {
-          card_id: null,
+          cardId: undefined,
           deck_id: null,
-          question:'',
-          answer: ''
+          question:'QUESTION',
+          answer: 'ANSWER'
         }
       };
     },
@@ -167,8 +167,8 @@
       },
       handleSelectCard(index, card) {
     this.selectedIndex = index;
-    this.frontText = card.question;
-    this.backText = card.answer;
+    this.newCard = card;
+
   },
       toggleEditFront() {
         // Check if frontText is empty and set a default value
@@ -201,44 +201,51 @@
         return this.nextCardId++;
       },
       createBlankCard() {
+
         if (this.frontText.trim() === '' || this.backText.trim() === '') {
           alert('Please enter both a question and an answer.');
           return;
         }
+        this.frontText = 'QUESTION';
+        this.backText = 'ANSWER';
         let newCard = {
-          card_id: null,
+          cardId: undefined,
           deck_id: this.deck.deckId,
           question: this.frontText,
           answer: this.backText
         };
-        this.cards.push(newCard);
         alert('Card added successfully!');
-        this.frontText = 'QUESTION';
-        this.backText = 'ANSWER';
+        // this.frontText = 'QUESTION';
+        // this.backText = 'ANSWER';
+        this.cards.push(newCard);
+        console.log(this.newCard);
+
       },
 
-  saveOrUpdateCard(card){
-    for(let i = 0; i < this.cards.length; i++){
-      if (this.cardId === null){
-        FlashcardService.saveCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
-        .then(response => {
-        console.log("Card was saved", response);
-        })
-        .catch(error => {
-        console.error("Failed to create card:", error);
-        });
-      }else{
-        FlashcardService.updateCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
-        .then(response => {
-          console.log("Card was updated", response);
-        })
-        .catch(error => {
-          console.error("Failed to update card:", error);
-        })
+      saveOrUpdateDeck() {
+        for (let i = 0; i < this.cards.length; i++) {
+          let card = this.cards[i];
+          console.log(card);
+          if (card.cardId === undefined) {
+            FlashcardService.saveCard(card.deck_id, card.question, card.answer)
+                .then(response => {
+                  console.log("Card was saved", response);
+                  card.cardId = response.data.cardId;  // Assuming the response contains the new ID
+                })
+                .catch(error => {
+                  console.error("Failed to create card:", error);
+                });
+          } else {
+            FlashcardService.updateCard(card.deck_id, card.question, card.answer)
+                .then(response => {
+                  console.log("Card was updated", response);
+                })
+                .catch(error => {
+                  console.error("Failed to update card:", error);
+                });
+          }
+        }
       }
-    }
-
-  }
 },
   }
   </script>

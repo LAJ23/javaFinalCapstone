@@ -145,7 +145,7 @@ public class FlashCardController {
 
     @RequestMapping(path = "/savecard", method = RequestMethod.POST)
     public FlashCard saveFlashcard(@RequestBody FlashCard card) {
-        FlashCard newCard = null;
+        FlashCard newCard;
         newCard = deckDao.addFlashcard(card);
         return newCard;
     }
