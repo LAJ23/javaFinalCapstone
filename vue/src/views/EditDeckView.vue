@@ -62,7 +62,7 @@
     />
 
 
-
+  </div>
     </div>
     <div id="cardEditor" >
       <div class="card" id="frontCard">
@@ -84,10 +84,11 @@
   </template>
   <p class="side">Back</p>
 </div>
-    </div>
+  </div>
 </div>
 </div>
 </div>
+
 
     
  
@@ -151,7 +152,7 @@
       this.backText = this.cards[0].answer;     // Set the backText
     }
   }).catch(error => {
-    console.error('Failed to fetch cards:', error);
+    console.error('Failed to fetch cards:' , error);
   });
 },
     getDeck(deckId) {
@@ -196,9 +197,8 @@
   },
   handleSelectCard(index, card) {
     this.selectedIndex = index;
-    this.frontText = card.question;
-    this.backText = card.answer;
-  },
+    this.newCard = card;  // Pointing newCard to the selected card
+},
   handleDeleteCard({ cardId, index }) {
     if (cardId) {
       this.removeCardFromLocal(index);
@@ -219,128 +219,68 @@
   getNextCardId(){
     return this.nextCardId++;
   },
-  createBlankCard(){
-    FlashcardService.addBlankCard() ;{
-      //create card in data()
-    }
-  },
-  saveOrUpdateCard(card){
-    for(let i = 0; i < this.cards.length; i++){
-      if (this.cardId === null){
-        FlashcardService.saveCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
-        .then(response => {
-
-        })
-        .catch(error => {
+  createBlankCard() {
+    const newCard = {
+        cardId: undefined, 
+        deckId: this.deck.deckId, 
+        question: "Enter Question",
+        answer: "Enter Answer",
+        color: this.deck.color, 
+    };
+    this.cards.push(newCard);
+    this.selectedIndex = this.cards.length - 1;  
+    this.newCard = newCard;  
+},
+saveOrUpdateDeck() {
+  this.cards.forEach(card => {
+    console.log(card);  // Ensure cardId is correctly logged
+    if (card.card_id === undefined) {  // Check if the card ID is undefined
+      FlashcardService.saveCard(card)
+      .then(response => {
+        console.log("Card was saved", response.data);
+        card.card_id = response.data.card_id;  // Update the local card's ID with the ID returned from the server
+      })
+      .catch(error => {
         console.error("Failed to create card:", error);
-        });
-      }else{
-        FlashcardService.updateCard(this.newCard.deck_id, this.newCard.question, this.newCard.answer)
-        .then(response => {
-
-        })
-        .catch(error => {
-          console.error("Failed to update card:", error);
-        })
-      }
+      });
+    } else {
+      // Assuming `updateCard` updates an existing card
+      FlashcardService.updateCard(card)
+      .then(response => {
+        console.log("Card was updated", response);
+      })
+      .catch(error => {
+        console.error("Failed to update card:", error);
+      });
     }
+  });
+},
+      
 
-  }
-      getDeck(deckId) {
-        FlashcardService.getDeck(deckId).then(response => {
-          const data = response.data;
-          this.deck.deckName = data.deckName;
-          this.deck.highScore = data.highScore;
-          this.deck.color = data.color;
-          this.deck.creator_id = data.userID;
-          this.deck.deckId = data.deckId;
-          this.title = data.deckName;
-          console.log('Deck details fetched:', data);
-        }).catch(error => {
-          console.error('Failed to fetch deck details:', error);
-        });
-      },
-      handleSelectCard(index, card) {
-    this.selectedIndex = index;
-    this.newCard = card;
-
-  },
-      toggleEditFront() {
-        // Check if frontText is empty and set a default value
-        if (this.frontText.trim() === '') {
-          this.frontText = 'Enter your question';
-        }
-        this.isEditingFront = !this.isEditingFront;
-      },
-      toggleEditBack() {
-        // Check if backText is empty and set a default value
-        if (this.backText.trim() === '') {
-          this.backText = 'Enter your answer';
-        }
-        this.isEditingBack = !this.isEditingBack;
-      },
-      toggleEditDeckName() {
-        if (this.deckName.trim() === '') {
-          this.deckName = 'Unnamed Deck'; // Default deck name if empty
-        }
-        this.isEditingDeckName = !this.isEditingDeckName;
-      },
-      toggleColorSelection() {
-        this.isSelectingColor = !this.isSelectingColor;
-      },
-      setColor(event) {
-        this.selectedColor = event.target.options[event.target.selectedIndex].text;
-        this.isSelectingColor = false; // Optionally close the dropdown after selection
-      },
-      getNextCardId() {
-        return this.nextCardId++;
-      },
-      createBlankCard() {
-
-        if (this.frontText.trim() === '' || this.backText.trim() === '') {
-          alert('Please enter both a question and an answer.');
-          return;
-        }
-        this.frontText = 'QUESTION';
-        this.backText = 'ANSWER';
-        let newCard = {
-          cardId: undefined,
-          deck_id: this.deck.deckId,
-          question: this.frontText,
-          answer: this.backText
-        };
-        alert('Card added successfully!');
-        // this.frontText = 'QUESTION';
-        // this.backText = 'ANSWER';
-        this.cards.push(newCard);
-        console.log(this.newCard);
-
-      },
-
-      saveOrUpdateDeck() {
-        for (let i = 0; i < this.cards.length; i++) {
-          let card = this.cards[i];
-          console.log(card);
-          if (card.cardId === undefined) {
-            FlashcardService.saveCard(card.deck_id, card.question, card.answer)
-                .then(response => {
-                  console.log("Card was saved", response);
-                  card.cardId = response.data.cardId;  // Assuming the response contains the new ID
-                })
-                .catch(error => {
-                  console.error("Failed to create card:", error);
-                });
-          } else {
-            FlashcardService.updateCard(card.deck_id, card.question, card.answer)
-                .then(response => {
-                  console.log("Card was updated", response);
-                })
-                .catch(error => {
-                  console.error("Failed to update card:", error);
-                });
-          }
-        }
-      }
+      // saveOrUpdateDeck(card) {
+      //   for (let i = 0; i < this.cards.length; i++) {
+      //     let card = this.cards[i];
+      //     console.log(card);
+      //     if (card.cardId === undefined) {
+      //       FlashcardService.saveCard(card.deck_id, card.question, card.answer)
+      //           .then(response => {
+      //             console.log("Card was saved", response);
+      //             card.cardId = response.data.cardId;  // Assuming the response contains the new ID
+      //           })
+      //           .catch(error => {
+      //             console.error("Failed to create card:", error);
+      //           });
+      //     } else {
+      //       FlashcardService.updateCard(card.deck_id, card.question, card.answer)
+      //           .then(response => {
+      //             console.log("Card was updated", response);
+      //           })
+      //           .catch(error => {
+      //             console.error("Failed to update card:", error);
+      //           });
+      //     }
+      //   }
+      // }
 },
   }
   </script>

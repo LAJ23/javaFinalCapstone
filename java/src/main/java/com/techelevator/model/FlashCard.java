@@ -1,9 +1,11 @@
 package com.techelevator.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class FlashCard {
 
   private int cardId;
-
+@JsonProperty("deck_id")
   private int deckId;
     private String question;
     private String answer;
