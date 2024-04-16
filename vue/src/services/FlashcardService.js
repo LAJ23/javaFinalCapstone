@@ -55,8 +55,8 @@ export default {
     },
 
     updateCard(card) {
-        return http.post(`/deck/${card.id}`, {
-            card_id: card.card_id,
+        return http.post(`/deck/${card.cardId}`, {
+            card_id: card.cardId,
             deck_id: card.deck_id,
             question: card.question,
             answer: card.answer
