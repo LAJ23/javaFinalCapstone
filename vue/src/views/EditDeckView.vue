@@ -33,9 +33,10 @@
   </template>
 </h3> 
        </div> 
-             <button class= "savebtn" v-on:click="saveOrUpdateCard" >
-        <font-awesome-icon class="savebtn" :icon="['far', 'floppy-disk']" />
-            </button> 
+          <span class="savebtn" @click="saveOrUpdateCard">
+            Save This Deck
+            <font-awesome-icon @click="saveOrUpdateCard" icon="far, fa-floppy-disk" />
+          </span> 
        </div>
         <div id="editorCont" >
           <div id="previewCont">
@@ -374,13 +375,11 @@
   }
 
   .savebtn {
-    font-size: 3.5vw;
+    font-size: 2vw;
     position: absolute;
     right: 0;
     bottom: 1vw;
-    
-    
-
+    cursor: pointer;
   }
   button {
     width: 80%;
