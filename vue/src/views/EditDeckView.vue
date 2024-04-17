@@ -39,7 +39,7 @@
        <div class="btns">
         <button class="btn deletebtn" @click="deleteDeck">Delete Deck</button>
           <span class="btn savebtn" @click="saveOrUpdateDeck">
-            Save This Deck 
+            Save This Deck
             <font-awesome-icon icon="far, fa-floppy-disk" />
           </span>
           
@@ -315,8 +315,12 @@ saveOrUpdateDeck() {
     font-weight: 200;
   }
   .btn2 {
-    display: inline;
+    display: inline-flex;
     font-size: 1.5vw;
+    width: 1vw;
+    padding: 1vw 1vw;
+    text-align: center;
+    justify-content: center;
   }
 
   #themePen {
@@ -346,8 +350,6 @@ saveOrUpdateDeck() {
     font-size: 2.5vw;
     display: flex;
     justify-content: center;
-    align-items: center;
-   
     bottom: 1vw;
     cursor: pointer;
   }
@@ -357,7 +359,6 @@ saveOrUpdateDeck() {
     background-color: rgb(133, 133, 133);
     border-radius: 1vw;
     border: 1px solid black;
-
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -380,8 +381,6 @@ saveOrUpdateDeck() {
 
 #previewList {
   width: 100%;
- 
-  
   padding-top: 1vw;
   display: flex;
   flex-direction: column;
