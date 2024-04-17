@@ -29,7 +29,7 @@
       <input type="text" v-model="searchQuery" placeholder="Search" @input="searchCards" @keydown.down="selectNext" @keydown.up="selectPrevious" />
       </div>
       <ul v-if="filteredCards.length > 0" class="search-results">
-        <li v-for="card in filteredCards" @click="selectItem" :key="card.card_id">
+        <li v-for="card in filteredCards" @click="selectItem(card)" :key="card.card_id">
             {{ card.question }}
             {{ card.answer }}
         </li>
