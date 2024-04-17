@@ -10,7 +10,6 @@
       </template>
       <template v-else>
         {{ deck.deckName }}
-        
         <div class="btn btn2" @click="toggleEditDeckName">
           <font-awesome-icon :icon="['fas', 'pencil']" />
         </div>
@@ -29,8 +28,8 @@
 
   </template>
   <template v-else>
-    <span id="color">{{ selectedColor }}</span>
-    <div id="themePen" @click="toggleColorSelection">
+    <span id="color" @click="toggleColorSelection">{{ selectedColor }}</span>
+    <div id="themePen" >
       <font-awesome-icon :icon="['fas', 'pencil']" />
     </div>
   </template>
@@ -99,9 +98,6 @@
 </div>
 </div>
 
-
-    
- 
   </template>
   
   <script>
@@ -147,10 +143,9 @@
       if (deckId) {
         this.getDeck(deckId);
         this.fetchCards(deckId);
-        console.log("created",this.deck.color);
       } else {
         console.error('No deckId provided in the route.');
-        this.$router.push({name: 'home'});  // Fallback to a safe route if no ID
+        this.$router.push({name: 'home'});  // If no ID
       }
     },
     methods: {
@@ -162,7 +157,7 @@
     FlashcardService.deleteDeck(this.deck.deckId)
       .then(() => {
         alert('Deck has been deleted successfully.');
-        this.$router.push({ name: 'edit' }); // Navigate back to the home or another relevant view
+        this.$router.push({ name: 'edit' });
       })
       .catch(error => {
         console.error('Failed to delete deck:', error);
@@ -190,21 +185,18 @@
     this.deck.color = data.color;
     this.deck.creator_id = data.userID;
     this.deck.deckId = data.deckId;
-    console.log("created",this.deck.color);
     console.log('Deck details fetched:', data);
   }).catch(error => {
     console.error('Failed to fetch deck details:', error);
   });
 },
   toggleEditFront() {
-    // Check if frontText is empty and set a default value
     if (this.frontText.trim() === '') {
       this.frontText = 'Enter your question';
     }
     this.isEditingFront = !this.isEditingFront;
   },
   toggleEditBack() {
-    // Check if backText is empty and set a default value
     if (this.backText.trim() === '') {
       this.backText = 'Enter your answer';
     }
@@ -212,7 +204,7 @@
   },
   toggleEditDeckName() {
     if (this.deckName.trim() === '') {
-      this.deckName = 'Unnamed Deck'; // Default deck name if empty
+      this.deckName = 'Unnamed Deck'; // Default deck name
     }
     this.isEditingDeckName = !this.isEditingDeckName;
   },
@@ -227,7 +219,7 @@
 },
   handleSelectCard(index, card) {
     this.selectedIndex = index;
-    this.newCard = card;  // Pointing newCard to the selected card
+    this.newCard = card;
 },
   handleDeleteCard({ card_id, index }) {
     if (card_id) {
@@ -262,13 +254,11 @@
     this.newCard = newCard;  
 },
 saveOrUpdateDeck() {
-  
   this.cards.forEach(card => {
      
     if (card.card_id === undefined) {  
       card.deck_id = this.deck.deckId; 
       FlashcardService.saveCard(card)
-      
       .then(response => {
         console.log("Card was saved", response.data);
         card.card_id = response.data.card_id;  
@@ -279,7 +269,6 @@ saveOrUpdateDeck() {
     } else {
       console.log(card) 
       FlashcardService.updateCard(card)
-      
       .then(response => {
         console.log("Card was updated", response);
       })
@@ -298,13 +287,13 @@ colorChoice() {
       case 3: return 'Yellow';
       case 4: return 'Green';
       case 5: return 'White';
-  
+
     }
   },
 
 },computed: {
   colorClass() {
-    console.log("Current color code:", this.deck.color); // Debugging line to check what value is being used
+    console.log("Current color code:", this.deck.color); // Debugging line to check value
     switch (this.deck.color) {
       case 1: return 'redBK';
       case 2: return 'orangeBK';
@@ -342,8 +331,12 @@ colorChoice() {
     font-weight: 200;
   }
   .btn2 {
-    display: inline;
+    display: inline-flex;
     font-size: 1.5vw;
+    width: 1vw;
+    padding: 1vw 1vw;
+    text-align: center;
+    justify-content: center;
   }
 
   #themePen {
@@ -373,8 +366,6 @@ colorChoice() {
     font-size: 2.5vw;
     display: flex;
     justify-content: center;
-    align-items: center;
-   
     bottom: 1vw;
     cursor: pointer;
   }
@@ -383,16 +374,15 @@ colorChoice() {
     height: 60vw;
     background-color: rgb(133, 133, 133);
     border-radius: 1vw;
+    border: 1px solid black;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding-top: 1.8vw;
-
   }
   #previewCont{
     overflow: scroll;
-    
     display: flex;
     flex-direction: column;
     position: relative;
@@ -407,15 +397,11 @@ colorChoice() {
 
 #previewList {
   width: 100%;
- 
-  
   padding-top: 1vw;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  
-  
   border-radius: 1vw;
   padding-bottom: 1.5vw;
   
@@ -426,8 +412,6 @@ colorChoice() {
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    
   }
 
   #cardEditor {
@@ -435,17 +419,15 @@ colorChoice() {
     display: flex;
     flex-direction: column;
     width: 100%;
-    
     background-color: rgb(226, 226, 226);
     align-items: center;
     justify-items: center;
-
+    border-radius: 1vw;
   }
   #editorCont {
     display:flex;
     flex-direction: row;
     width: 100%;
-    
   }
 
   h2 {
@@ -470,8 +452,6 @@ colorChoice() {
     width: 70%;
     margin: 2vw;
     height: 25vw;
-    
-   
   }
   input {
     width: 90%;
@@ -496,11 +476,7 @@ colorChoice() {
     display: flex;
     justify-content: space-between;
     position: relative;
-    
-    
-
   }
-
 
   button {
     width: 80%;
@@ -534,9 +510,16 @@ colorChoice() {
     border: 1px solid black;
 }
 .addbtn {
-  margin-bottom: 1vw ;
-  
+  margin-bottom: 1vw;
   left: 1.8vw;
   top: 1.4vw;
+}
+
+#color{
+  cursor: pointer;
+}
+
+#colors{
+  cursor: pointer;
 }
   </style>

@@ -67,4 +67,7 @@ export default {
     deleteCard(id) {
         return http.delete(`/delete/${id}`)
     },
+    searchFlashcards(query) {
+        return http.get(`/search?query=${query}`);
+    },
 }

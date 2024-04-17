@@ -4,11 +4,11 @@
 
   <div id="createCont">
     <form  action="">
-  <h3>What would you like to Name your deck?</h3>
+  <h3>What would you like to name your deck?</h3>
   <input type="text" placeholder="Name" v-model="newDeck.name">
 
     <h3>Choose a color theme:</h3>
-    <select id="colors" name="colors" v-model="newDeck.color">
+    <select id="colors" name="Colors" v-model="newDeck.color">
       <option disabled value="">Please select one</option>
   <option  value="5">White</option>
   <option id="red" value="1">Red</option>
@@ -20,7 +20,6 @@
 </form>
 </div>
 
-
 </template>
 
 <script>
@@ -29,7 +28,6 @@ import FlashcardService  from '../services/FlashcardService';
 
 export default {
   components: {
-
 
   },
   data() {
@@ -49,13 +47,10 @@ export default {
      createDeck() {
   FlashcardService.addDeck(this.newDeck.name, this.newDeck.color, this.newDeck.creator_id)
     .then(response => {
-      // On successful creation, navigate to the edit page
-      // You might want to pass the newly created deck ID to the edit route if needed
       this.$router.push({ name: 'edit', query: { deckId: response.data.deck_id } });
     })
     .catch(error => {
       console.error("Failed to create deck:", error);
-      // Handle error (e.g., show an error message to the user)
     });
 }
   }
@@ -123,7 +118,6 @@ input {
   padding-top: .5vw;
   padding-bottom: .3vw;
 }
-
 select {
   width: 100%;
   font-size: 2vw;
@@ -131,8 +125,5 @@ select {
   padding-top: .5vw;
 
 }
-
-
-
 </style>
 

@@ -5,9 +5,9 @@
         v-for="deck in decks"
         :key="deck.deckId"
         :deckId="deck.deckId"
+        :color="deck.color"
         :name="deck.deckName"
         :highScore="deck.highScore"
-        :color="deck.color"
         :routeName="routeName"
       />
     </div>
@@ -23,7 +23,7 @@ export default {
     routeName: String,
     limitTopThree: {
       type: Boolean,
-      default: false // Default is not to limit, so it behaves normally unless specified
+      default: false
     }
   },
   components: {
@@ -69,7 +69,7 @@ export default {
     font-weight: 200;
   }
   #iconCont {
-    margin-top: 2vw;
+    margin-top: 1vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -92,8 +92,6 @@ export default {
     justify-content: center;
     align-items: center;
     padding-left: 15vw;
-   
-    
   }
 
   </style>

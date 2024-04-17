@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import FlashcardService from '../services/FlashcardService';
 
 export default {
   props: ['isSelected', 'deckId', 'question', 'answer', 'card_id', 'index', 'color'],
@@ -31,9 +30,7 @@ export default {
   },
   methods: {
     selectCard() {
-      // Emit an event to inform the parent component that this card was selected
       this.$emit('selectCard');
-      console.log(this.color)
     },
     deleteCard() {
       if (confirm('Are you sure you want to delete this card?')) {
@@ -71,7 +68,7 @@ export default {
   justify-content: center;
   align-items: center;
   width: 100%;
-  
+
   height: 13vw ;
   
 }
@@ -94,8 +91,6 @@ export default {
     font-size: 1.5vw;
   }
   .delete {
-  
-    
     font-size: 1.5vw;
     color: black;
 
@@ -115,9 +110,9 @@ export default {
     right: 1vw;
   }
   .FlashhighlightSelected {
-    
+
   background-color: rgb(255, 0, 170);  /* Ensure this class overrides the default */
 }
-  
- 
+
+
   </style>

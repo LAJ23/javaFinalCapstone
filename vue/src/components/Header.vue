@@ -22,25 +22,53 @@
         "
         v-bind:to="{ name: 'logout' }"
         v-if="$store.state.token != ''"
-        >Logout</router-link
-      >
+        >Logout</router-link>
       <div id="searchBar">
-        <div class="input-icon">
-          <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" class="input-field" placeholder="Search" />
-        </div>
+      <div class="input-icon">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" v-model="searchQuery" placeholder="Search" @input="searchCards" @keydown.down="selectNext" @keydown.up="selectPrevious" />
       </div>
+      <ul v-if="filteredCards.length > 0" class="search-results">
+        <li v-for="card in filteredCards" @click="selectItem(card)" :key="card.card_id">
+            {{ card.question }}
+            {{ card.answer }}
+        </li>
+    </ul>
     </div>
+  </div>
   </header>
 
   
 </template>
 
 <script>
+import FlashcardService from '../services/FlashcardService' 
+
 export default {
+  data() {
+    return {
+    searchQuery: '',
+    filteredCards: []
+    };
+  },
   methods: {
     goHome() {
       this.$router.push("/");
+    },
+    searchCards() {
+  const query = this.searchQuery.toLowerCase();
+  FlashcardService.searchFlashcards(query)
+    .then(response => {
+      this.filteredCards = response.data;
+    })
+    .catch(error => {
+      console.error('Error searching flashcards:', error);
+    });
+},
+    selectItem(item) {
+        this.searchQuery = item.question;
+        this.filteredCards = [];
+        this.$router.push(`/edit-deck/${item.deck_id}`)
     },
   },
 };
@@ -89,5 +117,29 @@ header {
 #searchLogoutCont {
   display: flex;
   align-items: center;
+}
+
+.search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.search-results li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.search-results li:hover {
+    background-color: #f1f1f1;
 }
 </style>

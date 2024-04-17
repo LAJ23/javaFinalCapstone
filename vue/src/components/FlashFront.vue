@@ -25,7 +25,7 @@ export default {
         case 3: return 'yellowBK';
         case 4: return 'greenBK';
         case 5: return 'whiteBK';
-        default: return '';  // Default case if color is not set
+        default: return '';
       }
     },
   },
@@ -40,10 +40,7 @@ export default {
   <style scoped>
   * {
     font-family: 'Writing';
-  
-  
   }
-
   #answer {
     display: flex;
     

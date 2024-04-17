@@ -2,24 +2,16 @@
     
     <h2>Choose a deck start a session:</h2>
     <UserDecks route-name='session' />
-   
 
-  
-          
-   
   </template>
   
   <script>
   
   import UserDecks from '../components/UserDecks.vue';
 
-  
-  
   export default {
     components: {
-      
       UserDecks,
-      
     }
   };
   </script>
@@ -29,8 +21,6 @@
     font-family: 'Writing';
     padding-left: 10vw;
     padding-right: 10vw;
-  
-  
   }
   
   h2 {
@@ -39,4 +29,3 @@
   }
  
   </style>
-  

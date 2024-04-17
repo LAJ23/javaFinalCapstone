@@ -38,16 +38,12 @@ export default {
   <style scoped>
   * {
     font-family: 'Writing';
-  
-  
   }
 
   #answer {
     display: flex;
     position: absolute;
     bottom: -11vw;
-    
-    
   }
 .answerbtn {
   display: flex;
@@ -117,9 +113,8 @@ button {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 2vw;
   }
-
-  
-  #flip {
+  #flip
+  {
     position: absolute;
     font-size: 3vw;
     padding: 1vw;

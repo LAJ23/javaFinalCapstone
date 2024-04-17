@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 
-@CrossOrigin(origins = "http://127.0.0.1:5173")
+@CrossOrigin
 public class FlashCardController {
     private DeckDao deckDao;
     private UserDao userDao;
@@ -81,7 +81,6 @@ public class FlashCardController {
         return newDeck;
     }
 
-
     @RequestMapping(path = "/score/{id}", method = RequestMethod.GET)
     public String getHighScore(@PathVariable int id) {
         String score = deckDao.getDeckHighScore(id);
@@ -107,8 +106,7 @@ public class FlashCardController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating card: " + e.getMessage());
         }
     }
-
-
+    
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteFlashcard(@PathVariable("id") int card_id) {
         boolean isDeleted = deckDao.deleteFlashcard(card_id);
@@ -148,6 +146,12 @@ public class FlashCardController {
         FlashCard newCard;
         newCard = deckDao.addFlashcard(card);
         return newCard;
+    }
+
+    @RequestMapping("/search")
+    public ResponseEntity<List<FlashCard>> searchFlashcards(@RequestParam String query) {
+        List<FlashCard> searchedCards = deckDao.searchFlashcards(query);
+        return ResponseEntity.ok().body(searchedCards);
     }
 }
 

@@ -37,7 +37,6 @@
 <script>
 
 import UserDecks from "../components/UserDecks.vue";
-import UserService from "../services/UserService";
 
 export default {
   components: {
@@ -53,7 +52,11 @@ export default {
   },
   computed: {
     userName() {
-      return this.$store.state.user.username;
+      const name = this.$store.state.user.username;
+      if (name && name.length > 0) {
+        return name.charAt(0).toUpperCase() + name.slice(1);
+      }
+      return '';
     },
   },
   mounted() {
@@ -109,25 +112,22 @@ export default {
 }
 
 h1 {
-  margin-top: 5vw;
-  margin-left: 6vw;
-  font-size: 5vw;
+  margin-top: 3vw;
+  margin-left: 3vw;
+  font-size: 4vw;
   
   font-weight: 500;
 }
 h2 {
   font-size: 2.5vw;
   margin-top: 3vw;
-  margin-bottom: 2vw;
+  margin-bottom: 1vw;
   align-self: center;
 }
 
 nav {
   display: flex;
   justify-content: space-evenly;
-  margin-top: 2.5vw;
+  margin-top: 1.5vw;
 }
-
-
-
 </style>

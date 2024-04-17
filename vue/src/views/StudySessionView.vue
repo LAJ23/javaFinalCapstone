@@ -73,7 +73,7 @@ export default {
       timer: null,
       elapsedTime: "00:00",
       sessionActive: true,
-      scorePercentage: 0 // Track the score percentage
+      scorePercentage: 0
     };
   },
   created() {
@@ -93,7 +93,7 @@ export default {
   FlashcardService.getCards(deckId).then(response => {
     this.cards = response.data;
     this.totalCards = this.cards.length;
-    console.log("Current Card Index:", this.currentCardIndex);  // Check the index here
+    console.log("Current Card Index:", this.currentCardIndex);
     console.log("Total cards:", this.totalCards);
   }).catch(error => {
     console.error('Failed to fetch cards:', error);
@@ -188,12 +188,9 @@ export default {
 };
 </script>
 
-
 <style scoped>
  * {
     font-family: 'Writing';
-  
-  
   }
   .wtf {
     width: 100%;
