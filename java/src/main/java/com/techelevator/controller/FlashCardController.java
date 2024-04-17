@@ -149,6 +149,12 @@ public class FlashCardController {
         newCard = deckDao.addFlashcard(card);
         return newCard;
     }
+
+    @RequestMapping("/search")
+    public ResponseEntity<List<FlashCard>> searchFlashcards(@RequestParam String query) {
+        List<FlashCard> searchedCards = deckDao.searchFlashcards(query);
+        return ResponseEntity.ok().body(searchedCards);
+    }
 }
 
 
