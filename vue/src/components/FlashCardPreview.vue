@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import FlashcardService from '../services/FlashcardService';
 
 export default {
   props: ['isSelected', 'deckId', 'question', 'answer', 'card_id', 'index', 'color'],
@@ -25,13 +24,12 @@ export default {
         case '3': return 'yellowBK';
         case '4': return 'greenBK';
         case '5': return 'whiteBK';
-        default: return 'defaultBackground';  // Ensure this class provides a default background
+        default: return 'defaultBackground';
       }
     }
   },
   methods: {
     selectCard() {
-      // Emit an event to inform the parent component that this card was selected
       this.$emit('selectCard');
     },
     deleteCard() {
@@ -93,8 +91,6 @@ export default {
     font-size: 1.5vw;
   }
   .delete {
-  
-    
     font-size: 1.5vw;
     color: black;
 
@@ -113,10 +109,4 @@ export default {
     border-radius: 50%;
     right: 1vw;
   }
-  .FlashhighlightSelected {
-    
-  background-color: rgb(255, 0, 170);  /* Ensure this class overrides the default */
-}
-  
- 
   </style>

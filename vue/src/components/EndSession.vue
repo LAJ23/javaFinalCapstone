@@ -60,13 +60,8 @@
   </script>
   
   <style scoped>
-
-  
-
     * {
       font-family: 'Writing';
-    
-    
     }
     .endSession {
     margin-top: 2vw;
@@ -80,7 +75,6 @@
     line-height: 4vw;
     border-radius: 2vw;
     box-shadow: 0 0 2vw 0.5vw rgba(0, 0, 0, 0.2);
-
   }
 
   button {
@@ -100,7 +94,4 @@
     border: 1px solid grey;
     border-radius: .5vw;
   }
-    
-  
-
     </style>

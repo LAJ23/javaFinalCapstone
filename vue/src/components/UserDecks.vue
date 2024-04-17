@@ -92,8 +92,6 @@ export default {
     justify-content: center;
     align-items: center;
     padding-left: 15vw;
-   
-    
   }
 
   </style>
