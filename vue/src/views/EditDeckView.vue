@@ -363,16 +363,16 @@ saveOrUpdateDeck() {
     height: 60vw;
     background-color: rgb(133, 133, 133);
     border-radius: 1vw;
+    border: 1px solid black;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding-top: 1.8vw;
-
   }
   #previewCont{
     overflow: scroll;
-    
     display: flex;
     flex-direction: column;
     position: relative;
@@ -475,11 +475,7 @@ saveOrUpdateDeck() {
     display: flex;
     justify-content: space-between;
     position: relative;
-    
-    
-
   }
-
 
   button {
     width: 80%;

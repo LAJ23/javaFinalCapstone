@@ -69,7 +69,7 @@ export default {
     font-weight: 200;
   }
   #iconCont {
-    margin-top: 2vw;
+    margin-top: 1vw;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
