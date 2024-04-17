@@ -28,8 +28,8 @@
 
   </template>
   <template v-else>
-    <span id="color">{{ selectedColor }}</span>
-    <div id="themePen" @click="toggleColorSelection">
+    <span id="color" @click="toggleColorSelection">{{ selectedColor }}</span>
+    <div id="themePen" >
       <font-awesome-icon :icon="['fas', 'pencil']" />
     </div>
   </template>
@@ -517,5 +517,13 @@ saveOrUpdateDeck() {
   
   left: 1.8vw;
   top: 1.4vw;
+}
+
+#color{
+  cursor: pointer;
+}
+
+#colors{
+  cursor: pointer;
 }
   </style>
