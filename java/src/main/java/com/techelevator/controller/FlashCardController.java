@@ -90,14 +90,11 @@ public class FlashCardController {
 //--------------------------------------------------------------------------------------------------------
 
 
-    @PutMapping("/deck/{cardId}")
-    public ResponseEntity<String> updateFlashcard(
-            @PathVariable int cardId,
-            @RequestParam String question,
-            @RequestParam String answer) {
+    @RequestMapping(path = "/deck/{card_id}", method = RequestMethod.POST)
+    public ResponseEntity<String> updateFlashcard(@PathVariable int card_id, @RequestBody FlashCard flashCard) {
 
         try {
-            boolean updateSuccessful = deckDao.updateFlashcard(cardId, question, answer);
+            boolean updateSuccessful = deckDao.updateFlashcard(flashCard.getCardId(), flashCard.getQuestion(), flashCard.getAnswer());
 
             if (updateSuccessful) {
                 return ResponseEntity.ok().build();
@@ -110,6 +107,7 @@ public class FlashCardController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating card: " + e.getMessage());
         }
     }
+
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteFlashcard(@PathVariable("id") int card_id) {
