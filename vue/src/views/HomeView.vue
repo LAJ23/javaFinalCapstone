@@ -29,7 +29,7 @@
     </nav>
     <h2>Recent Decks</h2>
     <div id="UserDeckCont" >
-      <UserDecks route-name='session' />
+      <UserDecks route-name='session' :limit-top-three="true" />
   </div>
   </div>
 </template>
@@ -128,17 +128,6 @@ nav {
   margin-top: 2.5vw;
 }
 
-.btn {
-  font-size: 2.5vw;
-  width: 25%;
-  padding-top: 1.2vw;
-  padding-bottom: 1vw;
-  color: white;
-  background-color: rgb(58, 58, 255);
-  border-radius: 0.8vw;
-  border: none;
-  text-decoration: none;
-  cursor: pointer;
-}
+
 
 </style>

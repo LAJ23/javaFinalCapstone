@@ -16,3 +16,35 @@
     background-color: white;
     border: 1px solid black;
 }
+.btn {
+    font-size: 2.5vw;
+    width: 25%;
+    padding-top: 1.2vw;
+    padding-bottom: 1vw;
+    color: white;
+    background-color: rgb(58, 58, 255);
+    border-radius: 0.8vw;
+    border: none;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .btn:hover {
+    color: black;
+    border: .1vw solid black;
+    background-image: linear-gradient(
+        to right, 
+        rgb(255, 101, 101) 0%, rgb(255, 101, 101) 25%,  /* Red */
+        rgb(255, 200, 99) 25%, rgb(255, 200, 99) 50%,    /* Orange */
+        rgb(255, 255, 97) 50%, rgb(255, 255, 97) 75%,    /* Yellow */
+        rgb(101, 255, 101) 75%, rgb(101, 255, 101) 100%  /* Green */
+    );
+    animation: slidebg 2s linear infinite;
+}
+ 
+ 
+ @keyframes slidebg {
+   to {
+     background-position:20vw;
+   }
+ }
+ 

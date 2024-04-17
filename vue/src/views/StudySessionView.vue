@@ -8,18 +8,25 @@
         <p>Time {{ elapsedTime }}</p>
         <p>Score {{ currentScore }}/{{ totalCards }}</p>
       </div>
-      <FlashFront
-        v-if="showFront"
-        :card="cards[currentCardIndex]"
-        :color="deck.color"
-        @flipCard="flipCard"
-      />
-      <FlashBack
-        v-else
-        :card="cards[currentCardIndex]"
-        :color="deck.color"
-        @answerSelected="handleAnswer"
-      />
+    
+      <div class="wtf" v-if="!isLoading">
+    <FlashFront
+      v-if="showFront"
+      :card="cards[currentCardIndex]"
+      :color="deck.color"
+      @flipCard="flipCard"
+    />
+    <FlashBack
+      v-else
+      :card="cards[currentCardIndex]"
+      :color="deck.color"
+      @answerSelected="handleAnswer"
+    />
+  </div>
+  <div v-else>
+    Loading cards...
+  </div>
+
       <p class="cardCount">Card {{ currentCardIndex + 1 }}/{{ totalCards }}</p>
     </div>
     <EndSession
@@ -83,21 +90,25 @@ export default {
   },
   methods: {
     fetchCards(deckId) {
-      FlashcardService.getCards(deckId).then(response => {
-        this.cards = response.data;
-        this.totalCards = this.cards.length;
-      }).catch(error => {
-        console.error('Failed to fetch cards:', error);
-      });
-    },
+  FlashcardService.getCards(deckId).then(response => {
+    this.cards = response.data;
+    this.totalCards = this.cards.length;
+    console.log("Current Card Index:", this.currentCardIndex);  // Check the index here
+    console.log("Total cards:", this.totalCards);
+  }).catch(error => {
+    console.error('Failed to fetch cards:', error);
+    this.cards = [];
+  });
+},
     getDeck(deckId) {
       FlashcardService.getDeck(deckId).then(response => {
         const data = response.data;
-        this.deck.deckName = data.deckName;
-        this.deck.highScore = data.highScore;
-        this.deck.color = data.color;
-        this.deck.creator_id = data.userID;
-        this.deck.deckId = data.deckId;
+    this.deck.deckName = data.deckName;
+    this.deck.highScore = data.highScore;
+    this.deck.color = data.color;
+    this.deck.creator_id = data.userID;
+    this.deck.deckId = data.deckId;
+    console.log(this.deck);
 
         this.oldScore = this.deck.highScore;
       }).catch(error => {
@@ -183,6 +194,12 @@ export default {
     font-family: 'Writing';
   
   
+  }
+  .wtf {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .cardCount {
     position: absolute;

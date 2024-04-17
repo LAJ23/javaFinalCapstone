@@ -34,22 +34,31 @@
     </div>
   </template>
 </h3> 
+
        </div> 
-          <span class="savebtn" @click="saveOrUpdateDeck">
-            Save This Deck
+       <div class="btns">
+        <button class="btn deletebtn" @click="deleteDeck">Delete Deck</button>
+          <span class="btn savebtn" @click="saveOrUpdateDeck">
+            Save This Deck 
             <font-awesome-icon icon="far, fa-floppy-disk" />
           </span>
+          
        </div>
+       
+      </div>
         <div id="editorCont" >
-          <div id="previewCont">
-        <div id="previewList">
-          <button class="addbtn" v-on:click="createBlankCard">
+          <div class="previewBtnFix">
+            <button class="addbtn" v-on:click="createBlankCard">
             <font-awesome-icon :icon="['fas', 'plus']" /> Add Card
           </button>
+          <div id="previewCont">
+            
+        <div id="previewList">
+          
           <Preview 
       v-for="(card, index) in cards"
       :key="card.card_id"
-      :cardId="card.cardId"
+      :card_id="card.card_id"
       :deckId="deck.deckId"
       :question="card.question"
       :answer="card.answer"
@@ -63,6 +72,7 @@
 
   </div>
     </div>
+  </div>
     <div id="cardEditor" >
       <div class="card" :class="colorClass" id="frontCard">
   <template v-if="isEditingFront">
@@ -119,7 +129,7 @@
         selectedIndex: 0,
         selectedColor: 'Red',
         newCard: {
-          cardId: undefined,
+          card_id: undefined,
           deck_id: null,
           question:'QUESTION',
           answer: 'ANSWER'
@@ -142,11 +152,27 @@
       }
     },
     methods: {
+      deleteDeck() {
+    if (!confirm('Are you sure you want to delete this deck?')) {
+      return;
+    }
+
+    FlashcardService.deleteDeck(this.deck.deckId)
+      .then(() => {
+        alert('Deck has been deleted successfully.');
+        this.$router.push({ name: 'edit' }); // Navigate back to the home or another relevant view
+      })
+      .catch(error => {
+        console.error('Failed to delete deck:', error);
+        alert('Error deleting deck. Please try again.');
+      });
+  },
       fetchCards(deckId) {
   FlashcardService.getCards(deckId).then(response => {
     this.cards = response.data;
     console.log('Cards fetched:', response.data);
     if (this.cards.length > 0) {
+
       this.frontText = this.cards[0].question;  // Set the frontText
       this.backText = this.cards[0].answer;     // Set the backText
     }
@@ -200,17 +226,17 @@
     this.selectedIndex = index;
     this.newCard = card;  // Pointing newCard to the selected card
 },
-  handleDeleteCard({ cardId, index }) {
-    if (cardId) {
+  handleDeleteCard({ card_id, index }) {
+    if (card_id) {
       this.removeCardFromLocal(index);
-      FlashcardService.deleteCard(cardId).then(() => {
+      FlashcardService.deleteCard(card_id).then(() => {
 
-        console.log("Card deleted from server:", cardId);
+        console.log("Card deleted from server:", card_id);
       }).catch(error => {
         console.error("Failed to delete card:", error);
       });
     } else {
-      console.log(cardId)
+      console.log(card_id)
       this.removeCardFromLocal(index);
     }
   },
@@ -235,12 +261,12 @@
 saveOrUpdateDeck() {
   this.cards.forEach(card => {
      
-    if (card.cardId === undefined) {  
+    if (card.card_id === undefined) {  
       card.deck_id = this.deck.deckId; 
       FlashcardService.saveCard(card)
       .then(response => {
         console.log("Card was saved", response.data);
-        card.cardId = response.data.card_id;  
+        card.card_id = response.data.card_id;  
       })
       .catch(error => {
         console.error("Failed to create card:", error);
@@ -283,6 +309,10 @@ saveOrUpdateDeck() {
   select {
     font-size: 2vw;
   }
+  .fa-floppy-disk {
+    margin-left: 2vw;
+    margin-bottom: .5vw;
+  }
 
 
   #editCont {
@@ -302,24 +332,72 @@ saveOrUpdateDeck() {
     font-size: 1vw;
     display: inline;
   }
-  #previewCont{
-    overflow-y: scroll;
+  .deletebtn {
+    width: 20vw;
+    font-size: 2.5vw
+    
+  }
+
+  .btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 5vw;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+  .savebtn {
+    width: 25vw;
+    height: 2.6vw;
+    margin-left: 2vw;
+    white-space: nowrap;
+    font-size: 2.5vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    bottom: 1vw;
+    cursor: pointer;
+  }
+  .previewBtnFix {
     width: 25%;
+    height: 60vw;
+    background-color: rgb(133, 133, 133);
+    border-radius: 1vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 1.8vw;
+
+  }
+  #previewCont{
+    overflow: scroll;
+    
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
     height: 60vw;
   }
   #previewCont::-webkit-scrollbar {
     display: none;
 }
+#previewList::-webkit-scrollbar {
+    display: none;}
+
 #previewList {
   width: 100%;
+ 
   
   padding-top: 1vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   
-  background-color: rgb(133, 133, 133);
+  
   border-radius: 1vw;
   padding-bottom: 1.5vw;
   
@@ -405,13 +483,7 @@ saveOrUpdateDeck() {
 
   }
 
-  .savebtn {
-    font-size: 2vw;
-    position: absolute;
-    right: 0;
-    bottom: 1vw;
-    cursor: pointer;
-  }
+
   button {
     width: 80%;
     font-size: 2vw;
@@ -442,5 +514,11 @@ saveOrUpdateDeck() {
 .whiteBK {
     background-color: white;
     border: 1px solid black;
+}
+.addbtn {
+  margin-bottom: 1vw ;
+  
+  left: 1.8vw;
+  top: 1.4vw;
 }
   </style>
