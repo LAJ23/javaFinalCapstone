@@ -21,7 +21,7 @@ public interface DeckDao {
     public FlashCard addblankcard(int deckId);
 
 
-    public boolean deleteFlashcard(int id);
+    public boolean deleteFlashcard(int cardId);
 
     public boolean updateFlashcard(int cardId, String question, String answer);
 
@@ -32,6 +32,8 @@ public interface DeckDao {
 
 
     public boolean updateDeck(int deckId, int color, String name);
+
+    List<FlashCard> searchFlashcards(String query);
 }
 
 
