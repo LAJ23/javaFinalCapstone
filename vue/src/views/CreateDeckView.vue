@@ -4,7 +4,7 @@
 
   <div id="createCont">
     <form  action="">
-  <h3>What would you like to Name your deck?</h3>
+  <h3>What would you like to name your deck?</h3>
   <input type="text" placeholder="Name" v-model="newDeck.name">
 
     <h3>Choose a color theme:</h3>
@@ -20,7 +20,6 @@
 </form>
 </div>
 
-
 </template>
 
 <script>
@@ -29,7 +28,6 @@ import FlashcardService  from '../services/FlashcardService';
 
 export default {
   components: {
-
 
   },
   data() {
@@ -120,7 +118,6 @@ input {
   padding-top: .5vw;
   padding-bottom: .3vw;
 }
-
 select {
   width: 100%;
   font-size: 2vw;
@@ -128,8 +125,5 @@ select {
   padding-top: .5vw;
 
 }
-
-
-
 </style>
 

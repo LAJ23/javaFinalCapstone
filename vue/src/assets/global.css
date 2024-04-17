@@ -16,6 +16,7 @@
     background-color: white;
     border: 1px solid black;
 }
+
 .btn {
     font-size: 2.5vw;
     width: 25%;
@@ -28,7 +29,12 @@
     text-decoration: none;
     cursor: pointer;
     transition: transform 0.2s;
-  }
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
   .btn:hover {
     color: black;
     border: .1vw solid black;

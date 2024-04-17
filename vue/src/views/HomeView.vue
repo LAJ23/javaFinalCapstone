@@ -37,7 +37,6 @@
 <script>
 
 import UserDecks from "../components/UserDecks.vue";
-import UserService from "../services/UserService";
 
 export default {
   components: {
@@ -131,7 +130,4 @@ nav {
   justify-content: space-evenly;
   margin-top: 1.5vw;
 }
-
-
-
 </style>

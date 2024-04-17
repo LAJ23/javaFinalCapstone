@@ -98,9 +98,6 @@
 </div>
 </div>
 
-
-    
- 
   </template>
   
   <script>
@@ -140,6 +137,7 @@
 
       Preview,
     },
+
     created() {
       const deckId = this.$route.params.deckId;
       console.log("Received Deck ID:", deckId);
@@ -148,7 +146,7 @@
         this.fetchCards(deckId);
       } else {
         console.error('No deckId provided in the route.');
-        this.$router.push({name: 'home'});  // Fallback to a safe route if no ID
+        this.$router.push({name: 'home'});  // If no ID
       }
     },
     methods: {
@@ -160,7 +158,7 @@
     FlashcardService.deleteDeck(this.deck.deckId)
       .then(() => {
         alert('Deck has been deleted successfully.');
-        this.$router.push({ name: 'edit' }); // Navigate back to the home or another relevant view
+        this.$router.push({ name: 'edit' });
       })
       .catch(error => {
         console.error('Failed to delete deck:', error);
@@ -307,11 +305,6 @@ saveOrUpdateDeck() {
   select {
     font-size: 2vw;
   }
-  .fa-floppy-disk {
-    margin-left: 2vw;
-    margin-bottom: .5vw;
-  }
-
 
   #editCont {
     width: 90%;
@@ -394,8 +387,6 @@ saveOrUpdateDeck() {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  
-  
   border-radius: 1vw;
   padding-bottom: 1.5vw;
   
@@ -406,8 +397,6 @@ saveOrUpdateDeck() {
     display: flex;
     align-items: center;
     justify-content: center;
-    
-    
   }
 
   #cardEditor {
@@ -424,7 +413,6 @@ saveOrUpdateDeck() {
     display:flex;
     flex-direction: row;
     width: 100%;
-    
   }
 
   h2 {
@@ -449,8 +437,6 @@ saveOrUpdateDeck() {
     width: 70%;
     margin: 2vw;
     height: 25vw;
-    
-   
   }
   input {
     width: 90%;
@@ -509,8 +495,7 @@ saveOrUpdateDeck() {
     border: 1px solid black;
 }
 .addbtn {
-  margin-bottom: 1vw ;
-  
+  margin-bottom: 1vw;
   left: 1.8vw;
   top: 1.4vw;
 }

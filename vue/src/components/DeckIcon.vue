@@ -16,7 +16,7 @@
 import deckImage from '../assets/imgs/deck-image.png';
 
 export default {
-  props: ['name', 'highScore', 'color', 'deckId', 'routeName'],  // Add 'routeName' prop
+  props: ['name', 'highScore', 'color', 'deckId', 'routeName'],
   data() {
     return {
       deckImage,
@@ -73,12 +73,7 @@ export default {
 }
 .deckIconCont {
     position: relative;
-    
-    
 }
-
-
-
 .iconText {
     position: absolute;
     display: flex;
@@ -90,7 +85,6 @@ export default {
     border-radius: .5vw;
     bottom: 1.3vw;
     right: 1vw;
-   
     color: black;   
 }
 

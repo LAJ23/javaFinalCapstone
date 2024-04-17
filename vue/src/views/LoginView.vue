@@ -170,6 +170,9 @@ label {
   font-size: 1.5vw;
   text-decoration: none;
   font-family: "Writing";
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 input {
   font-size: 1.5vw;

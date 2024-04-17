@@ -29,12 +29,7 @@
     align-items: flex-end;
     justify-content: space-between;
   }
-  
-  .btn {
-   
-    
-    white-space: nowrap;
-  }
+
   button {
     margin-right: 3vw;
     display: flex;             
@@ -51,9 +46,4 @@
     text-decoration: none;
     cursor: pointer;
   }
-
- 
- 
-
- 
   </style>
