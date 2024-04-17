@@ -27,7 +27,6 @@ public class JdbcDeckDao implements DeckDao {
     public void DeckDao() {
 
     }
-
     @Override
     @CrossOrigin
     public List<Deck> getAllDecks(int id) {

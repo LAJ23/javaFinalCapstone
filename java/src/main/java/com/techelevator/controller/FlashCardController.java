@@ -81,7 +81,6 @@ public class FlashCardController {
         return newDeck;
     }
 
-
     @RequestMapping(path = "/score/{id}", method = RequestMethod.GET)
     public String getHighScore(@PathVariable int id) {
         String score = deckDao.getDeckHighScore(id);
@@ -107,8 +106,7 @@ public class FlashCardController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating card: " + e.getMessage());
         }
     }
-
-
+    
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteFlashcard(@PathVariable("id") int card_id) {
         boolean isDeleted = deckDao.deleteFlashcard(card_id);
