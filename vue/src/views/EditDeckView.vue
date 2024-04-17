@@ -18,12 +18,12 @@
     <h3>Color theme:
   <template v-if="isSelectingColor">
     <select id="colors" name="colors" @change="setColor">
-      <option class="" value="">Select Color</option>
-    <option class="redBK" value="1">Red</option>
-    <option class="orangeBK" value="2">Orange</option>
-    <option class="yellowBK" value="3">Yellow</option>
-    <option class="greenBK" value="4">Green</option>
-    <option class="whiteBK" value="5">White</option>
+      <option value="">Select Color</option>
+  <option class="redBK" value="1" :selected="this.deck.color === 1">Red</option>
+  <option class="orangeBK" value="2" :selected="this.deck.color === 2">Orange</option>
+  <option class="yellowBK" value="3" :selected="this.deck.color === 3">Yellow</option>
+  <option class="greenBK" value="4" :selected="this.deck.color === 4">Green</option>
+  <option class="whiteBK" value="5" :selected="this.deck.color === 5">White</option>
 </select>
 
   </template>
@@ -39,7 +39,7 @@
        <div class="btns">
         <button class="btn deletebtn" @click="deleteDeck">Delete Deck</button>
           <span class="btn savebtn" @click="saveOrUpdateDeck">
-            Save This Deck
+            Save This Deck 
             <font-awesome-icon icon="far, fa-floppy-disk" />
           </span>
           
@@ -137,7 +137,6 @@
 
       Preview,
     },
-
     created() {
       const deckId = this.$route.params.deckId;
       console.log("Received Deck ID:", deckId);
@@ -214,8 +213,8 @@
   },
   setColor(event) {
     this.selectedColor = event.target.options[event.target.selectedIndex].text;
-    this.deck.color = event.target.value;
-    console.log("Selected color value:", this.deck.color);
+    this.deck.color = parseInt(event.target.value);
+    console.log("Selected color value:", this.deck.color); // Debugging: Check the actual value being set
     this.isSelectingColor = false;
 },
   handleSelectCard(index, card) {
@@ -278,17 +277,29 @@ saveOrUpdateDeck() {
       });
     }
   });
+  FlashcardService.updateDeck(this.deck);
 },
+colorChoice() {
+
+    switch (this.deck.color) {
+      case 1: return 'Red';
+      case 2: return 'Orange';
+      case 3: return 'Yellow';
+      case 4: return 'Green';
+      case 5: return 'White';
+
+    }
+  },
 
 },computed: {
   colorClass() {
     console.log("Current color code:", this.deck.color); // Debugging line to check value
     switch (this.deck.color) {
-      case '1': return 'redBK';
-      case '2': return 'orangeBK';
-      case '3': return 'yellowBK';
-      case '4': return 'greenBK';
-      case '5': return 'whiteBK';
+      case 1: return 'redBK';
+      case 2: return 'orangeBK';
+      case 3: return 'yellowBK';
+      case 4: return 'greenBK';
+      case 5: return 'whiteBK';
       default: return 'whiteBK';
     }
   },
@@ -305,6 +316,11 @@ saveOrUpdateDeck() {
   select {
     font-size: 2vw;
   }
+  .fa-floppy-disk {
+    margin-left: 2vw;
+    margin-bottom: .5vw;
+  }
+
 
   #editCont {
     width: 90%;

@@ -19,12 +19,12 @@ export default {
   computed: {
     backgroundColorClass() {
       switch (this.color) {
-        case '1': return 'redBK';
-        case '2': return 'orangeBK';
-        case '3': return 'yellowBK';
-        case '4': return 'greenBK';
-        case '5': return 'whiteBK';
-        default: return 'defaultBackground';
+        case 1: return 'redBK';
+        case 2: return 'orangeBK';
+        case 3: return 'yellowBK';
+        case 4: return 'greenBK';
+        case 5: return 'whiteBK';
+        default: return 'whiteBK';  // Ensure this class provides a default background
       }
     }
   },
@@ -109,4 +109,10 @@ export default {
     border-radius: 50%;
     right: 1vw;
   }
+  .FlashhighlightSelected {
+
+  background-color: rgb(255, 0, 170);  /* Ensure this class overrides the default */
+}
+
+
   </style>
