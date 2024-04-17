@@ -129,9 +129,9 @@ public class JdbcDeckDao implements DeckDao {
     }
 
     @Override
-    public boolean deleteFlashcard(int card_id) {
+    public boolean deleteFlashcard(int cardId) {
         String sql = "DELETE FROM flashcard WHERE card_id = ?";
-        int rowsAffected = jdbcTemplate.update(sql, card_id);
+        int rowsAffected = jdbcTemplate.update(sql, cardId);
         return rowsAffected > 0;
     }
 
@@ -199,7 +199,12 @@ public class JdbcDeckDao implements DeckDao {
         return rowsAffected > 0;
     }
 
-
+    @Override
+    public List<FlashCard> searchFlashcards(String query) {
+        String sql = "SELECT * FROM flashcard WHERE question LIKE ? OR answer LIKE ?";
+        query = "%" + query + "%";
+        return jdbcTemplate.query(sql, new FlashCardRowMapper(), query, query);
+    }
 
 
 
