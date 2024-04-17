@@ -337,11 +337,10 @@ saveOrUpdateDeck() {
     display: flex;
     flex-direction: column;
     width: 100%;
-    
     background-color: rgb(226, 226, 226);
     align-items: center;
     justify-items: center;
-
+    border-radius: 1vw;
   }
   #editorCont {
     display:flex;
