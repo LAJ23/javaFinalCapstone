@@ -10,6 +10,7 @@
       </template>
       <template v-else>
         {{ deck.deckName }}
+        
         <div class="btn btn2" @click="toggleEditDeckName">
           <font-awesome-icon :icon="['fas', 'pencil']" />
         </div>
@@ -18,12 +19,12 @@
     <h3>Color theme:
   <template v-if="isSelectingColor">
     <select id="colors" name="colors" @change="setColor">
-      <option class="" value="">Select Color</option>
-    <option class="redBK" value="1">Red</option>
-    <option class="orangeBK" value="2">Orange</option>
-    <option class="yellowBK" value="3">Yellow</option>
-    <option class="greenBK" value="4">Green</option>
-    <option class="whiteBK" value="5">White</option>
+      <option value="">Select Color</option>
+  <option class="redBK" value="1" :selected="this.deck.color === 1">Red</option>
+  <option class="orangeBK" value="2" :selected="this.deck.color === 2">Orange</option>
+  <option class="yellowBK" value="3" :selected="this.deck.color === 3">Yellow</option>
+  <option class="greenBK" value="4" :selected="this.deck.color === 4">Green</option>
+  <option class="whiteBK" value="5" :selected="this.deck.color === 5">White</option>
 </select>
 
   </template>
@@ -146,6 +147,7 @@
       if (deckId) {
         this.getDeck(deckId);
         this.fetchCards(deckId);
+        console.log("created",this.deck.color);
       } else {
         console.error('No deckId provided in the route.');
         this.$router.push({name: 'home'});  // Fallback to a safe route if no ID
@@ -188,6 +190,7 @@
     this.deck.color = data.color;
     this.deck.creator_id = data.userID;
     this.deck.deckId = data.deckId;
+    console.log("created",this.deck.color);
     console.log('Deck details fetched:', data);
   }).catch(error => {
     console.error('Failed to fetch deck details:', error);
@@ -218,7 +221,7 @@
   },
   setColor(event) {
     this.selectedColor = event.target.options[event.target.selectedIndex].text;
-    this.deck.color = event.target.value;
+    this.deck.color = parseInt(event.target.value);
     console.log("Selected color value:", this.deck.color); // Debugging: Check the actual value being set
     this.isSelectingColor = false;
 },
@@ -259,11 +262,13 @@
     this.newCard = newCard;  
 },
 saveOrUpdateDeck() {
+  
   this.cards.forEach(card => {
      
     if (card.card_id === undefined) {  
       card.deck_id = this.deck.deckId; 
       FlashcardService.saveCard(card)
+      
       .then(response => {
         console.log("Card was saved", response.data);
         card.card_id = response.data.card_id;  
@@ -274,6 +279,7 @@ saveOrUpdateDeck() {
     } else {
       console.log(card) 
       FlashcardService.updateCard(card)
+      
       .then(response => {
         console.log("Card was updated", response);
       })
@@ -282,17 +288,29 @@ saveOrUpdateDeck() {
       });
     }
   });
+  FlashcardService.updateDeck(this.deck);
 },
+colorChoice() {
+
+    switch (this.deck.color) {
+      case 1: return 'Red';
+      case 2: return 'Orange';
+      case 3: return 'Yellow';
+      case 4: return 'Green';
+      case 5: return 'White';
+  
+    }
+  },
 
 },computed: {
   colorClass() {
     console.log("Current color code:", this.deck.color); // Debugging line to check what value is being used
     switch (this.deck.color) {
-      case '1': return 'redBK';
-      case '2': return 'orangeBK';
-      case '3': return 'yellowBK';
-      case '4': return 'greenBK';
-      case '5': return 'whiteBK';
+      case 1: return 'redBK';
+      case 2: return 'orangeBK';
+      case 3: return 'yellowBK';
+      case 4: return 'greenBK';
+      case 5: return 'whiteBK';
       default: return 'whiteBK';
     }
   },

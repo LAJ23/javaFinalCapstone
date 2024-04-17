@@ -23,7 +23,7 @@ export default {
     updateDeck(deck) {
         return http.post('/updateDeck', {
           deckId: deck.deckId,
-          deckName: deck.deckName,  // Changed from name to deckName
+          deckName: deck.deckName,  
           highScore: deck.highScore,
           color: deck.color,
           user_id: deck.creator_id

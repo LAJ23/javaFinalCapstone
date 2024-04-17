@@ -20,12 +20,12 @@ export default {
   computed: {
     backgroundColorClass() {
       switch (this.color) {
-        case '1': return 'redBK';
-        case '2': return 'orangeBK';
-        case '3': return 'yellowBK';
-        case '4': return 'greenBK';
-        case '5': return 'whiteBK';
-        default: return 'defaultBackground';  // Ensure this class provides a default background
+        case 1: return 'redBK';
+        case 2: return 'orangeBK';
+        case 3: return 'yellowBK';
+        case 4: return 'greenBK';
+        case 5: return 'whiteBK';
+        default: return 'whiteBK';  // Ensure this class provides a default background
       }
     }
   },
@@ -33,6 +33,7 @@ export default {
     selectCard() {
       // Emit an event to inform the parent component that this card was selected
       this.$emit('selectCard');
+      console.log(this.color)
     },
     deleteCard() {
       if (confirm('Are you sure you want to delete this card?')) {
