@@ -168,14 +168,12 @@
   });
 },
   toggleEditFront() {
-    // Check if frontText is empty and set a default value
     if (this.frontText.trim() === '') {
       this.frontText = 'Enter your question';
     }
     this.isEditingFront = !this.isEditingFront;
   },
   toggleEditBack() {
-    // Check if backText is empty and set a default value
     if (this.backText.trim() === '') {
       this.backText = 'Enter your answer';
     }
@@ -183,7 +181,7 @@
   },
   toggleEditDeckName() {
     if (this.deckName.trim() === '') {
-      this.deckName = 'Unnamed Deck'; // Default deck name if empty
+      this.deckName = 'Unnamed Deck'; // Default deck name
     }
     this.isEditingDeckName = !this.isEditingDeckName;
   },
@@ -193,12 +191,12 @@
   setColor(event) {
     this.selectedColor = event.target.options[event.target.selectedIndex].text;
     this.deck.color = event.target.value;
-    console.log("Selected color value:", this.deck.color); // Debugging: Check the actual value being set
+    console.log("Selected color value:", this.deck.color);
     this.isSelectingColor = false;
 },
   handleSelectCard(index, card) {
     this.selectedIndex = index;
-    this.newCard = card;  // Pointing newCard to the selected card
+    this.newCard = card;
 },
   handleDeleteCard({ cardId, index }) {
     if (cardId) {
@@ -260,7 +258,7 @@ saveOrUpdateDeck() {
 
 },computed: {
   colorClass() {
-    console.log("Current color code:", this.deck.color); // Debugging line to check what value is being used
+    console.log("Current color code:", this.deck.color); // Debugging line to check value
     switch (this.deck.color) {
       case '1': return 'redBK';
       case '2': return 'orangeBK';
