@@ -1,4 +1,5 @@
 <template>
+
   <div :class="['card', colorClass]">
     <p>{{ card.question }}</p>
     <button id="flip" @click="flip">Flip!</button>
@@ -7,7 +8,15 @@
 
 <script>
 export default {
-  props: ['card','color'],
+  props: ['card', 'color'],
+  mounted() {
+    console.log('Component mounted with card:', this.card);
+  },
+  watch: {
+    card(newVal, oldVal) {
+      console.log('Card prop updated:', newVal);
+    }
+  },
   computed: {
     colorClass() {
       switch (this.color) {

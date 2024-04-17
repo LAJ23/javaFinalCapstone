@@ -105,6 +105,7 @@ public class JdbcDeckDao implements DeckDao {
         try {
             int newDeckId = jdbcTemplate.queryForObject(sql, int.class, deck.getDeckName(),  deck.getColor(), deck.getUserID());
             newDeck = getDeck(newDeckId);
+            addblankcard(newDeck.getDeckId());
             return newDeck;
 
         }
@@ -153,6 +154,15 @@ public class JdbcDeckDao implements DeckDao {
             throw new DaoException("Bad SQL Grammar", ex);
         }
     }
+    @Override
+    public FlashCard addblankcard(int deckId) {
+        FlashCard newCard = null;
+        String sql = "INSERT INTO flashcard (deck_id, question, answer) VALUES (?, 'question', 'answer') RETURNING card_id";
+
+            int newCardId = jdbcTemplate.queryForObject(sql, int.class, deckId);
+            newCard = getCardById(newCardId);
+            return newCard;
+    }
 
     @Override
     public FlashCard getCardById(int cardId) {
@@ -167,14 +177,19 @@ public class JdbcDeckDao implements DeckDao {
         return card;
     }
 
-    @Override
-    @Transactional
-    public boolean deleteDeck(int deckId) {
-        String sql = "DELETE FROM flashcard WHERE deck_id = ?";
-        jdbcTemplate.update(sql, deckId);
-        String deleteDeckSql = "DELETE FROM deck WHERE deck_id = ?";
-        int rowsAffected = jdbcTemplate.update(deleteDeckSql, deckId);
 
+
+    @Override
+    public boolean deleteDeck(int deckId) {
+        deleteDeckcards(deckId);
+        String sql = "DELETE FROM deck WHERE deck_id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, deckId);
+        return rowsAffected > 0;
+    }
+    @Override
+    public boolean deleteDeckcards(int deckId) {
+        String sql = "DELETE FROM flashcard WHERE deck_id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, deckId);
         return rowsAffected > 0;
     }
 

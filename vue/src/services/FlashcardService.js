@@ -9,7 +9,7 @@ export default {
         return http.get(`/deckName/${id}`)
     },
     getDeck(id) {
-        return http.get(`/deck/${id}`)
+        return http.get(`/getdeck/${id}`)
     },
 
     addDeck(name, color) {
@@ -54,15 +54,15 @@ export default {
     },
 
     updateCard(card) {
-        return http.post(`/deck/${card.cardId}`, {
-            cardId: card.cardId,
+        return http.post(`/deck/${card.card_id}`, {
+            card_id: card.card_id,
             deck_id: card.deck_id,
             question: card.question,
             answer: card.answer
         });
     },
-    deleteDeck(id) {
-        return http.delete(`/deck/${id}`)
+    deleteDeck(deckId) {
+        return http.delete(`/deleteDeck/${deckId}`)
     },
     deleteCard(id) {
         return http.delete(`/delete/${id}`)

@@ -1,6 +1,6 @@
 <template>
   <div id='Flashhighlight' :class="isSelected ? 'FlashhighlightSelected' : 'Flashhighlight'" @click="selectCard">
-    <div id="FlashCardCont">
+    <div class="FlashCardCont" :class="backgroundColorClass">
       <p>{{ question }}</p>
       <div class="deleteCont">
         <button @click.stop="deleteCard">
@@ -16,7 +16,19 @@
 import FlashcardService from '../services/FlashcardService';
 
 export default {
-  props: ['isSelected', 'deckId', 'question', 'answer', 'cardId', 'index', 'color'],
+  props: ['isSelected', 'deckId', 'question', 'answer', 'card_id', 'index', 'color'],
+  computed: {
+    backgroundColorClass() {
+      switch (this.color) {
+        case '1': return 'redBK';
+        case '2': return 'orangeBK';
+        case '3': return 'yellowBK';
+        case '4': return 'greenBK';
+        case '5': return 'whiteBK';
+        default: return 'defaultBackground';  // Ensure this class provides a default background
+      }
+    }
+  },
   methods: {
     selectCard() {
       // Emit an event to inform the parent component that this card was selected
@@ -24,8 +36,8 @@ export default {
     },
     deleteCard() {
       if (confirm('Are you sure you want to delete this card?')) {
-        console.log(this.cardId, this.index)
-        this.$emit('deleteCard', { cardId: this.cardId, index: this.index });
+        console.log(this.card_id, this.index)
+        this.$emit('deleteCard', { card_id: this.card_id, index: this.index });
       }
     }
   },
@@ -38,7 +50,7 @@ export default {
 
   }
   p {font-size: .8vw;}
-   #FlashCardCont {
+   .FlashCardCont {
   position: relative;
   display: flex;
   align-items: center;
@@ -49,7 +61,7 @@ export default {
   padding: .5vw;
   text-align: center;
   vertical-align: middle;
-  background-color: blueviolet;
+ 
 } 
 #Flashhighlight {
   
@@ -102,7 +114,8 @@ export default {
     right: 1vw;
   }
   .FlashhighlightSelected {
-  background-color: green;  /* Ensure this class overrides the default */
+    
+  background-color: rgb(255, 0, 170);  /* Ensure this class overrides the default */
 }
   
  

@@ -17,7 +17,8 @@ import java.util.List;
 //@PreAuthorize("isAuthenticated()")
 
 @RestController
-@CrossOrigin
+
+@CrossOrigin(origins = "http://127.0.0.1:5173")
 public class FlashCardController {
     private DeckDao deckDao;
     private UserDao userDao;
@@ -45,7 +46,7 @@ public class FlashCardController {
         return name;
     }
 
-    @RequestMapping(path = "deck/{deckId}", method = RequestMethod.GET)
+    @RequestMapping(path = "getdeck/{deckId}", method = RequestMethod.GET)
     public Deck getDeck(@PathVariable int deckId) {
         Deck deck = deckDao.getDeck(deckId);
         return deck;
@@ -133,13 +134,14 @@ public class FlashCardController {
         }
     }
 
-    @DeleteMapping("/{deckId}")
-    public ResponseEntity<?> deleteDeck(@PathVariable("deckId") int deckId) {
+
+    @DeleteMapping("/deleteDeck/{deckId}")
+    public ResponseEntity<String> deleteDeck(@PathVariable("deckId") int deckId) {
         boolean isDeleted = deckDao.deleteDeck(deckId);
         if (isDeleted) {
-            return ResponseEntity.ok().build(); // Successfully deleted
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            return ResponseEntity.notFound().build(); // Deck not found
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -150,12 +152,6 @@ public class FlashCardController {
         return newCard;
     }
 }
-//    @PostMapping
-//    public ResponseEntity<Void> addFlashcard(@RequestBody FlashCard flashCard) {
-//        deckDao.addFlashcard(flashCard.getDeckId(), flashCard.getQuestion(), flashCard.getAnswer());
-//        return ResponseEntity.status(HttpStatus.CREATED).build();
-//    }
-//    }
 
 
 

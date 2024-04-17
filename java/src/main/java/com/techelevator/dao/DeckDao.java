@@ -16,6 +16,9 @@ public interface DeckDao {
     public String getDeckHighScore(int id);
     public boolean updateDeck(Deck deck);
     public Deck addDeck(Deck deck);
+    public boolean deleteDeckcards(int deckId);
+
+    public FlashCard addblankcard(int deckId);
 
 
     public boolean deleteFlashcard(int id);

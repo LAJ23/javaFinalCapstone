@@ -10,7 +10,6 @@
         :color="deck.color"
         :routeName="routeName"
       />
-
     </div>
   </div>
 </template>
@@ -20,11 +19,18 @@ import DeckIcon from './DeckIcon.vue';
 import FlashcardService from '../services/FlashcardService';
 
 export default {
-  props: ['routeName'],  // Receive routeName prop
+  props: {
+    routeName: String,
+    limitTopThree: {
+      type: Boolean,
+      default: false // Default is not to limit, so it behaves normally unless specified
+    }
+  },
   components: {
     DeckIcon,
   },
   data() {
+    
     return {
       decks: [],
     };
@@ -36,9 +42,16 @@ export default {
     async fetchDecks() {
       try {
         const response = await FlashcardService.getDecks(this.$store.state.user.id);
-        this.decks = response.data; // Ensure the API response format matches your expectations
+        let decks = response.data || [];
+        // Apply the sorting and limiting only if limitTopThree is true
+        if (this.limitTopThree && decks.length) {
+          decks = decks.sort((a, b) => b.deckId - a.deckId);
+          decks = decks.slice(0, 3);
+        }
+        this.decks = decks;
       } catch (error) {
         console.error('Error fetching decks:', error);
+        this.decks = [];
       }
     },
   }
