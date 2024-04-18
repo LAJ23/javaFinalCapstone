@@ -9,7 +9,7 @@
         <p>Score {{ currentScore }}/{{ totalCards }}</p>
       </div>
     
-      <div class="wtf" v-if="!isLoading">
+      <div class="cardDisplay" v-if="!isLoading">
     <FlashFront
       v-if="showFront"
       :card="cards[currentCardIndex]"
@@ -192,7 +192,7 @@ export default {
  * {
     font-family: 'Writing';
   }
-  .wtf {
+  .cardDisplay {
     width: 100%;
     display: flex;
     align-items: center;

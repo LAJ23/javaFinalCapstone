@@ -217,8 +217,8 @@
   setColor(event) {
   const selectedValue = parseInt(event.target.value, 10);
   this.selectedColor = this.getColorName(selectedValue);
-  this.deck.color = selectedValue; // Assuming you still need this
-  console.log("Selected color value:", this.deck.color); // Debugging: Check the actual value being set
+  this.deck.color = selectedValue;
+  console.log("Selected color value:", this.deck.color); 
   this.isSelectingColor = false;
 },
   handleSelectCard(index, card) {
