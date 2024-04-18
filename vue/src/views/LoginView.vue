@@ -52,18 +52,6 @@
       <div role="alert" v-if="this.$route.query.registration">
         Thank you for registering, please sign in.
       </div>
-      <!-- <div class="form-input-group">
-        
-        <input type="text" id="username" v-model="user.username" required autofocus placeholder="Username"/>
-      </div>
-      <div class="form-input-group">
-        
-        <input type="password" id="password" v-model="user.password" required placeholder="Password"/>
-      </div>
-      <button class="btn" type="submit">Sign in</button>
-      <button class="btn" type="submit" >
-      <router-link style="text-decoration: none; color: inherit;" v-bind:to="{ name: 'register' }">Register</router-link></button>
-    </form> -->
     
   </div>
 </template>
@@ -159,7 +147,7 @@ label {
 }
 
 .btn {
-  display: block;
+  display: flex;
   width: 80%;
   height: 2.5vw;
   margin-top: 0.6vw;
@@ -170,7 +158,6 @@ label {
   font-size: 1.5vw;
   text-decoration: none;
   font-family: "Writing";
-  display: flex;
   justify-content: center;
   align-items: center;
 }
