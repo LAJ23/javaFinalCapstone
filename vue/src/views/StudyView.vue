@@ -1,7 +1,7 @@
 <template>
     
     <h2>Choose a deck start a session:</h2>
-    <UserDecks route-name='session' />
+    <UserDecks routeName='session' />
 
   </template>
   

@@ -1,6 +1,6 @@
 <template>
   <div id="iconCont">
-    <router-link :to="{ name: routeName, params: { deckId: deckId, name: name }}" style="text-decoration: none; padding: 0;">
+    <router-link :to="{ name: routeName, params: { deckId: deckId, name: name, color: color }}" style="text-decoration: none; padding: 0;">
       <div class="deckIconCont">
         <div :class="['iconText', colorClass]">
           <h3>{{ name }}</h3>
@@ -19,11 +19,13 @@ export default {
   props: ['name', 'highScore', 'color', 'deckId', 'routeName'],
   data() {
     return {
+      
       deckImage,
     };
   },
   created() {
     console.log(this.deckId)
+    
   },
   computed: {
     colorClass() {

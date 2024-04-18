@@ -41,15 +41,15 @@ const routes = [
         props: true
     },
     {
-      path: '/edit-deck/:deckId',
+      path: '/edit-deck/:deckId/:color',
       name: 'editDeck',
       component: () => import('@/views/EditDeckView.vue'),
       props: true,
-      meta: {  // Ensure 'meta' is used here
+      meta: {  
         showHeader: true,
         requiresAuth: true
       }
-  },
+    },
   {
     path: '/edit',
     name: 'edit',

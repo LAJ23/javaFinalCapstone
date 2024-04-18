@@ -10,28 +10,28 @@
       </template>
       <template v-else>
         {{ deck.deckName }}
-        <div class="btn btn2" @click="toggleEditDeckName">
+        <div class="pencilbtn margin" @click="toggleEditDeckName">
           <font-awesome-icon :icon="['fas', 'pencil']" />
         </div>
       </template>
     </h2>
-    <h3>Color theme:
+    <h3 :class="colorTextClass" ><span class="blackFT" id="colorTheme">Color theme:</span>
   <template v-if="isSelectingColor">
     <select id="colors" name="colors" @change="setColor">
-      <option value="">Select Color</option>
-  <option class="redBK" value="1" :selected="this.deck.color === 1">Red</option>
-  <option class="orangeBK" value="2" :selected="this.deck.color === 2">Orange</option>
-  <option class="yellowBK" value="3" :selected="this.deck.color === 3">Yellow</option>
-  <option class="greenBK" value="4" :selected="this.deck.color === 4">Green</option>
-  <option class="whiteBK" value="5" :selected="this.deck.color === 5">White</option>
+      <option >Select an Color</option>
+  <option value="1" class="redBK">Red</option>
+  <option value="2" class="orangeBK">Orange</option>
+  <option value="3" class="yellowBK" >Yellow</option>
+  <option value="4" class="greenBK">Green</option>
+  <option value="5" class="whiteBK" >White</option>
 </select>
 
   </template>
   <template v-else>
-    <span id="color" @click="toggleColorSelection">{{ selectedColor }}</span>
-    <div id="themePen" >
-      <font-awesome-icon :icon="['fas', 'pencil']" />
-    </div>
+    <span id="color" @click="toggleColorSelection">{{ selectedColor }} <font-awesome-icon class="pencilbtn " :icon="['fas', 'pencil',]" /></span>
+    
+      
+    
   </template>
 </h3> 
 
@@ -74,7 +74,7 @@
     </div>
   </div>
     <div id="cardEditor" >
-      <div class="card" :class="colorClass" id="frontCard">
+      <div class="card" :class="color2Class" id="frontCard">
   <template v-if="isEditingFront">
     <input v-model="newCard.question" @blur="toggleEditFront" @keyup.enter="toggleEditFront" placeholder="Enter your question">
   </template>
@@ -84,7 +84,7 @@
   <p class="side">Front</p>
 </div>
 
-<div class="card" :class="colorClass" id="backCard">
+<div class="card" :class="color2Class" id="backCard">
   <template v-if="isEditingBack">
     <input v-model="newCard.answer" @blur="toggleEditBack" @keyup.enter="toggleEditBack" placeholder="Enter your answer">
   </template>
@@ -111,7 +111,7 @@
         deck: {
           deckName: '',
           highScore: 0,
-          color: '',
+          color: 'colo',
           creator_id: null,
           deckId: ''
         },
@@ -124,7 +124,7 @@
         isSelectingColor: false,
         title: '',
         selectedIndex: 0,
-        selectedColor: 'Red',
+        selectedColor: 'yellow',
         newCard: {
           card_id: undefined,
           deck_id: null,
@@ -139,7 +139,6 @@
     },
     created() {
       const deckId = this.$route.params.deckId;
-      console.log("Received Deck ID:", deckId);
       if (deckId) {
         this.getDeck(deckId);
         this.fetchCards(deckId);
@@ -148,6 +147,10 @@
         this.$router.push({name: 'home'});  // If no ID
       }
     },
+    mounted() {
+  const colorCode = parseInt(this.$route.params.color, 10);
+  this.selectedColor = this.getColorName(colorCode);
+},
     methods: {
       deleteDeck() {
     if (!confirm('Are you sure you want to delete this deck?')) {
@@ -212,10 +215,11 @@
     this.isSelectingColor = !this.isSelectingColor;
   },
   setColor(event) {
-    this.selectedColor = event.target.options[event.target.selectedIndex].text;
-    this.deck.color = parseInt(event.target.value);
-    console.log("Selected color value:", this.deck.color); // Debugging: Check the actual value being set
-    this.isSelectingColor = false;
+  const selectedValue = parseInt(event.target.value, 10);
+  this.selectedColor = this.getColorName(selectedValue);
+  this.deck.color = selectedValue; // Assuming you still need this
+  console.log("Selected color value:", this.deck.color); // Debugging: Check the actual value being set
+  this.isSelectingColor = false;
 },
   handleSelectCard(index, card) {
     this.selectedIndex = index;
@@ -254,6 +258,7 @@
     this.newCard = newCard;  
 },
 saveOrUpdateDeck() {
+  this.deck.highScore = 0;
   this.cards.forEach(card => {
      
     if (card.card_id === undefined) {  
@@ -279,21 +284,33 @@ saveOrUpdateDeck() {
   });
   FlashcardService.updateDeck(this.deck);
 },
-colorChoice() {
-
-    switch (this.deck.color) {
+getColorName(colorCode) {
+    switch (colorCode) {
       case 1: return 'Red';
       case 2: return 'Orange';
       case 3: return 'Yellow';
       case 4: return 'Green';
       case 5: return 'White';
+      default: return 'White';  // Default color
+    }
+  }
+},
 
+
+computed: {
+  colorClass() {
+    const colorCode = parseInt(this.$route.params.color); // Convert to integer if necessary
+    switch (colorCode) {
+      case 1: return 'redBK';
+      case 2: return 'orangeBK';
+      case 3: return 'yellowBK';
+      case 4: return 'greenBK';
+      case 5: return 'whiteBK';
+      default: return 'whiteBK';
     }
   },
-
-},computed: {
-  colorClass() {
-    console.log("Current color code:", this.deck.color); // Debugging line to check value
+  color2Class() {
+    
     switch (this.deck.color) {
       case 1: return 'redBK';
       case 2: return 'orangeBK';
@@ -301,6 +318,17 @@ colorChoice() {
       case 4: return 'greenBK';
       case 5: return 'whiteBK';
       default: return 'whiteBK';
+    }
+  },
+  colorTextClass() {
+    
+    switch (this.deck.color) {
+      case 1: return 'redFT';
+      case 2: return 'orangeFT';
+      case 3: return 'yellowFT';
+      case 4: return 'greenFT';
+      case 5: return 'whiteFT';
+      default: return 'blackFT';
     }
   },
 },
@@ -329,6 +357,7 @@ colorChoice() {
   h2 {
     font-size: 2.5vw;
     font-weight: 200;
+    padding-right: 2vw;
   }
   .btn2 {
     display: inline-flex;
@@ -338,11 +367,19 @@ colorChoice() {
     text-align: center;
     justify-content: center;
   }
-
-  #themePen {
-    font-size: 1vw;
+  .pencilbtn {
+    color: black;
     display: inline;
+    background-color: rgb(58, 58, 255);
+    font-size: 1.5vw;
+    padding:.7vw ;
+    color: white;
+    border-radius: 50%;
+    animation: slidebg 20s linear infinite;
+   
   }
+
+
   .deletebtn {
     width: 20vw;
     font-size: 2.5vw
@@ -356,7 +393,7 @@ colorChoice() {
     height: 5vw;
     position: absolute;
     bottom: 0;
-    right: 0;
+    right: 8vw;
   }
   .savebtn {
     width: 25vw;
@@ -419,7 +456,7 @@ colorChoice() {
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: rgb(226, 226, 226);
+    
     align-items: center;
     justify-items: center;
     border-radius: 1vw;
@@ -432,6 +469,7 @@ colorChoice() {
 
   h2 {
     margin-top: 3vw;
+    position: relative;
     font-size: 4vw;
   }
   h3 {
@@ -485,9 +523,7 @@ colorChoice() {
     border: none;
   }
 
-  #color {
-    color: rgb(255, 88, 88);
-  }
+
   .deckTitle {
     font-family:  'Writing';
   }
@@ -509,6 +545,38 @@ colorChoice() {
     background-color: white;
     border: 1px solid black;
 }
+.redFT {
+    color: rgb(255, 101, 101);
+    -webkit-text-stroke: .01vw; 
+    -webkit-text-stroke-color: black;
+}
+.orangeFT {
+    color: rgb(255, 200, 99);
+    -webkit-text-stroke: .01vw; 
+    -webkit-text-stroke-color: black;
+}
+.yellowFT {
+    color: rgb(255, 255, 97);
+    -webkit-text-stroke: .01vw; 
+    -webkit-text-stroke-color: black;
+}
+
+.greenFT {
+    color: rgb(101, 255, 101);
+    -webkit-text-stroke: .01vw; 
+    -webkit-text-stroke-color: black;
+}
+.whiteFT {
+  color: rgb(255, 255, 255);
+  -webkit-text-stroke: .01vw; 
+    -webkit-text-stroke-color: black;
+}
+.blackFT {
+  color: rgb(0, 0, 0);
+  margin-right: 1vw;
+  -webkit-text-stroke: 0; 
+    
+}
 .addbtn {
   margin-bottom: 1vw;
   left: 1.8vw;
@@ -522,4 +590,12 @@ colorChoice() {
 #colors{
   cursor: pointer;
 }
+
+.margin {
+  position: absolute;
+  right: -2vw;
+  
+
+}
+
   </style>
