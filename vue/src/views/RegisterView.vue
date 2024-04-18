@@ -168,6 +168,9 @@ label {
   color: white;
   font-size: 1.5vw;
   text-decoration: none;
+  display: flex;
+justify-content: center;
+align-items: center;
   font-family: "Writing";
 }
 input {

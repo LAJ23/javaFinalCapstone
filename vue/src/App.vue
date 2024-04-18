@@ -24,6 +24,9 @@ export default {
   margin: 0;
 }
 #capstone-app {
+
+  
+  
   
   height: 100%;
 }</style>

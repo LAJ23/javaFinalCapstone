@@ -29,7 +29,7 @@
     </nav>
     <h2>Recent Decks</h2>
     <div id="UserDeckCont" >
-      <UserDecks route-name='session' :limit-top-three="true" />
+      <UserDecks routeName='session' :limit-top-three="true" />
   </div>
   </div>
 </template>

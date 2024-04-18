@@ -1,8 +1,9 @@
 <template>
+  
 <div id="top">
     <h2>Choose a deck to Edit:</h2>
   </div>
-    <UserDecks route-name="editDeck" />
+    <UserDecks routeName="editDeck" />
   </template>
   <script>
   import UserDecks from '../components/UserDecks.vue';
