@@ -50,6 +50,24 @@ const routes = [
         requiresAuth: true
       }
     },
+    {
+      path: '/edit-deck/:deckId',
+      name: 'edit-deck',
+      component: () => import('@/views/EditDeckView.vue'),
+      props: true,
+      meta: {  
+        showHeader: true,
+        requiresAuth: true
+      }
+    },
+    // {
+    //   path: '/edit-deck/:deckId',
+    //   name: 'edit-deck',
+    //   meta: {  
+    //     showHeader: true,
+    //     requiresAuth: true
+    //   }
+    // },
   {
     path: '/edit',
     name: 'edit',
