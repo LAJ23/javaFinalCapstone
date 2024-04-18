@@ -32,7 +32,7 @@ public class JdbcDeckDao implements DeckDao {
     public List<Deck> getAllDecks(int id) {
         List<Deck> decks = new ArrayList<>();
         String sql = "SELECT * FROM deck WHERE creator_id = ? OR creator_id = 2";
-        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id); // Pass the id as parameter
+        SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
         while (results.next()) {
             Deck deck = mapRowToDeck(results);
             decks.add(deck);
@@ -60,9 +60,9 @@ public class JdbcDeckDao implements DeckDao {
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
 
         if (results.next()) {
-            return results.getString("name"); // Extract the name column from the first row of the result set
+            return results.getString("name");
         } else {
-            return null; // Return null if no results found (or you could throw an exception or return a default value)
+            return null; )
         }
     }
 
@@ -72,9 +72,9 @@ public class JdbcDeckDao implements DeckDao {
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, id);
 
         if (results.next()) {
-            return results.getString("high_score"); // Extract the name column from the first row of the result set
+            return results.getString("high_score");
         } else {
-            return null; // Return null if no results found (or you could throw an exception or return a default value)
+            return null;
         }
     }
 
@@ -82,10 +82,10 @@ public class JdbcDeckDao implements DeckDao {
     public Deck getDeck(int deckId) {
         String sql = "SELECT * FROM deck WHERE deck_id = ?";
         SqlRowSet results = jdbcTemplate.queryForRowSet(sql, deckId);
-        if (results.next()) {  // Ensure there is at least one row
+        if (results.next()) {
             return mapRowToDeck(results);
         } else {
-            return null;  // Return null or handle it based on your application's requirement
+            return null;
         }
     }
 

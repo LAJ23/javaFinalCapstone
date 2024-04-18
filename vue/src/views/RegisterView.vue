@@ -158,7 +158,7 @@ label {
 }
 
 .btn {
-  display: block;
+  display: flex;
   width: 80%;
   height: 2.5vw;
   margin-top: 0.6vw;
@@ -168,7 +168,6 @@ label {
   color: white;
   font-size: 1.5vw;
   text-decoration: none;
-  display: flex;
 justify-content: center;
 align-items: center;
   font-family: "Writing";

@@ -1,7 +1,7 @@
 import { createRouter as createRouter, createWebHistory } from 'vue-router'
 import { useStore } from 'vuex'
 
-// Import components
+
 import HomeView from '../views/HomeView.vue';
 import LoginView from '../views/LoginView.vue';
 import LogoutView from '../views/LogoutView.vue';
@@ -60,14 +60,6 @@ const routes = [
         requiresAuth: true
       }
     },
-    // {
-    //   path: '/edit-deck/:deckId',
-    //   name: 'edit-deck',
-    //   meta: {  
-    //     showHeader: true,
-    //     requiresAuth: true
-    //   }
-    // },
   {
     path: '/edit',
     name: 'edit',
