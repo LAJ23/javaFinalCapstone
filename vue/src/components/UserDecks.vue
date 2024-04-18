@@ -43,7 +43,7 @@ export default {
       try {
         const response = await FlashcardService.getDecks(this.$store.state.user.id);
         let decks = response.data || [];
-        // Apply the sorting and limiting only if limitTopThree is true
+        
         if (this.limitTopThree && decks.length) {
           decks = decks.sort((a, b) => b.deckId - a.deckId);
           decks = decks.slice(0, 3);

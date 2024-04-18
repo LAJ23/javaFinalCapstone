@@ -51,8 +51,7 @@
     </div>
       <div role="alert" v-if="this.$route.query.registration">
         Thank you for registering, please sign in.
-      </div>
-    
+      </div>    
   </div>
 </template>
 
@@ -147,7 +146,7 @@ label {
 }
 
 .btn {
-  display: flex;
+  display: block;
   width: 80%;
   height: 2.5vw;
   margin-top: 0.6vw;
@@ -158,6 +157,7 @@ label {
   font-size: 1.5vw;
   text-decoration: none;
   font-family: "Writing";
+  display: flex;
   justify-content: center;
   align-items: center;
 }

@@ -24,7 +24,7 @@ export default {
         case 3: return 'yellowBK';
         case 4: return 'greenBK';
         case 5: return 'whiteBK';
-        default: return 'whiteBK';  // Ensure this class provides a default background
+        default: return 'whiteBK';  // default background
       }
     }
   },
@@ -111,7 +111,7 @@ export default {
   }
   .FlashhighlightSelected {
 
-  background-color: rgb(255, 0, 170);  /* Ensure this class overrides the default */
+  background-color: rgb(255, 0, 170); 
 }
 
 

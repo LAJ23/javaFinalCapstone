@@ -218,7 +218,7 @@
   const selectedValue = parseInt(event.target.value, 10);
   this.selectedColor = this.getColorName(selectedValue);
   this.deck.color = selectedValue;
-  console.log("Selected color value:", this.deck.color);
+  console.log("Selected color value:", this.deck.color); 
   this.isSelectingColor = false;
 },
   handleSelectCard(index, card) {
@@ -299,7 +299,7 @@ getColorName(colorCode) {
 
 computed: {
   colorClass() {
-    const colorCode = parseInt(this.$route.params.color);
+    const colorCode = parseInt(this.$route.params.color); // Convert to integer if necessary
     switch (colorCode) {
       case 1: return 'redBK';
       case 2: return 'orangeBK';
@@ -378,6 +378,7 @@ computed: {
     animation: slidebg 20s linear infinite;
    
   }
+
 
   .deletebtn {
     width: 20vw;
@@ -521,7 +522,8 @@ computed: {
     border-radius: .5vw;
     border: none;
   }
-  
+
+
   .deckTitle {
     font-family:  'Writing';
   }
