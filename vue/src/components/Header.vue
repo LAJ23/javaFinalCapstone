@@ -23,22 +23,20 @@
         v-bind:to="{ name: 'logout' }"
         v-if="$store.state.token != ''"
         >Logout</router-link>
-      <div id="searchBar">
+        <div id="searchBar" ref="searchBar">
       <div class="input-icon">
-      <i class="fa-solid fa-magnifying-glass"></i>
-      <input type="text" v-model="searchQuery" placeholder="Search" @input="searchCards" @keydown.down="selectNext" @keydown.up="selectPrevious" />
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" v-model="searchQuery" placeholder="Search" @input="searchCards" @keydown.down="selectNext" @keydown.up="selectPrevious" />
       </div>
-      <ul v-if="filteredCards.length > 0" class="search-results">
+      <ul v-if="filteredCards.length > 0" class="search-results" @click="closeSearchResults">
         <li v-for="card in filteredCards" @click="selectItem(card)" :key="card.card_id">
-            {{ card.question }}
-            {{ card.answer }}
+          {{ card.question }}
+          {{ card.answer }}
         </li>
-    </ul>
+      </ul>
     </div>
-  </div>
+    </div>
   </header>
-
-  
 </template>
 
 <script>
@@ -68,9 +66,19 @@ export default {
     selectItem(item) {
         this.searchQuery = item.question;
         this.filteredCards = [];
-        console.log( "routercheck", item.deck_id)
         this.$router.push(`/edit-deck/${item.deck_id}`)
     },
+    closeSearchResults(event) {
+      if (!this.$refs.searchBar.contains(event.target)) {
+        this.filteredCards = [];
+      }
+    },
+  },
+  mounted() {
+    document.body.addEventListener('click', this.closeSearchResults);
+  },
+  beforeUnmount() {
+    document.body.removeEventListener('click', this.closeSearchResults);
   },
 };
 </script>
@@ -121,18 +129,20 @@ header {
 }
 
 .search-results {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 1000;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-top: none;
-    border-radius: 0 0 5px 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 1vw;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .search-results li {
