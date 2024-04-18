@@ -64,7 +64,7 @@ export default {
     });
 },
     selectItem(item) {
-        this.searchQuery = item.question;
+      this.searchQuery = '';
         this.filteredCards = [];
         this.$router.push(`/edit-deck/${item.deck_id}`)
     },
